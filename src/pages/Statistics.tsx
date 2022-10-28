@@ -2,9 +2,9 @@ import { trpc } from "../utils/trpc";
 
 // TODO: Forward the data as a prop to BarChart component
 const Statistics = () => {
-  const { data: champions } = trpc.statistics.getWorldChampions.useQuery();
+  const { data: worldChampions } = trpc.statistics.getWorldChampions.useQuery();
 
-  champions?.sort(
+  worldChampions?.sort(
     (a, b) =>
       b.winningYears.length -
       a.winningYears.length
@@ -12,12 +12,12 @@ const Statistics = () => {
 
   return (
     <div className="wrapper">
-      {champions?.map((champion) => {
+      {worldChampions?.map((worldChampion) => {
         return (
-          <div key={champion.name} className="driver-wrapper">
-            <div className="driver-title">{champion.name}</div>
+          <div key={worldChampion.name} className="driver-wrapper">
+            <div className="driver-title">{worldChampion.name}</div>
             <div className="driver-winning-years">
-              {champion.winningYears.join(", ")}
+              {worldChampion.winningYears.join(", ")}
             </div>
           </div>
         );

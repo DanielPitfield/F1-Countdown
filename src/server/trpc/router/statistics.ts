@@ -23,30 +23,57 @@ export const statisticsRouter = router({
       "http://ergast.com/api/f1/driverStandings/1/drivers.json?limit=50"
     );
     const data = await response.json();
-    const drivers: DriverInfo[] = await data.MRData.DriverTable.Drivers;
+    const worldChampions: DriverInfo[] = await data.MRData.DriverTable.Drivers;
 
-    const driverObjects = await Promise.all(
+    return await Promise.all(
       // For each driver
-      drivers.map(async (driver) => {
+      worldChampions.map(async (worldChampion) => {
         // First name and surname
-        const fullName = `${driver.givenName} ${driver.familyName}`;
+        const fullName = `${worldChampion.givenName} ${worldChampion.familyName}`;
 
         // Get the years they won the championship
         const response = await fetch(
-          `http://ergast.com/api/f1/drivers/${driver.driverId}/driverStandings/1/seasons.json?limit=20`
+          `http://ergast.com/api/f1/drivers/${worldChampion.driverId}/driverStandings/1/seasons.json?limit=20`
         );
         const data = await response.json();
         const winningYears: SeasonInfo[] = await data.MRData.SeasonTable
           .Seasons;
 
-        // Object of name and winning years
         return {
           name: fullName,
           winningYears: winningYears.map((yearInfo) => yearInfo.season),
         };
       })
     );
+  }),
 
-    return driverObjects;
+  getRaceWinners: publicProcedure.query(async () => {
+    // Get all the drivers that have won a world championship
+    const response = await fetch(
+      "http://ergast.com/api/f1/driverStandings/1/drivers.json?limit=50"
+    );
+    const data = await response.json();
+    const worldChampions: DriverInfo[] = await data.MRData.DriverTable.Drivers;
+
+    return await Promise.all(
+      // For each driver
+      worldChampions.map(async (worldChampion) => {
+        // First name and surname
+        const fullName = `${worldChampion.givenName} ${worldChampion.familyName}`;
+
+        // Get the years they won the championship
+        const response = await fetch(
+          `http://ergast.com/api/f1/drivers/${worldChampion.driverId}/driverStandings/1/seasons.json?limit=20`
+        );
+        const data = await response.json();
+        const winningYears: SeasonInfo[] = await data.MRData.SeasonTable
+          .Seasons;
+
+        return {
+          name: fullName,
+          winningYears: winningYears.map((yearInfo) => yearInfo.season),
+        };
+      })
+    );
   }),
 });
