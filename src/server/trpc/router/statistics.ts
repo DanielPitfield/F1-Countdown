@@ -1,15 +1,6 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
-
-type DriverInfo = {
-  driverId: string;
-  code: string;
-  url: string;
-  givenName: string;
-  familyName: string;
-  dateOfBirth: string;
-  nationality: string;
-};
+import { DriverInfo } from "./driver";
 
 type SeasonInfo = {
   season: string;
@@ -18,24 +9,24 @@ type SeasonInfo = {
 
 export const statisticsRouter = router({
   getWorldChampions: publicProcedure.query(async () => {
-    // Get all the drivers that have won a world championship
-    const response = await fetch(
-      "http://ergast.com/api/f1/driverStandings/1/drivers.json?limit=50"
-    );
+    // Fetch all the drivers that have won a world championship
+    const API_URL =
+      "http://ergast.com/api/f1/driverStandings/1/drivers.json?limit=50";
+
+    const response = await fetch(API_URL);
     const data = await response.json();
     const worldChampions: DriverInfo[] = await data.MRData.DriverTable.Drivers;
 
     return await Promise.all(
       // For each driver
       worldChampions.map(async (worldChampion) => {
-        // First name and surname
+        // Fetch the years they won the championship
+        const API_URL = `http://ergast.com/api/f1/drivers/${worldChampion.driverId}/driverStandings/1/seasons.json?limit=20`;
         const fullName = `${worldChampion.givenName} ${worldChampion.familyName}`;
 
-        // Get the years they won the championship
-        const response = await fetch(
-          `http://ergast.com/api/f1/drivers/${worldChampion.driverId}/driverStandings/1/seasons.json?limit=20`
-        );
+        const response = await fetch(API_URL);
         const data = await response.json();
+        
         const winningYears: SeasonInfo[] = await data.MRData.SeasonTable
           .Seasons;
 
