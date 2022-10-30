@@ -50,7 +50,7 @@ export const driverRouter = router({
       const data = await response.json();
 
       return (await input.isReturnOnlyTotalNum)
-        ? data.MRData.total
+        ? data.MRData.total as string
         : data.MRData.RaceTable.Races;
     }),
 
@@ -68,7 +68,7 @@ export const driverRouter = router({
       const data = await response.json();
 
       return (await input.isReturnOnlyTotalNum)
-        ? data.MRData.total
+        ? data.MRData.total as string
         : data.MRData.RaceTable.Races;
     }),
 
