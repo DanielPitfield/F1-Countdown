@@ -1,4 +1,5 @@
 import { trpc } from "../utils/trpc";
+import styles from "../styles/statistics/driverWorldChampionship.module.scss";
 
 const DriverWorldChampionshipStatistics = () => {
   const { data: driverWorldChampionshipHistory } =
@@ -13,7 +14,7 @@ const DriverWorldChampionshipStatistics = () => {
   );
 
   return (
-    <div className="world-championship-statistics">
+    <div className={styles.wrapper}>
       {uniqueWorldChampions.map((championID) => {
         const worldChampionName = driverWorldChampionshipHistory?.find(
           (season) => season.winningDriverID === championID
@@ -24,12 +25,12 @@ const DriverWorldChampionshipStatistics = () => {
         );
 
         return (
-          <div key={worldChampionName} className="world-champion-wrapper">
-            <div className="world-champion-name">{worldChampionName}</div>
-            <div className="world-champion-num-championships">
+          <div key={worldChampionName} className={styles.driverWrapper}>
+            <div className={styles.driverName}>{worldChampionName}</div>
+            <div className={styles.numChampionships}>
               {championshipsWon?.length}
             </div>
-            <div className="world-champion-years-won">
+            <div className={styles.winningYears}>
               {championshipsWon?.map((season) => season.year).join(" , ")}
             </div>
           </div>
