@@ -16,14 +16,6 @@ export type SeasonHistory = {
   }[];
 };
 
-export type SeasonResult = {
-  year: string;
-  winningDriverID: string;
-  winningDriverFullName: string;
-  // The team of the driver's champion (not always the constructor's champion)
-  winningDriverTeam: string;
-};
-
 export type SeasonInfo = {
   season: string;
   url: string;
@@ -37,19 +29,6 @@ export const statisticsRouter = router({
     const response = await fetch(API_URL);
     const data = await response.json();
 
-    const seasonStandings: SeasonHistory[] = await data.MRData.StandingsTable
-      .StandingsLists;
-
-    return seasonStandings.map(
-      (seasonHistory: SeasonHistory) =>
-        ({
-          year: seasonHistory.season,
-          winningDriverID: seasonHistory.DriverStandings[0]?.Driver.driverId,
-          winningDriverFullName: `${seasonHistory.DriverStandings[0]?.Driver.givenName} ${seasonHistory.DriverStandings[0]?.Driver.familyName}`,
-          // The team of the driver's champion (not always the constructor's champion)
-          winningDriverTeam:
-            seasonHistory.DriverStandings[0]?.Constructors[0]?.constructorId,
-        } as SeasonResult)
-    );
+    return (await data.MRData.StandingsTable.StandingsLists) as SeasonHistory[];
   }),
 });
