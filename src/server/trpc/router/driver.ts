@@ -1,6 +1,7 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { ConstructorInfo } from "./constructor";
+import { SeasonInfo } from "./statistics";
 
 export type DriverInfo = {
   driverId: string;
@@ -12,6 +13,13 @@ export type DriverInfo = {
   nationality: string;
 };
 
+// TODO: Team History
+// TODO: First race (first win?)
+// TODO: Most recent race (also most recent win?)
+// TODO: Championship result history
+// TODO: Is a current driver on the grid?
+// TODO: Picture (F1 22 card?)
+
 export const driverRouter = router({
   getInfo: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
@@ -22,6 +30,17 @@ export const driverRouter = router({
       const data = await response.json();
 
       return (await data.MRData.DriverTable.Drivers[0]) as DriverInfo;
+    }),
+
+  getWorldChampionshipWinningYears: publicProcedure
+    .input(z.object({ driverID: z.string().min(1).trim() }))
+    .query(async ({ input }) => {
+      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/driverStandings/1/seasons.json`;
+
+      const response = await fetch(API_URL);
+      const data = await response.json();
+
+      return (await data.MRData.SeasonTable.Seasons) as SeasonInfo[];
     }),
 
   getTeamsDrivenFor: publicProcedure
@@ -50,7 +69,7 @@ export const driverRouter = router({
       const data = await response.json();
 
       return (await input.isReturnOnlyTotalNum)
-        ? data.MRData.total as string
+        ? (data.MRData.total as string)
         : data.MRData.RaceTable.Races;
     }),
 
@@ -68,7 +87,7 @@ export const driverRouter = router({
       const data = await response.json();
 
       return (await input.isReturnOnlyTotalNum)
-        ? data.MRData.total as string
+        ? (data.MRData.total as string)
         : data.MRData.RaceTable.Races;
     }),
 
