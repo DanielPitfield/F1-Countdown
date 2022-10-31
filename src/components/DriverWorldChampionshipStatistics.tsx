@@ -36,21 +36,24 @@ const DriverWorldChampionshipStatistics = () => {
     new Set(seasonResults?.map((season) => season.winningDriverID))
   );
 
+  // Descending order (of number of championships won)
+  uniqueWorldChampions.sort((a, b) => {
+    return (
+      seasonResults.filter((season) => season.winningDriverID === b).length -
+      seasonResults.filter((season) => season.winningDriverID === a).length
+    );
+  });
+
   return (
     <div className={styles.wrapper}>
       {uniqueWorldChampions.map((championID) => {
-        const championshipsWon = seasonResults.filter(
+        const championshipsWon: SeasonResult[] = seasonResults.filter(
           (season) => season.winningDriverID === championID
         );
-
-        const fullName =
-          seasonResults.find((season) => season.winningDriverID === championID)
-            ?.winningDriverFullName ?? "";
 
         return (
           <WorldChampionshipStatistic
             key={championID}
-            fullName={fullName}
             championshipsWon={championshipsWon}
           />
         );
