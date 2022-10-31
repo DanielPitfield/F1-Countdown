@@ -1,40 +1,55 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { DriverInfo } from "./driver";
+import { ConstructorInfo } from "./constructor";
 
-type SeasonInfo = {
+export type SeasonHistory = {
+  season: string;
+  round: string;
+  DriverStandings: {
+    position: string;
+    positionText: string;
+    points: string;
+    wins: string;
+    Driver: DriverInfo;
+    Constructors: ConstructorInfo[];
+  }[];
+};
+
+export type SeasonResult = {
+  year: string;
+  winningDriverID: string;
+  winningDriverFullName: string;
+  // The team of the driver's champion (not always the constructor's champion)
+  winningDriverTeam: string;
+};
+
+export type SeasonInfo = {
   season: string;
   url: string;
 };
 
 export const statisticsRouter = router({
-  getWorldChampions: publicProcedure.query(async () => {
-    // Fetch all the drivers that have won a world championship
-    const API_URL =
-      "http://ergast.com/api/f1/driverStandings/1/drivers.json?limit=50";
+  getDriverWorldChampionshipHistory: publicProcedure.query(async () => {
+    // The historical information of every driver's world championship since 1950
+    const API_URL = "http://ergast.com/api/f1/driverStandings/1.json?limit=100";
 
     const response = await fetch(API_URL);
     const data = await response.json();
-    const worldChampions: DriverInfo[] = await data.MRData.DriverTable.Drivers;
 
-    return await Promise.all(
-      // For each driver
-      worldChampions.map(async (worldChampion) => {
-        // Fetch the years they won the championship
-        const API_URL = `http://ergast.com/api/f1/drivers/${worldChampion.driverId}/driverStandings/1/seasons.json?limit=20`;
-        const fullName = `${worldChampion.givenName} ${worldChampion.familyName}`;
+    const seasonStandings: SeasonHistory[] = await data.MRData.StandingsTable
+      .StandingsLists;
 
-        const response = await fetch(API_URL);
-        const data = await response.json();
-        
-        const winningYears: SeasonInfo[] = await data.MRData.SeasonTable
-          .Seasons;
-
-        return {
-          name: fullName,
-          winningYears: winningYears.map((yearInfo) => yearInfo.season),
-        };
-      })
+    return seasonStandings.map(
+      (seasonHistory: SeasonHistory) =>
+        ({
+          year: seasonHistory.season,
+          winningDriverID: seasonHistory.DriverStandings[0]?.Driver.driverId,
+          winningDriverFullName: `${seasonHistory.DriverStandings[0]?.Driver.givenName} ${seasonHistory.DriverStandings[0]?.Driver.familyName}`,
+          // The team of the driver's champion (not always the constructor's champion)
+          winningDriverTeam:
+            seasonHistory.DriverStandings[0]?.Constructors[0]?.constructorId,
+        } as SeasonResult)
     );
   }),
 });
