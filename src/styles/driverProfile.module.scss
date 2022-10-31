@@ -1,0 +1,25 @@
+.wrapper {
+}
+
+.generalInformation {
+  margin: 3em 0;
+  & > * {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5em;
+  }
+}
+
+.teamsDrivenFor {
+  margin: 0.5em;
+}
+
+.resultsInformation {
+  margin: 3em 0;
+
+  & > * {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5em;
+  }
+}

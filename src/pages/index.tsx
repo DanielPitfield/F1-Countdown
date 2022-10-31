@@ -8,7 +8,10 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>F1 Dashboard</title>
-        <meta name="description" content="F1 Statistics, Schedule and Information" />
+        <meta
+          name="description"
+          content="F1 Statistics, Schedule and Information"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -20,6 +23,10 @@ const Home: NextPage = () => {
             </h1>
 
             <Link href="/Statistics">Statistics</Link>
+
+            <Link href="/driverProfiles/alonso">Alonso</Link>
+            <Link href="/driverProfiles/max_verstappen">Verstappen</Link>
+            <Link href="/driverProfiles/leclerc">Leclerc</Link>
           </div>
         </div>
       </main>

@@ -52,7 +52,7 @@ export const driverRouter = router({
       const data = await response.json();
 
       return (await data.MRData.ConstructorTable
-        .constructors) as ConstructorInfo[];
+        .Constructors) as ConstructorInfo[];
     }),
 
   getPolePositions: publicProcedure
@@ -92,13 +92,20 @@ export const driverRouter = router({
     }),
 
   getFastestLaps: publicProcedure
-    .input(z.object({ driverID: z.string().min(1).trim() }))
+    .input(
+      z.object({
+        driverID: z.string().min(1).trim(),
+        isReturnOnlyTotalNum: z.boolean(),
+      })
+    )
     .query(async ({ input }) => {
       const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/fastest/1/results.json`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.RaceTable.Races;
+      return (await input.isReturnOnlyTotalNum)
+        ? (data.MRData.total as string)
+        : data.MRData.RaceTable.Races;
     }),
 });
