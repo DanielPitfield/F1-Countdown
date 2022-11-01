@@ -2,10 +2,12 @@ import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { ConstructorInfo } from "./constructor";
 import { SeasonInfo } from "./statistics";
+import { MAX_LIMIT } from "../../../utils/limits";
 
 export type DriverInfo = {
   driverId: string;
-  code: string;
+  permanentNumber?: string;
+  code?: string;
   url: string;
   givenName: string;
   familyName: string;
@@ -24,7 +26,7 @@ export const driverRouter = router({
   getInfo: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
-      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}.json`;
+      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}.json?limit=1`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
@@ -35,7 +37,7 @@ export const driverRouter = router({
   getWorldChampionshipWinningYears: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
-      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/driverStandings/1/seasons.json`;
+      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/driverStandings/1/seasons.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
@@ -46,7 +48,7 @@ export const driverRouter = router({
   getTeamsDrivenFor: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
-      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/constructors.json`;
+      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/constructors.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
@@ -63,7 +65,7 @@ export const driverRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/qualifying/1.json`;
+      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/qualifying/1.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
@@ -81,7 +83,7 @@ export const driverRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/results/1.json`;
+      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/results/1.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
@@ -99,7 +101,7 @@ export const driverRouter = router({
       })
     )
     .query(async ({ input }) => {
-      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/fastest/1/results.json`;
+      const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/fastest/1/results.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
