@@ -23,7 +23,7 @@ const DriverProfile = () => {
 
   // TODO: Ideally this would be state, but this is a hook which can't be called conditionally or within an useEffect()
   const { data: generalInformation } = trpc.driver.getInfo.useQuery({
-    constrcutorID: driverName,
+    driverID: driverName,
   });
 
   const { data: teamsDrivenFor } = trpc.driver.getTeamsDrivenFor.useQuery({
