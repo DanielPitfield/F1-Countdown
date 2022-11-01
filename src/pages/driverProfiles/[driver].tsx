@@ -11,7 +11,7 @@ const DriverProfile = () => {
 
   React.useEffect(() => {
     if (router.isReady) {
-      const { driverParam } = router.query;
+      const { driver: driverParam } = router.query;
 
       if (!driverParam) {
         return;

@@ -6,17 +6,17 @@ import styles from "../../styles/teamProfile.module.scss";
 const TeamProfile = () => {
   const router = useRouter();
 
-  const [teamName, setteamName] = useState<string>("");
+  const [teamName, setTeamName] = useState<string>("");
 
   React.useEffect(() => {
     if (router.isReady) {
-      const { teamParam } = router.query;
+      const { team: teamParam } = router.query;
 
       if (!teamParam) {
         return;
       }
 
-      setteamName(teamParam as string);
+      setTeamName(teamParam as string);
     }
   }, [router.isReady, router.query]);
 
@@ -58,7 +58,7 @@ const TeamProfile = () => {
       </div>
 
       <span className={styles.currentDrivers}>
-        {currentDrivers?.join(", ")}
+        {currentDrivers?.map(driver => `${driver.givenName} ${driver.familyName}`).join(", ")}
       </span>
 
       <div className={styles.resultsInformation}>
