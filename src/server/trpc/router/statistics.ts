@@ -1,7 +1,7 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { DriverInfo } from "./driver";
-import { ConstructorInfo } from "./constructor";
+import { TeamInfo } from "./team";
 
 export type SeasonHistory = {
   season: string;
@@ -12,7 +12,7 @@ export type SeasonHistory = {
     points: string;
     wins: string;
     Driver: DriverInfo;
-    Constructors: ConstructorInfo[];
+    Constructors: TeamInfo[];
   }[];
 };
 

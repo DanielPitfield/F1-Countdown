@@ -28,7 +28,7 @@ const DriverWorldChampionshipStatistics = () => {
         winningDriverFullName: `${seasonHistory.DriverStandings[0]?.Driver.givenName} ${seasonHistory.DriverStandings[0]?.Driver.familyName}`,
         // The team of the driver's champion (not always the constructor's champion)
         winningDriverTeam:
-          seasonHistory.DriverStandings[0]?.Constructors[0]?.constructorId,
+          seasonHistory.DriverStandings[0]?.Constructors[0]?.constructorID,
       } as SeasonResult)
   );
 

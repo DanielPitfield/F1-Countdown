@@ -71,7 +71,7 @@ const DriverProfile = () => {
       </div>
 
       <span className={styles.teamsDrivenFor}>
-        {teamsDrivenFor?.map((constructor) => constructor.name).join(", ")}
+        {teamsDrivenFor?.map((team) => team.name).join(", ")}
       </span>
 
       <div className={styles.resultsInformation}>

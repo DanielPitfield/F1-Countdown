@@ -1,6 +1,6 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
-import { ConstructorInfo } from "./constructor";
+import { TeamInfo } from "./team";
 import { SeasonInfo } from "./statistics";
 import { MAX_LIMIT } from "../../../utils/limits";
 
@@ -53,8 +53,7 @@ export const driverRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await data.MRData.ConstructorTable
-        .Constructors) as ConstructorInfo[];
+      return (await data.MRData.ConstructorTable.Constructors) as TeamInfo[];
     }),
 
   getPolePositions: publicProcedure

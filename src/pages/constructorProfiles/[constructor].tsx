@@ -1,53 +1,53 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { trpc } from "../../utils/trpc";
-import styles from "../../styles/constructorProfile.module.scss";
+import styles from "../../styles/teamProfile.module.scss";
 
-const ConstructorProfile = () => {
+const TeamProfile = () => {
   const router = useRouter();
 
-  const [constructorName, setConstructorName] = useState<string>("");
+  const [teamName, setteamName] = useState<string>("");
 
   React.useEffect(() => {
     if (router.isReady) {
-      const { constructorParam } = router.query;
+      const { teamParam } = router.query;
 
-      if (!constructorParam) {
+      if (!teamParam) {
         return;
       }
 
-      setConstructorName(constructorParam as string);
+      setteamName(teamParam as string);
     }
   }, [router.isReady, router.query]);
 
   // TODO: Ideally this would be state, but this is a hook which can't be called conditionally or within an useEffect()
-  const { data: generalInformation } = trpc.constructor.getInfo.useQuery({
-    constructorID: constructorName,
+  const { data: generalInformation } = trpc.team.getInfo.useQuery({
+    teamID: teamName,
   });
 
-  const { data: currentDrivers } = trpc.constructor.getDrivers.useQuery({
-    constructorID: constructorName,
+  const { data: currentDrivers } = trpc.team.getDrivers.useQuery({
+    teamID: teamName,
     isReturnOnlyCurrentDrivers: true,
   });
 
-  const { data: polePositions } = trpc.constructor.getPolePositions.useQuery({
-    constructorID: constructorName,
+  const { data: polePositions } = trpc.team.getPolePositions.useQuery({
+    teamID: teamName,
     isReturnOnlyTotalNum: true,
   });
 
-  const { data: raceWins } = trpc.constructor.getRaceWins.useQuery({
-    constructorID: constructorName,
+  const { data: raceWins } = trpc.team.getRaceWins.useQuery({
+    teamID: teamName,
     isReturnOnlyTotalNum: true,
   });
 
-  const { data: fastestLaps } = trpc.constructor.getFastestLaps.useQuery({
-    constructorID: constructorName,
+  const { data: fastestLaps } = trpc.team.getFastestLaps.useQuery({
+    teamID: teamName,
     isReturnOnlyTotalNum: true,
   });
 
   const { data: worldChampionships } =
-    trpc.constructor.getWorldChampionshipWinningYears.useQuery({
-      constructorID: constructorName,
+    trpc.team.getWorldChampionshipWinningYears.useQuery({
+      teamID: teamName,
     });
 
   return (
@@ -71,4 +71,4 @@ const ConstructorProfile = () => {
   );
 };
 
-export default ConstructorProfile;
+export default TeamProfile;
