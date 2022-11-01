@@ -27,6 +27,10 @@ const Home: NextPage = () => {
             <Link href="/driverProfiles/alonso">Alonso</Link>
             <Link href="/driverProfiles/max_verstappen">Verstappen</Link>
             <Link href="/driverProfiles/leclerc">Leclerc</Link>
+
+            <Link href="/constructorProfiles/ferrari">Ferrari</Link>
+            <Link href="/constructorProfiles/red_bull">Red Bull</Link>
+            <Link href="/constructorProfiles/mercedes">Mercedes</Link>
           </div>
         </div>
       </main>
