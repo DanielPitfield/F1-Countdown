@@ -25,10 +25,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     /*
     If the dynamic parameter can be provided below in paths[],
-    The team profile page will be called at build time (the page will load very fast!),
+    getStaticProps() will only need to be called at build time (the page will load very fast!),
     Otherwise, it will be called before initial render (due to using fallback: blocking),
     Therefore, try and save team names in database using Prisma,
-    findMany() method of Prisma context
+    and add them to the paths[] array using findMany() method of Prisma context
     */
 
     paths: [{ params: { team: "ferrari" } }, { params: { team: "red_bull" } }],
