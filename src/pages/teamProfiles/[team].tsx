@@ -33,6 +33,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     Otherwise, it will be called before initial render (due to using fallback: blocking),
     Therefore, try and save team names in database using Prisma,
     and add them to the paths[] array using findMany() method of Prisma context
+
+    NOTE:
+    In development (next dev), getStaticPaths() and getStaticProps() will be called on every request
     */
 
     paths: [{ params: { team: "ferrari" } }, { params: { team: "red_bull" } }],
