@@ -1,8 +1,5 @@
 import { trpc } from "../../utils/trpc";
 import styles from "../../styles/teamProfile.module.scss";
-import { DriverInfo } from "../../server/trpc/router/driver";
-import { SeasonInfo } from "../../server/trpc/router/statistics";
-import { TeamInfo } from "../../server/trpc/router/team";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -13,15 +10,6 @@ import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
-
-type TeamProfile = {
-  generalInformation: TeamInfo | undefined;
-  currentDrivers: DriverInfo[] | undefined;
-  polePositions: number;
-  raceWins: number;
-  fastestLaps: number;
-  worldChampionships: SeasonInfo[] | undefined;
-};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -83,7 +71,7 @@ export async function getStaticProps(
       trpcState: ssg.dehydrate(),
       team,
     },
-    revalidate: 1,
+    revalidate: REVALDATION_PERIOD,
   };
 }
 
