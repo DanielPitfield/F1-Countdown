@@ -3,7 +3,11 @@ import styles from "../../styles/teamProfile.module.scss";
 import { DriverInfo } from "../../server/trpc/router/driver";
 import { SeasonInfo } from "../../server/trpc/router/statistics";
 import { TeamInfo } from "../../server/trpc/router/team";
-import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import {
+  GetStaticPaths,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
@@ -36,14 +40,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async (
+export async function getStaticProps(
   context: GetStaticPropsContext<{ team: string }>
-) => {
+) {
   // Helper function
   const ssg = await createProxySSGHelpers({
     router: appRouter,
-    ctx: {prisma},
-    transformer: superjson, // optional - adds superjson serialization
+    ctx: { prisma },
+    transformer: superjson,
   });
 
   // The dynamic parameter of the route
@@ -76,12 +80,12 @@ export const getStaticProps = async (
       trpcState: ssg.dehydrate(),
       team,
     },
-    revalidate: REVALDATION_PERIOD,
+    revalidate: 1,
   };
-};
+}
 
 const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const {team} = props;
+  const { team } = props;
 
   const { data: generalInformation } = trpc.team.getInfo.useQuery({
     teamID: team,
