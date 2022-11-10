@@ -1,33 +1,7 @@
 import { router, publicProcedure } from "../trpc";
-import { z } from "zod";
-import { DriverInfo } from "./driver";
-import { TeamInfo } from "./team";
 import { MAX_LIMIT } from "../../../utils/limits";
-
-export type DriverSeasonHistory = {
-  season: string;
-  round: string;
-  DriverStandings: {
-    position: string;
-    positionText: string;
-    points: string;
-    wins: string;
-    Driver: DriverInfo;
-    Constructors: TeamInfo[];
-  }[];
-};
-
-export type TeamSeasonHistory = {
-  season: string;
-  round: string;
-  ConstructorStandings: {
-    position: string;
-    positionText: string;
-    points: string;
-    wins: string;
-    Constructor: TeamInfo;
-  };
-};
+import { DriverSeasonHistory } from "./driver";
+import { TeamSeasonHistory } from "./team";
 
 export const statisticsRouter = router({
   getDriverWorldChampionshipHistory: publicProcedure.query(async () => {

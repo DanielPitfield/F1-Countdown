@@ -2,13 +2,24 @@ import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { CURRENT_DRIVER_LIMIT, MAX_LIMIT } from "../../../utils/limits";
 import { DriverInfo } from "./driver";
-import { TeamSeasonHistory } from "./statistics";
 
 export type TeamInfo = {
   constructorID: string;
   url: string;
   name: string;
   nationality: string;
+};
+
+export type TeamSeasonHistory = {
+  season: string;
+  round: string;
+  ConstructorStandings: {
+    position: string;
+    positionText: string;
+    points: string;
+    wins: string;
+    Constructor: TeamInfo;
+  };
 };
 
 export const teamRouter = router({
