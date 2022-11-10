@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getTargetDriver } from "../../utils/getTargetDriver";
 import Game from "./Game";
 
 export interface GameConfigProps {
@@ -24,7 +25,7 @@ const GameConfig = (props: GameConfigProps) => {
 
   const [currentDriverGuess, setCurrentDriverGuess] =
     useState<DriverGuess | null>(null);
-  const [targetDriver, setTargetDriver] = useState<DriverGuess | null>(null);
+  const [targetDriver, setTargetDriver] = useState<DriverGuess>(getTargetDriver());
 
   const [guesses, setGuesses] = useState<DriverGuess[]>([]);
   const [wordIndex, setWordIndex] = useState(0);
@@ -34,7 +35,7 @@ const GameConfig = (props: GameConfigProps) => {
     setRemainingGuesses(props.startingNumGuesses);
 
     setCurrentDriverGuess(null);
-    // TODO: Reset target driver
+    setTargetDriver(getTargetDriver());
 
     setGuesses([]);
     setWordIndex(0);
