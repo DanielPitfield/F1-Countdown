@@ -1,16 +1,16 @@
 import React from "react";
 import { Button } from "../Button";
+import { DriverGuess } from "./GameConfig";
 import { GameRow } from "./GameRow";
 
 interface Props {
   inProgress: boolean;
   remainingGuesses: number;
 
-  currentDriverGuess: string;
-  targetDriver: string;
-  targetHint?: string;
+  currentDriverGuess: DriverGuess | null;
+  targetDriver: DriverGuess | null;
 
-  guesses: string[];
+  guesses: DriverGuess[];
   wordIndex: number;
 
   onEnter: () => void;
@@ -25,33 +25,21 @@ const Game = (props: Props) => {
       let rowValue;
 
       if (props.wordIndex < i) {
-        /*
-        If the wordIndex is behind the currently iterated row
-        (i.e the row has not been used yet)
-        Show an empty string 
-        */
-        rowValue = "";
+        // Row not used yet
+        rowValue = null;
       } else if (props.wordIndex === i) {
-        /* 
-        If the wordIndex and the row number are the same
-        (i.e the row is currently being used)
-        Show the currentWord
-        */
+        // Current row
         rowValue = props.currentDriverGuess;
       } else {
-        /* 
-        If the wordIndex is ahead of the currently iterated row
-        (i.e the row has already been used)
-        Show the respective guessed word
-        */
+        // A previously used row
         rowValue = props.guesses[i];
       }
 
       Grid.push(
         <GameRow
           key={`game/row/${i}`}
-          length={props.targetDriver.length}
-          currentDriverGuess={rowValue ?? ""}
+          length={Object.keys(props.targetDriver ?? {}).length}
+          driverGuess={rowValue ?? null}
           targetDriver={props.targetDriver}
           hasSubmit={props.wordIndex > i || !props.inProgress}
           applyAnimation={props.wordIndex === i}
@@ -62,23 +50,8 @@ const Game = (props: Props) => {
     return <div className="game-grid">{Grid}</div>;
   };
 
-  const Hint = () => {
-    if (!props.targetHint) {
-      return null;
-    }
-
-    // Display the hint (if defined)
-    return (
-      <div>
-        <strong>Hint:</strong> {props.targetHint}
-      </div>
-    );
-  };
-
   return (
     <div>
-      <Hint />
-
       <div>
         {!props.inProgress && (
           <Button mode={"accept"} onClick={() => props.ResetGame()}>

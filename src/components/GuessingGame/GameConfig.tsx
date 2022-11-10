@@ -3,8 +3,18 @@ import Game from "./Game";
 
 export interface GameConfigProps {
   startingNumGuesses: number;
-  isHintShown: boolean;
 }
+
+export type DriverGuess = {
+  firstYear: string;
+  lastYear: string;
+  numWorldChampionships: number;
+  numWins: number;
+  numPodiums: number;
+  numPoints: number;
+  numPoles: number;
+  numRaceStarts: number;
+};
 
 const GameConfig = (props: GameConfigProps) => {
   const [inProgress, setInProgress] = useState(true);
@@ -12,18 +22,19 @@ const GameConfig = (props: GameConfigProps) => {
     props.startingNumGuesses
   );
 
-  const [currentDriverGuess, setCurrentDriverGuess] = useState("");
-  const [targetDriver, setTargetDriver] = useState("");
-  const [targetHint, setTargetHint] = useState("");
+  const [currentDriverGuess, setCurrentDriverGuess] =
+    useState<DriverGuess | null>(null);
+  const [targetDriver, setTargetDriver] = useState<DriverGuess | null>(null);
 
-  const [guesses, setGuesses] = useState<string[]>([]);
+  const [guesses, setGuesses] = useState<DriverGuess[]>([]);
   const [wordIndex, setWordIndex] = useState(0);
 
   function ResetGame() {
     setInProgress(true);
     setRemainingGuesses(props.startingNumGuesses);
 
-    setCurrentDriverGuess("");
+    setCurrentDriverGuess(null);
+    // TODO: Reset target driver
 
     setGuesses([]);
     setWordIndex(0);
@@ -40,15 +51,17 @@ const GameConfig = (props: GameConfigProps) => {
       return;
     }
 
-    // TODO: If a driver has been selected, then add to guesses
+    // Selected a driver as a guess
+    if (currentDriverGuess) {
+      const newGuesses = guesses.concat(currentDriverGuess);
+      setGuesses(newGuesses);
+    }
 
-    setGuesses(guesses.concat(currentDriverGuess));
-
-    // TODO: Exact match
-    // if () {
-    setInProgress(false);
-    return;
-    // }
+    // Exact answer
+    if (currentDriverGuess === targetDriver) {
+      setInProgress(false);
+      return;
+    }
 
     // Out of guesses
     if (wordIndex + 1 === remainingGuesses) {
@@ -56,9 +69,9 @@ const GameConfig = (props: GameConfigProps) => {
       return;
     }
 
-    // Otherwise
-    setCurrentDriverGuess("");
-    setWordIndex(wordIndex + 1); // Increment index to indicate new word has been started
+    // Move on to next row
+    setCurrentDriverGuess(null);
+    setWordIndex(wordIndex + 1);
   }
 
   return (
@@ -66,8 +79,7 @@ const GameConfig = (props: GameConfigProps) => {
       inProgress={inProgress}
       remainingGuesses={remainingGuesses}
       currentDriverGuess={currentDriverGuess}
-      targetDriver={targetDriver ?? ""}
-      targetHint={props.isHintShown ? targetHint : ""}
+      targetDriver={targetDriver}
       guesses={guesses}
       wordIndex={wordIndex}
       onEnter={onEnter}

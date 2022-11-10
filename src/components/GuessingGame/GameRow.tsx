@@ -1,9 +1,10 @@
+import { DriverGuess } from "./GameConfig";
 import GameTile from "./GameTile";
 
 interface Props {
   length: number;
-  currentDriverGuess: string;
-  targetDriver: string;
+  driverGuess: DriverGuess | null;
+  targetDriver: DriverGuess | null;
   hasSubmit: boolean;
   applyAnimation?: boolean;
 }
@@ -17,7 +18,7 @@ export const GameRow = (props: Props) => {
       className="game-row"
       data-apply-animation={props.applyAnimation}
       data-correct-word-submitted={Boolean(
-        props.hasSubmit && props.currentDriverGuess === props.targetDriver
+        props.hasSubmit && props.driverGuess === props.targetDriver
       )}
     >
       {Array(props.length)
@@ -26,7 +27,11 @@ export const GameRow = (props: Props) => {
           return (
             <GameTile
               key={index}
-              value={props.currentDriverGuess?.[index] ?? ""}
+              value={
+                props.driverGuess
+                  ? Object.values(props.driverGuess)[index]?.toString() ?? ""
+                  : ""
+              }
               status={"not set" /* TODO: Get Status */}
             />
           );
