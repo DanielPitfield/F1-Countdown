@@ -4,7 +4,7 @@ import { CURRENT_DRIVER_LIMIT, MAX_LIMIT } from "../../../utils/limits";
 import { DriverInfo } from "./driver";
 
 export type TeamInfo = {
-  constructorID: string;
+  constructorId: string;
   url: string;
   name: string;
   nationality: string;
@@ -60,7 +60,8 @@ export const teamRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await data.MRData.StandingsTable.StandingsLists) as TeamSeasonHistory[];
+      return (await data.MRData.StandingsTable
+        .StandingsLists) as TeamSeasonHistory[];
     }),
 
   getRacesEntered: publicProcedure

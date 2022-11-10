@@ -13,17 +13,23 @@ const TeamWorldChampionship = () => {
   }
 
   const uniqueWorldChampions = Array.from(
-    new Set(history.map((season) => season.ConstructorStandings[0]?.Constructor.constructorID))
+    new Set(
+      history.map(
+        (season) => season.ConstructorStandings[0]?.Constructor.constructorId
+      )
+    )
   );
 
   // Descending order (of number of championships won)
   uniqueWorldChampions.sort((a, b) => {
     return (
       history.filter(
-        (season) => season.ConstructorStandings[0]?.Constructor.constructorID === b
+        (season) =>
+          season.ConstructorStandings[0]?.Constructor.constructorId === b
       ).length -
       history.filter(
-        (season) => season.ConstructorStandings[0]?.Constructor.constructorID === a
+        (season) =>
+          season.ConstructorStandings[0]?.Constructor.constructorId === a
       ).length
     );
   });
@@ -32,14 +38,13 @@ const TeamWorldChampionship = () => {
     <div className={styles.wrapper}>
       {uniqueWorldChampions.map((championID) => {
         const championshipsWon: TeamSeasonHistory[] = history.filter(
-          (season) => season.ConstructorStandings[0]?.Constructor.constructorID === championID
+          (season) =>
+            season.ConstructorStandings[0]?.Constructor.constructorId ===
+            championID
         );
 
         return (
-          <TeamChampion
-            key={championID}
-            championshipsWon={championshipsWon}
-          />
+          <TeamChampion key={championID} championshipsWon={championshipsWon} />
         );
       })}
     </div>
