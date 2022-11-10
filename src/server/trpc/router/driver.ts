@@ -56,6 +56,24 @@ export const driverRouter = router({
       return (await data.MRData.ConstructorTable.Constructors) as TeamInfo[];
     }),
 
+  getRacesEntered: publicProcedure
+    .input(
+      z.object({
+        driverID: z.string().min(1).trim(),
+        isReturnOnlyTotalNum: z.boolean(),
+      })
+    )
+    .query(async ({ input }) => {
+      const API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/results.json?limit=${MAX_LIMIT}`;
+
+      const response = await fetch(API_URL);
+      const data = await response.json();
+
+      return (await input.isReturnOnlyTotalNum)
+        ? (data.MRData.total as string)
+        : data.MRData.RaceTable.Races;
+    }),
+
   getPolePositions: publicProcedure
     .input(
       z.object({

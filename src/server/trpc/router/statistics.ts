@@ -24,7 +24,7 @@ export type SeasonInfo = {
 export const statisticsRouter = router({
   getDriverWorldChampionshipHistory: publicProcedure.query(async () => {
     // The historical information of every driver's world championship since 1950
-    const API_URL = "http://ergast.com/api/f1/driverStandings/1.json?limit=100";
+    const API_URL = "http://ergast.com/api/f1/driverStandings/1.json";
 
     const response = await fetch(API_URL);
     const data = await response.json();

@@ -52,6 +52,24 @@ export const teamRouter = router({
       return (await data.MRData.SeasonTable.Seasons) as SeasonInfo[];
     }),
 
+  getRacesEntered: publicProcedure
+    .input(
+      z.object({
+        teamID: z.string().min(1).trim(),
+        isReturnOnlyTotalNum: z.boolean(),
+      })
+    )
+    .query(async ({ input }) => {
+      const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/results.json?limit=${MAX_LIMIT}`;
+
+      const response = await fetch(API_URL);
+      const data = await response.json();
+
+      return (await input.isReturnOnlyTotalNum)
+        ? (data.MRData.total as string)
+        : data.MRData.RaceTable.Races;
+    }),
+
   getPolePositions: publicProcedure
     .input(
       z.object({
