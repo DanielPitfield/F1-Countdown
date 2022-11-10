@@ -1,13 +1,14 @@
-import styles from "../styles/statistics/driverWorldChampion.module.scss";
+import { DriverSeasonHistory } from "../../server/trpc/router/driver";
 
-import { SeasonResult } from "./DriverWorldChampionshipStatistics";
+import styles from "../../styles/statistics/driverWorldChampion.module.scss";
 
 interface WorldChampionshipStatisticProps {
-  championshipsWon: SeasonResult[];
+  championshipsWon: DriverSeasonHistory[];
 }
 
 const WorldChampionshipStatistic = (props: WorldChampionshipStatisticProps) => {
-  const fullName = props.championshipsWon[0]?.winningDriverFullName;
+  const driver = props.championshipsWon[0]?.DriverStandings[0]?.Driver;
+  const fullName = `${driver?.givenName} ${driver?.familyName}`;
 
   return (
     <div key={fullName} className={styles.wrapper}>
@@ -16,11 +17,11 @@ const WorldChampionshipStatistic = (props: WorldChampionshipStatisticProps) => {
         {props.championshipsWon.length}
       </div>
       <div className={styles.winningYears}>
-        {`(${props.championshipsWon.map((season) => season.year).join(", ")})`}
+        {`(${props.championshipsWon.map((x) => x.season).join(", ")})`}
       </div>
       <div className={styles.winningYearsTeams}>
         {`(${props.championshipsWon
-          .map((season) => season.winningDriverTeam)
+          .map((x) => x.DriverStandings[0]?.Constructors[0]?.name)
           .join(", ")})`}
       </div>
     </div>

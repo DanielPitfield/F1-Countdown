@@ -1,6 +1,5 @@
 import intervalToDuration from "date-fns/intervalToDuration";
 import { trpc } from "../../utils/trpc";
-import styles from "../../styles/driverProfile.module.scss";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -11,6 +10,8 @@ import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
+
+import styles from "../../styles/driverProfile.module.scss";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
