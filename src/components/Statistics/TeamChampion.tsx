@@ -7,7 +7,7 @@ interface WorldChampionshipStatisticProps {
 }
 
 const TeamChampion = (props: WorldChampionshipStatisticProps) => {
-  const teamName = props.championshipsWon[0]?.ConstructorStandings.Constructor.name;
+  const teamName = props.championshipsWon[0]?.ConstructorStandings[0]?.Constructor.name;
 
   return (
     <div key={teamName} className={styles.wrapper}>

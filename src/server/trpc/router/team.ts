@@ -19,7 +19,7 @@ export type TeamSeasonHistory = {
     points: string;
     wins: string;
     Constructor: TeamInfo;
-  };
+  }[];
 };
 
 export const teamRouter = router({
