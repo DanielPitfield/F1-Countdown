@@ -125,6 +125,10 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <span>{`Race wins: ${raceWins}`}</span>
         <span>{`Fastest Laps: ${fastestLaps}`}</span>
         <span>{`World championships: ${worldChampionships?.length}`}</span>
+        {Boolean(worldChampionships && worldChampionships.length > 0) &&
+          worldChampionships
+            ?.map((championship) => championship.season)
+            .join(", ")}
       </div>
     </div>
   );

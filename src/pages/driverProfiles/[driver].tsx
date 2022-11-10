@@ -56,12 +56,13 @@ export async function getStaticProps(
   });
 
   // TODO: Is age statically generated?
-  const age = intervalToDuration({
-    start: driverInfo?.dateOfBirth
-      ? new Date(driverInfo?.dateOfBirth)
-      : new Date(),
-    end: new Date(),
-  }).years ?? 0;
+  const age =
+    intervalToDuration({
+      start: driverInfo?.dateOfBirth
+        ? new Date(driverInfo?.dateOfBirth)
+        : new Date(),
+      end: new Date(),
+    }).years ?? 0;
 
   return {
     props: {
@@ -76,7 +77,7 @@ export async function getStaticProps(
 const DriverProfile = (
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-  const {driver} = props;
+  const { driver } = props;
 
   const { data: generalInformation } = trpc.driver.getInfo.useQuery({
     driverID: driver,
@@ -124,6 +125,10 @@ const DriverProfile = (
         <span>{`Race wins: ${raceWins}`}</span>
         <span>{`Fastest Laps: ${fastestLaps}`}</span>
         <span>{`World championships: ${worldChampionships?.length}`}</span>
+        {Boolean(worldChampionships && worldChampionships.length > 0) &&
+          worldChampionships
+            ?.map((championship) => championship.season)
+            .join(", ")}
       </div>
     </div>
   );
