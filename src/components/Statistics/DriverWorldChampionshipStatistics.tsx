@@ -1,6 +1,8 @@
-import { trpc } from "../utils/trpc";
+
+import { DriverSeasonHistory } from "../../server/trpc/router/statistics";
+import { trpc } from "../../utils/trpc";
 import styles from "../styles/statistics/driverWorldChampionships.module.scss";
-import { DriverSeasonHistory } from "../server/trpc/router/statistics";
+
 import WorldChampionshipStatistic from "./WorldChampionStatistic";
 
 export type SeasonResult = {

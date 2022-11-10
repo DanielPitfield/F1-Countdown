@@ -1,4 +1,4 @@
-import DriverWorldChampionshipStatistics from "../components/DriverWorldChampionshipStatistics";
+import DriverWorldChampionshipStatistics from "../components/Statistics/DriverWorldChampionshipStatistics";
 
 const Statistics = () => {
   return (
