@@ -44,6 +44,7 @@ export const teamRouter = router({
   getWorldChampionshipWinningYears: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
+      // TODO: https://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings.json?limit=${MAX_LIMIT}
       const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings/1/seasons.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);

@@ -23,6 +23,7 @@ const Home: NextPage = () => {
             </h1>
 
             <Link href="/Statistics">Statistics</Link>
+            <Link href="/GuessingGame">Guessing Game</Link>
 
             <Link href="/driverProfiles/alonso">Alonso</Link>
             <Link href="/driverProfiles/max_verstappen">Verstappen</Link>

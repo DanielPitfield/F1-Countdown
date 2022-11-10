@@ -37,6 +37,7 @@ export const driverRouter = router({
   getWorldChampionshipWinningYears: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
+      // TODO: https://ergast.com/api/f1/drivers/${input.driverID}/driverStandings.json?limit=${MAX_LIMIT}
       const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/driverStandings/1/seasons.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
