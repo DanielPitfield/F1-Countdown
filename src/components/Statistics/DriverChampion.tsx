@@ -1,12 +1,12 @@
 import { DriverSeasonHistory } from "../../server/trpc/router/driver";
 
-import styles from "../../styles/statistics/driverWorldChampion.module.scss";
+import styles from "../../styles/statistics/DriverChampion.module.scss";
 
 interface WorldChampionshipStatisticProps {
   championshipsWon: DriverSeasonHistory[];
 }
 
-const WorldChampionshipStatistic = (props: WorldChampionshipStatisticProps) => {
+const DriverChampion = (props: WorldChampionshipStatisticProps) => {
   const driver = props.championshipsWon[0]?.DriverStandings[0]?.Driver;
   const fullName = `${driver?.givenName} ${driver?.familyName}`;
 
@@ -28,4 +28,4 @@ const WorldChampionshipStatistic = (props: WorldChampionshipStatisticProps) => {
   );
 };
 
-export default WorldChampionshipStatistic;
+export default DriverChampion;

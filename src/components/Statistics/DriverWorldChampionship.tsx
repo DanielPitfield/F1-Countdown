@@ -1,10 +1,10 @@
 import { DriverSeasonHistory } from "../../server/trpc/router/driver";
-import WorldChampionshipStatistic from "./WorldChampionStatistic";
+import DriverChampion from "./DriverChampion";
 import { trpc } from "../../utils/trpc";
 
-import styles from "../../styles/statistics/driverWorldChampionships.module.scss";
+import styles from "../../styles/statistics/DriverWorldChampionship.module.scss";
 
-const DriverWorldChampionshipStatistics = () => {
+const DriverWorldChampionship = () => {
   const { data: history } =
     trpc.statistics.getDriverWorldChampionshipHistory.useQuery();
 
@@ -22,8 +22,9 @@ const DriverWorldChampionshipStatistics = () => {
       history.filter(
         (season) => season.DriverStandings[0]?.Driver.driverId === b
       ).length -
-      history.filter((season) => season.DriverStandings[0]?.Driver.driverId === a)
-        .length
+      history.filter(
+        (season) => season.DriverStandings[0]?.Driver.driverId === a
+      ).length
     );
   });
 
@@ -35,7 +36,7 @@ const DriverWorldChampionshipStatistics = () => {
         );
 
         return (
-          <WorldChampionshipStatistic
+          <DriverChampion
             key={championID}
             championshipsWon={championshipsWon}
           />
@@ -45,4 +46,4 @@ const DriverWorldChampionshipStatistics = () => {
   );
 };
 
-export default DriverWorldChampionshipStatistics;
+export default DriverWorldChampionship;

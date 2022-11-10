@@ -1,9 +1,9 @@
-import DriverWorldChampionshipStatistics from "../components/Statistics/DriverWorldChampionshipStatistics";
+import DriverWorldChampionship from "../components/Statistics/DriverWorldChampionship";
 
 const Statistics = () => {
   return (
     <div className="wrapper">
-      <DriverWorldChampionshipStatistics />
+      <DriverWorldChampionship />
     </div>
   );
 };
