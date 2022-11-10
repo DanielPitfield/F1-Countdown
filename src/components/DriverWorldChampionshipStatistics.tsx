@@ -1,6 +1,6 @@
 import { trpc } from "../utils/trpc";
 import styles from "../styles/statistics/driverWorldChampionships.module.scss";
-import { SeasonHistory } from "../server/trpc/router/statistics";
+import { DriverSeasonHistory } from "../server/trpc/router/statistics";
 import WorldChampionshipStatistic from "./WorldChampionStatistic";
 
 export type SeasonResult = {
@@ -20,7 +20,7 @@ const DriverWorldChampionshipStatistics = () => {
   }
 
   const seasonResults: SeasonResult[] = driverWorldChampionshipHistory.map(
-    (seasonHistory: SeasonHistory) =>
+    (seasonHistory: DriverSeasonHistory) =>
       ({
         year: seasonHistory.season,
         winningDriverID: seasonHistory.DriverStandings[0]?.Driver.driverId,

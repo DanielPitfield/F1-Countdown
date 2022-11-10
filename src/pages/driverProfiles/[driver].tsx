@@ -51,7 +51,7 @@ export async function getStaticProps(
     driverID: driver,
     isReturnOnlyTotalNum: true,
   });
-  await ssg.driver.getWorldChampionshipWinningYears.prefetch({
+  await ssg.driver.getChampionshipResults.prefetch({
     driverID: driver,
   });
 
@@ -103,7 +103,7 @@ const DriverProfile = (
   });
 
   const { data: worldChampionships } =
-    trpc.driver.getWorldChampionshipWinningYears.useQuery({
+    trpc.driver.getChampionshipResults.useQuery({
       driverID: driver,
     });
 

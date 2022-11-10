@@ -62,7 +62,7 @@ export async function getStaticProps(
     teamID: team,
     isReturnOnlyTotalNum: true,
   });
-  await ssg.team.getWorldChampionshipWinningYears.prefetch({
+  await ssg.team.getChampionshipResults.prefetch({
     teamID: team,
   });
 
@@ -103,7 +103,7 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   });
 
   const { data: worldChampionships } =
-    trpc.team.getWorldChampionshipWinningYears.useQuery({
+    trpc.team.getChampionshipResults.useQuery({
       teamID: team,
     });
 

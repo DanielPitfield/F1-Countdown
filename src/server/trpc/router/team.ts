@@ -1,8 +1,8 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
-import { SeasonInfo } from "./statistics";
 import { CURRENT_DRIVER_LIMIT, MAX_LIMIT } from "../../../utils/limits";
 import { DriverInfo } from "./driver";
+import { TeamSeasonHistory } from "./statistics";
 
 export type TeamInfo = {
   constructorID: string;
@@ -41,16 +41,15 @@ export const teamRouter = router({
       return (await data.MRData.DriverTable.Drivers) as DriverInfo[];
     }),
 
-  getWorldChampionshipWinningYears: publicProcedure
+  getChampionshipResults: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
-      // TODO: https://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings.json?limit=${MAX_LIMIT}
-      const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings/1/seasons.json?limit=${MAX_LIMIT}`;
+      const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await data.MRData.SeasonTable.Seasons) as SeasonInfo[];
+      return (await data.MRData.StandingsTable.StandingsLists) as TeamSeasonHistory[];
     }),
 
   getRacesEntered: publicProcedure
