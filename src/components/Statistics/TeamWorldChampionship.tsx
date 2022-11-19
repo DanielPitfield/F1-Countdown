@@ -1,6 +1,6 @@
 import { trpc } from "../../utils/trpc";
 import { TeamSeasonHistory } from "../../server/trpc/router/team";
-import TeamChampion from "./TeamChampion";
+import TeamChampion from "../TeamChampion";
 
 import styles from "../../styles/statistics/TeamWorldChampionship.module.scss";
 

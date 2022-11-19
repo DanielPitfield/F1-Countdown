@@ -1,4 +1,4 @@
-import { TeamSeasonHistory } from "../../server/trpc/router/team";
+import { TeamSeasonHistory } from "../server/trpc/router/team";
 
 import styles from "../../styles/statistics/TeamChampion.module.scss";
 
@@ -7,7 +7,8 @@ interface WorldChampionshipStatisticProps {
 }
 
 const TeamChampion = (props: WorldChampionshipStatisticProps) => {
-  const teamName = props.championshipsWon[0]?.ConstructorStandings[0]?.Constructor.name;
+  const teamName =
+    props.championshipsWon[0]?.ConstructorStandings[0]?.Constructor.name;
 
   return (
     <div key={teamName} className={styles.wrapper}>
