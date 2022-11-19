@@ -2,11 +2,11 @@ import { TeamSeasonHistory } from "../server/trpc/router/team";
 
 import styles from "../../styles/statistics/TeamChampion.module.scss";
 
-interface WorldChampionshipStatisticProps {
+interface TeamChampionProps {
   championshipsWon: TeamSeasonHistory[];
 }
 
-const TeamChampion = (props: WorldChampionshipStatisticProps) => {
+const TeamChampion = (props: TeamChampionProps) => {
   const teamName =
     props.championshipsWon[0]?.ConstructorStandings[0]?.Constructor.name;
 

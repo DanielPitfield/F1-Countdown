@@ -1,9 +1,11 @@
-import DriverWorldChampionship from "../components/Statistics/DriverWorldChampionship";
+// TODO: Different pages for the different statistics
+
+import RaceWins from "../components/Statistics/RaceWins";
 
 const Statistics = () => {
   return (
     <div className="wrapper">
-      <DriverWorldChampionship />
+      <RaceWins numWinners={50}/>
     </div>
   );
 };
