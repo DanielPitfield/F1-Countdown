@@ -79,7 +79,7 @@ export const driverRouter = router({
 
       return {
         raceTable: data.MRData.RaceTable.Races,
-        totalNum: data.MRData.total as string,
+        totalNum: parseInt(data.MRData.total),
       };
     }),
 
@@ -93,7 +93,7 @@ export const driverRouter = router({
 
       return {
         raceTable: data.MRData.RaceTable.Races,
-        totalNum: data.MRData.total as string,
+        totalNum: parseInt(data.MRData.total),
       };
     }),
 
@@ -107,7 +107,7 @@ export const driverRouter = router({
 
       return {
         raceTable: data.MRData.RaceTable.Races,
-        totalNum: data.MRData.total as string,
+        totalNum: parseInt(data.MRData.total),
       };
     }),
 
@@ -121,7 +121,7 @@ export const driverRouter = router({
 
       return {
         raceTable: data.MRData.RaceTable.Races,
-        totalNum: data.MRData.total as string,
+        totalNum: parseInt(data.MRData.total),
       };
     }),
 });

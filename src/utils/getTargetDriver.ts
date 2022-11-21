@@ -12,24 +12,21 @@ export function getTargetDriver(): DriverGuess {
     lastYear: "2020",
     // TODO
     numWorldChampionships: 1,
-    numWins: parseInt(
+    numWins:
       trpc.driver.getRaceWins.useQuery({
         driverID: randomDriverID,
-      }).data?.totalNum ?? "0"
-    ),
+      }).data?.totalNum ?? 0,
     // TODO
     numPodiums: 1,
     // TODO
     numPoints: 1,
-    numPoles: parseInt(
+    numPoles:
       trpc.driver.getPolePositions.useQuery({
         driverID: randomDriverID,
-      }).data?.totalNum ?? "0"
-    ),
-    numRaceStarts: parseInt(
+      }).data?.totalNum ?? 0,
+    numRaceStarts:
       trpc.driver.getRacesEntered.useQuery({
         driverID: randomDriverID,
-      }).data?.totalNum ?? "0"
-    ),
+      }).data?.totalNum ?? 0,
   };
 }

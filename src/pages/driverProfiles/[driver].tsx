@@ -106,9 +106,9 @@ const DriverProfile = (
       </span>
 
       <div className={styles.resultsInformation}>
-        <span>{`Pole positions: ${polePositions?.totalNum}`}</span>
-        <span>{`Race wins: ${raceWins?.totalNum}`}</span>
-        <span>{`Fastest Laps: ${fastestLaps?.totalNum}`}</span>
+        <span>{`Pole positions: ${polePositions?.totalNum ?? "0"}`}</span>
+        <span>{`Race wins: ${raceWins?.totalNum ?? "0"}`}</span>
+        <span>{`Fastest Laps: ${fastestLaps?.totalNum ?? "0"}`}</span>
         <span>{`World championships: ${worldChampionships?.length}`}</span>
         {Boolean(worldChampionships && worldChampionships.length > 0) &&
           worldChampionships

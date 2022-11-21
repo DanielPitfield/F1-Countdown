@@ -102,9 +102,9 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </span>
 
       <div className={styles.resultsInformation}>
-        <span>{`Pole positions: ${polePositions?.totalNum}`}</span>
-        <span>{`Race wins: ${raceWins?.totalNum}`}</span>
-        <span>{`Fastest Laps: ${fastestLaps?.totalNum}`}</span>
+        <span>{`Pole positions: ${polePositions?.totalNum.toString() ?? "0"}`}</span>
+        <span>{`Race wins: ${raceWins?.totalNum.toString() ?? "0"}`}</span>
+        <span>{`Fastest Laps: ${fastestLaps?.totalNum.toString() ?? "0"}`}</span>
         <span>{`World championships: ${worldChampionships?.length}`}</span>
         {Boolean(worldChampionships && worldChampionships.length > 0) &&
           worldChampionships
