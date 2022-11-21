@@ -1,6 +1,6 @@
 import { trpc } from "../../utils/trpc";
 import { DriverSeasonHistory } from "../../server/trpc/router/driver";
-import DriverChampion from "../DriverChampion";
+import DriverChampion from "../../components/Statistics/DriverChampion";
 
 import styles from "../../styles/statistics/DriverWorldChampionship.module.scss";
 

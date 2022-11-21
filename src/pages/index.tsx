@@ -23,16 +23,27 @@ const Home: NextPage = () => {
               <span className={styles.titlePink}>F1 Dashboard</span>
             </h1>
 
-            <Link href="/Statistics">Statistics</Link>
-            <Link href="/GuessingGame">Guessing Game</Link>
+            <h3>Statistics</h3>
+            <Link href="/statistics/DriverWorldChampionship">
+              Driver Championships
+            </Link>
+            <Link href="/statistics/TeamWorldChampionship">
+              Constructor Championships
+            </Link>
+            <Link href="/statistics/RaceWins">Race Wins</Link>
 
+            <h3>Driver Profiles</h3>
             <Link href="/driverProfiles/alonso">Alonso</Link>
             <Link href="/driverProfiles/max_verstappen">Verstappen</Link>
             <Link href="/driverProfiles/leclerc">Leclerc</Link>
 
+            <h3>Team Profiles</h3>
             <Link href="/teamProfiles/ferrari">Ferrari</Link>
             <Link href="/teamProfiles/red_bull">Red Bull</Link>
             <Link href="/teamProfiles/mercedes">Mercedes</Link>
+
+            <h3>Other</h3>
+            <Link href="/GuessingGame">Guessing Game</Link>
           </div>
         </div>
       </main>
