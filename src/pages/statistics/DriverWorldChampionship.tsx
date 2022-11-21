@@ -3,8 +3,6 @@ import { trpc } from "../../utils/trpc";
 import { DriverSeasonHistory } from "../../server/trpc/router/driver";
 import DriverChampion from "../../components/Statistics/DriverChampion";
 
-import styles from "../../styles/statistics/DriverWorldChampionship.module.scss";
-
 const DriverWorldChampionship: NextPage = () => {
   const { data: history } =
     trpc.statistics.getDriverWorldChampionshipHistory.useQuery();
@@ -30,7 +28,7 @@ const DriverWorldChampionship: NextPage = () => {
   });
 
   return (
-    <div className={styles.wrapper}>
+    <div>
       {uniqueWorldChampions.map((championID) => {
         const championshipsWon: DriverSeasonHistory[] = history.filter(
           (season) => season.DriverStandings[0]?.Driver.driverId === championID
