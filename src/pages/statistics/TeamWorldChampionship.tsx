@@ -1,10 +1,12 @@
+import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
 import { TeamSeasonHistory } from "../../server/trpc/router/team";
 import TeamChampion from "../../components/Statistics/TeamChampion";
 
 import styles from "../../styles/statistics/TeamWorldChampionship.module.scss";
 
-const TeamWorldChampionship = () => {
+
+const TeamWorldChampionship: NextPage = () => {
   const { data: history } =
     trpc.statistics.getTeamWorldChampionshipHistory.useQuery();
 

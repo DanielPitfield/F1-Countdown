@@ -1,6 +1,7 @@
+import type { NextPage } from "next";
 import GameConfig from "../components/GuessingGame/GameConfig";
 
-const GuessingGame = () => {
+const GuessingGame: NextPage = () => {
   return (
     <div className="wrapper">
       <GameConfig startingNumGuesses={10} />

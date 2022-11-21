@@ -1,10 +1,11 @@
+import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
 import { RaceHistory } from "../../server/trpc/router/statistics";
 import RaceWinner from "../../components/Statistics/RaceWinner";
 
 import styles from "../../styles/statistics/DriverWorldChampionship.module.scss";
 
-const RaceWins = () => {
+const RaceWins: NextPage = () => {
   const { data: historyPart1 } =
     trpc.statistics.getRaceWinnerHistoryPart1.useQuery();
 
