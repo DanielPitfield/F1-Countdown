@@ -1,6 +1,6 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
-import { CURRENT_DRIVER_LIMIT, MAX_LIMIT } from "../../../utils/limits";
+import { MAX_LIMIT } from "../../../utils/limits";
 import { DriverInfo } from "./driver";
 
 export type TeamInfo = {
@@ -35,21 +35,20 @@ export const teamRouter = router({
     }),
 
   getDrivers: publicProcedure
-    .input(
-      z.object({
-        teamID: z.string().min(1).trim(),
-        isReturnOnlyCurrentDrivers: z.boolean(),
-      })
-    )
+    .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
-      const API_URL = input.isReturnOnlyCurrentDrivers
-        ? `http://ergast.com/api/f1/current/constructors/${input.teamID}/drivers.json?limit=${CURRENT_DRIVER_LIMIT}`
-        : `http://ergast.com/api/f1/constructors/${input.teamID}/drivers.json?limit=${MAX_LIMIT}`;
+      const CURRENT_DRIVERS_API_URL = `http://ergast.com/api/f1/current/constructors/${input.teamID}/drivers.json`;
+      const response_current = await fetch(CURRENT_DRIVERS_API_URL);
+      const data_current = await response_current.json();
 
-      const response = await fetch(API_URL);
-      const data = await response.json();
+      const ALL_DRIVERS_API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/drivers.json?limit=${MAX_LIMIT}`;
+      const response_all = await fetch(ALL_DRIVERS_API_URL);
+      const data_all = await response_all.json();
 
-      return (await data.MRData.DriverTable.Drivers) as DriverInfo[];
+      return {
+        current: data_current.MRData.DriverTable.Drivers as DriverInfo[],
+        all: data_all.MRData.DriverTable.Drivers as DriverInfo[],
+      };
     }),
 
   getChampionshipResults: publicProcedure
@@ -65,74 +64,58 @@ export const teamRouter = router({
     }),
 
   getRacesEntered: publicProcedure
-    .input(
-      z.object({
-        teamID: z.string().min(1).trim(),
-        isReturnOnlyTotalNum: z.boolean(),
-      })
-    )
+    .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
       const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/results.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await input.isReturnOnlyTotalNum)
-        ? (data.MRData.total as string)
-        : data.MRData.RaceTable.Races;
+      return {
+        raceTable: data.MRData.RaceTable.Races,
+        totalNum: data.MRData.total as string,
+      };
     }),
 
   getPolePositions: publicProcedure
-    .input(
-      z.object({
-        teamID: z.string().min(1).trim(),
-        isReturnOnlyTotalNum: z.boolean(),
-      })
-    )
+    .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
       const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/qualifying/1.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await input.isReturnOnlyTotalNum)
-        ? (data.MRData.total as string)
-        : data.MRData.RaceTable.Races;
+      return {
+        raceTable: data.MRData.RaceTable.Races,
+        totalNum: data.MRData.total as string,
+      };
     }),
 
   getRaceWins: publicProcedure
-    .input(
-      z.object({
-        teamID: z.string().min(1).trim(),
-        isReturnOnlyTotalNum: z.boolean(),
-      })
-    )
+    .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
       const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/results/1.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await input.isReturnOnlyTotalNum)
-        ? (data.MRData.total as string)
-        : data.MRData.RaceTable.Races;
+      return {
+        raceTable: data.MRData.RaceTable.Races,
+        totalNum: data.MRData.total as string,
+      };
     }),
 
   getFastestLaps: publicProcedure
-    .input(
-      z.object({
-        teamID: z.string().min(1).trim(),
-        isReturnOnlyTotalNum: z.boolean(),
-      })
-    )
+    .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
       const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/fastest/1/results.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await input.isReturnOnlyTotalNum)
-        ? (data.MRData.total as string)
-        : data.MRData.RaceTable.Races;
+      return {
+        raceTable: data.MRData.RaceTable.Races,
+        totalNum: data.MRData.total as string,
+      };
     }),
 });

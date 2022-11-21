@@ -70,74 +70,58 @@ export const driverRouter = router({
     }),
 
   getRacesEntered: publicProcedure
-    .input(
-      z.object({
-        driverID: z.string().min(1).trim(),
-        isReturnOnlyTotalNum: z.boolean(),
-      })
-    )
+    .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
       const API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/results.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await input.isReturnOnlyTotalNum)
-        ? (data.MRData.total as string)
-        : data.MRData.RaceTable.Races;
+      return {
+        raceTable: data.MRData.RaceTable.Races,
+        totalNum: data.MRData.total as string,
+      };
     }),
 
   getPolePositions: publicProcedure
-    .input(
-      z.object({
-        driverID: z.string().min(1).trim(),
-        isReturnOnlyTotalNum: z.boolean(),
-      })
-    )
+    .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
       const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/qualifying/1.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await input.isReturnOnlyTotalNum)
-        ? (data.MRData.total as string)
-        : data.MRData.RaceTable.Races;
+      return {
+        raceTable: data.MRData.RaceTable.Races,
+        totalNum: data.MRData.total as string,
+      };
     }),
 
   getRaceWins: publicProcedure
-    .input(
-      z.object({
-        driverID: z.string().min(1).trim(),
-        isReturnOnlyTotalNum: z.boolean(),
-      })
-    )
+    .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
       const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/results/1.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await input.isReturnOnlyTotalNum)
-        ? (data.MRData.total as string)
-        : data.MRData.RaceTable.Races;
+      return {
+        raceTable: data.MRData.RaceTable.Races,
+        totalNum: data.MRData.total as string,
+      };
     }),
 
   getFastestLaps: publicProcedure
-    .input(
-      z.object({
-        driverID: z.string().min(1).trim(),
-        isReturnOnlyTotalNum: z.boolean(),
-      })
-    )
+    .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
       const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/fastest/1/results.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await input.isReturnOnlyTotalNum)
-        ? (data.MRData.total as string)
-        : data.MRData.RaceTable.Races;
+      return {
+        raceTable: data.MRData.RaceTable.Races,
+        totalNum: data.MRData.total as string,
+      };
     }),
 });

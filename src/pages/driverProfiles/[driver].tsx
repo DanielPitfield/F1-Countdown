@@ -40,21 +40,10 @@ export async function getStaticProps(
   // Pre-fetching data (so that it is immediately available)
   const driverInfo = await ssg.driver.getInfo.fetch({ driverID: driver });
   await ssg.driver.getTeamsDrivenFor.prefetch({ driverID: driver });
-  await ssg.driver.getPolePositions.prefetch({
-    driverID: driver,
-    isReturnOnlyTotalNum: true,
-  });
-  await ssg.driver.getRaceWins.prefetch({
-    driverID: driver,
-    isReturnOnlyTotalNum: true,
-  });
-  await ssg.driver.getFastestLaps.prefetch({
-    driverID: driver,
-    isReturnOnlyTotalNum: true,
-  });
-  await ssg.driver.getChampionshipResults.prefetch({
-    driverID: driver,
-  });
+  await ssg.driver.getPolePositions.prefetch({ driverID: driver });
+  await ssg.driver.getRaceWins.prefetch({ driverID: driver });
+  await ssg.driver.getFastestLaps.prefetch({ driverID: driver });
+  await ssg.driver.getChampionshipResults.prefetch({ driverID: driver });
 
   // TODO: Is age statically generated?
   const age =
@@ -90,23 +79,18 @@ const DriverProfile = (
 
   const { data: polePositions } = trpc.driver.getPolePositions.useQuery({
     driverID: driver,
-    isReturnOnlyTotalNum: true,
   });
 
   const { data: raceWins } = trpc.driver.getRaceWins.useQuery({
     driverID: driver,
-    isReturnOnlyTotalNum: true,
   });
 
   const { data: fastestLaps } = trpc.driver.getFastestLaps.useQuery({
     driverID: driver,
-    isReturnOnlyTotalNum: true,
   });
 
   const { data: worldChampionships } =
-    trpc.driver.getChampionshipResults.useQuery({
-      driverID: driver,
-    });
+    trpc.driver.getChampionshipResults.useQuery({ driverID: driver });
 
   return (
     <div className={styles.wrapper}>
@@ -122,9 +106,9 @@ const DriverProfile = (
       </span>
 
       <div className={styles.resultsInformation}>
-        <span>{`Pole positions: ${polePositions}`}</span>
-        <span>{`Race wins: ${raceWins}`}</span>
-        <span>{`Fastest Laps: ${fastestLaps}`}</span>
+        <span>{`Pole positions: ${polePositions?.totalNum}`}</span>
+        <span>{`Race wins: ${raceWins?.totalNum}`}</span>
+        <span>{`Fastest Laps: ${fastestLaps?.totalNum}`}</span>
         <span>{`World championships: ${worldChampionships?.length}`}</span>
         {Boolean(worldChampionships && worldChampionships.length > 0) &&
           worldChampionships

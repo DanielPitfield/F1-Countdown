@@ -47,25 +47,11 @@ export async function getStaticProps(
 
   // Pre-fetching data (so that it is immediately available)
   await ssg.team.getInfo.prefetch({ teamID: team });
-  await ssg.team.getDrivers.prefetch({
-    teamID: team,
-    isReturnOnlyCurrentDrivers: true,
-  });
-  await ssg.team.getPolePositions.prefetch({
-    teamID: team,
-    isReturnOnlyTotalNum: true,
-  });
-  await ssg.team.getRaceWins.prefetch({
-    teamID: team,
-    isReturnOnlyTotalNum: true,
-  });
-  await ssg.team.getFastestLaps.prefetch({
-    teamID: team,
-    isReturnOnlyTotalNum: true,
-  });
-  await ssg.team.getChampionshipResults.prefetch({
-    teamID: team,
-  });
+  await ssg.team.getDrivers.prefetch({ teamID: team });
+  await ssg.team.getPolePositions.prefetch({ teamID: team });
+  await ssg.team.getRaceWins.prefetch({ teamID: team });
+  await ssg.team.getFastestLaps.prefetch({ teamID: team });
+  await ssg.team.getChampionshipResults.prefetch({ teamID: team });
 
   return {
     props: {
@@ -83,24 +69,18 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     teamID: team,
   });
 
-  const { data: currentDrivers } = trpc.team.getDrivers.useQuery({
+  const { data: drivers } = trpc.team.getDrivers.useQuery({
     teamID: team,
-    isReturnOnlyCurrentDrivers: true,
   });
 
   const { data: polePositions } = trpc.team.getPolePositions.useQuery({
     teamID: team,
-    isReturnOnlyTotalNum: true,
   });
 
-  const { data: raceWins } = trpc.team.getRaceWins.useQuery({
-    teamID: team,
-    isReturnOnlyTotalNum: true,
-  });
+  const { data: raceWins } = trpc.team.getRaceWins.useQuery({ teamID: team });
 
   const { data: fastestLaps } = trpc.team.getFastestLaps.useQuery({
     teamID: team,
-    isReturnOnlyTotalNum: true,
   });
 
   const { data: worldChampionships } =
@@ -116,15 +96,15 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </div>
 
       <span className={styles.currentDrivers}>
-        {currentDrivers
+        {drivers?.current
           ?.map((driver) => `${driver.givenName} ${driver.familyName}`)
           .join(", ")}
       </span>
 
       <div className={styles.resultsInformation}>
-        <span>{`Pole positions: ${polePositions}`}</span>
-        <span>{`Race wins: ${raceWins}`}</span>
-        <span>{`Fastest Laps: ${fastestLaps}`}</span>
+        <span>{`Pole positions: ${polePositions?.totalNum}`}</span>
+        <span>{`Race wins: ${raceWins?.totalNum}`}</span>
+        <span>{`Fastest Laps: ${fastestLaps?.totalNum}`}</span>
         <span>{`World championships: ${worldChampionships?.length}`}</span>
         {Boolean(worldChampionships && worldChampionships.length > 0) &&
           worldChampionships
