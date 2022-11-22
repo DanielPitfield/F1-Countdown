@@ -89,7 +89,7 @@ const DriverProfile = (
     driverID: driver,
   });
 
-  const { data: worldChampionships } =
+  const { data: championshipResults } =
     trpc.driver.getChampionshipResults.useQuery({ driverID: driver });
 
   return (
@@ -109,9 +109,11 @@ const DriverProfile = (
         <span>{`Pole positions: ${polePositions?.totalNum ?? "0"}`}</span>
         <span>{`Race wins: ${raceWins?.totalNum ?? "0"}`}</span>
         <span>{`Fastest Laps: ${fastestLaps?.totalNum ?? "0"}`}</span>
-        <span>{`World championships: ${worldChampionships?.length}`}</span>
-        {Boolean(worldChampionships && worldChampionships.length > 0) &&
-          worldChampionships
+        <span>{`World championships: ${championshipResults?.numChampionshipsWon.toString() ?? "0"}`}</span>
+        {Boolean(
+          championshipResults && championshipResults.numChampionshipsWon > 0
+        ) &&
+          championshipResults?.winningYears
             ?.map((championship) => championship.season)
             .join(", ")}
       </div>

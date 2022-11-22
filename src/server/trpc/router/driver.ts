@@ -43,13 +43,22 @@ export const driverRouter = router({
   getChampionshipResults: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }) => {
-      const API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/driverStandings.json?limit=${MAX_LIMIT}`;
+      const WINNING_YEARS_API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/driverStandings/1.json?limit=${MAX_LIMIT}`;
+      const response_winning = await fetch(WINNING_YEARS_API_URL);
+      const data_winning = await response_winning.json();
 
-      const response = await fetch(API_URL);
-      const data = await response.json();
+      const ALL_YEARS_API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/driverStandings.json?limit=${MAX_LIMIT}`;
+      const response_all = await fetch(ALL_YEARS_API_URL);
+      const data_all = await response_all.json();
 
-      return (await data.MRData.StandingsTable
-        .StandingsLists) as DriverSeasonHistory[];
+      return {
+        numChampionshipsWon: parseInt(data_winning.MRData.total),
+        numChampionshipsEntered: parseInt(data_all.MRData.total),
+        winningYears: data_winning.MRData.StandingsTable
+          .StandingsLists as DriverSeasonHistory[],
+        allYears: data_all.MRData.StandingsTable
+          .StandingsLists as DriverSeasonHistory[],
+      };
     }),
 
   getTeamsDrivenFor: publicProcedure

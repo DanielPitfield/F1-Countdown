@@ -83,7 +83,7 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     teamID: team,
   });
 
-  const { data: worldChampionships } =
+  const { data: championshipResults } =
     trpc.team.getChampionshipResults.useQuery({
       teamID: team,
     });
@@ -102,12 +102,20 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </span>
 
       <div className={styles.resultsInformation}>
-        <span>{`Pole positions: ${polePositions?.totalNum.toString() ?? "0"}`}</span>
+        <span>{`Pole positions: ${
+          polePositions?.totalNum.toString() ?? "0"
+        }`}</span>
         <span>{`Race wins: ${raceWins?.totalNum.toString() ?? "0"}`}</span>
-        <span>{`Fastest Laps: ${fastestLaps?.totalNum.toString() ?? "0"}`}</span>
-        <span>{`World championships: ${worldChampionships?.length}`}</span>
-        {Boolean(worldChampionships && worldChampionships.length > 0) &&
-          worldChampionships
+        <span>{`Fastest Laps: ${
+          fastestLaps?.totalNum.toString() ?? "0"
+        }`}</span>
+        <span>{`World championships: ${
+          championshipResults?.numChampionshipsWon ?? "0"
+        }`}</span>
+        {Boolean(
+          championshipResults && championshipResults.numChampionshipsWon > 0
+        ) &&
+          championshipResults?.winningYears
             ?.map((championship) => championship.season)
             .join(", ")}
       </div>
