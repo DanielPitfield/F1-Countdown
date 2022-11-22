@@ -24,6 +24,7 @@ const Home: NextPage = () => {
             </h1>
 
             <h3>Statistics</h3>
+            <Link href="/statistics/CurrentStandings">Current Standings</Link>
             <Link href="/statistics/DriverWorldChampionship">
               Driver Championships
             </Link>
