@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { RaceHistory } from "../../server/trpc/router/statistics";
 import { getDriverName } from "../../utils/getDriverName";
 
@@ -9,11 +10,15 @@ interface RaceWinnerProps {
 
 const RaceWinner = (props: RaceWinnerProps) => {
   const driver = props.racesWon[0]?.Results[0]?.Driver;
-  const fullName = getDriverName(driver);
 
   return (
-    <div key={fullName} className={styles.wrapper}>
-      <div className={styles.name}>{fullName}</div>
+    <div key={driver?.driverId} className={styles.wrapper}>
+      <div className={styles.name}>
+        <Link href={`/driverProfiles/${driver?.driverId}`}>
+          {getDriverName(driver)}
+        </Link>
+      </div>
+      
       <div className={styles.numRaces}>{props.racesWon.length}</div>
     </div>
   );

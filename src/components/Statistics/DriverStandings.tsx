@@ -1,5 +1,6 @@
 import { DriverStanding } from "../../server/trpc/router/statistics";
 import { getDriverName } from "../../utils/getDriverName";
+import Link from "next/link";
 
 import styles from "../../styles/Statistic.module.scss";
 
@@ -13,9 +14,20 @@ const DriverStandings = (props: DriverStandingsProps) => {
       {props.standings?.map((standing) => {
         return (
           <div key={standing.Driver.driverId} className={styles.wrapper}>
-            <div>{`${standing.position} ${getDriverName(standing.Driver)} (${
-              standing.Constructors[0]?.name
-            })`}</div>
+            <div>
+              {standing.position}
+
+              <Link href={`/driverProfiles/${standing.Driver.driverId}`}>
+                {getDriverName(standing.Driver)}
+              </Link>
+
+              <Link
+                href={`/teamProfiles/${standing.Constructors[0]?.constructorId}`}
+              >
+                {`(${standing.Constructors[0]?.name})`}
+              </Link>
+            </div>
+
             <div>{standing.points}</div>
           </div>
         );
