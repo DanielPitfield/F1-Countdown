@@ -19,10 +19,8 @@ const CurrentStandings: NextPage = () => {
 
           return (
             <div key={fullName}>
-              <div>{`${standing.position} ${fullName}`}</div>
-              <div>{standing.Constructors[0]?.name}</div>
+              <div>{`${standing.position} ${fullName} (${standing.Constructors[0]?.name})`}</div>
               <div>{standing.points}</div>
-              <div>{standing.wins}</div>
             </div>
           );
         })}
@@ -34,7 +32,6 @@ const CurrentStandings: NextPage = () => {
             <div key={standing.Constructor.name}>
               <div>{`${standing.position} ${standing.Constructor.name}`}</div>
               <div>{standing.points}</div>
-              <div>{`Wins: ${standing.wins}`}</div>
             </div>
           );
         })}
