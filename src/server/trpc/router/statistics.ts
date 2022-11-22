@@ -27,22 +27,22 @@ export type RaceHistory = {
   Results: RaceResult[];
 };
 
-export type DriverStandings = {
+export type DriverStanding = {
   position: string;
   positionText: string;
   points: string;
   wins: string;
   Driver: DriverInfo;
   Constructors: TeamInfo[];
-}[];
+};
 
-export type TeamStandings = {
+export type TeamStanding = {
   position: string;
   positionText: string;
   points: string;
   wins: string;
   Constructor: TeamInfo;
-}[];
+};
 
 // The historical information of every driver that has won the Driver's World Championship (since 1950)
 export const statisticsRouter = router({
@@ -95,7 +95,7 @@ export const statisticsRouter = router({
     const data = await response.json();
 
     return (await data.MRData.StandingsTable.StandingsLists[0]
-      .DriverStandings) as DriverStandings;
+      .DriverStandings) as DriverStanding[];
   }),
 
   // The constructor standings for the current season
@@ -106,6 +106,6 @@ export const statisticsRouter = router({
     const data = await response.json();
 
     return (await data.MRData.StandingsTable.StandingsLists[0]
-      .ConstructorStandings) as TeamStandings;
+      .ConstructorStandings) as TeamStanding[];
   }),
 });

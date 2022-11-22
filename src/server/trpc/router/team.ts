@@ -2,6 +2,7 @@ import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { MAX_LIMIT } from "../../../utils/limits";
 import { DriverInfo } from "./driver";
+import { TeamStanding } from "./statistics";
 
 export type TeamInfo = {
   constructorId: string;
@@ -13,13 +14,7 @@ export type TeamInfo = {
 export type TeamSeasonHistory = {
   season: string;
   round: string;
-  ConstructorStandings: {
-    position: string;
-    positionText: string;
-    points: string;
-    wins: string;
-    Constructor: TeamInfo;
-  }[];
+  ConstructorStandings: TeamStanding[];
 };
 
 export const teamRouter = router({

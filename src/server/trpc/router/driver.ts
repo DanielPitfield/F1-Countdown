@@ -2,6 +2,7 @@ import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { TeamInfo } from "./team";
 import { MAX_LIMIT } from "../../../utils/limits";
+import { DriverStanding } from "./statistics";
 
 export type DriverInfo = {
   driverId: string;
@@ -17,14 +18,7 @@ export type DriverInfo = {
 export type DriverSeasonHistory = {
   season: string;
   round: string;
-  DriverStandings: {
-    position: string;
-    positionText: string;
-    points: string;
-    wins: string;
-    Driver: DriverInfo;
-    Constructors: TeamInfo[];
-  }[];
+  DriverStandings: DriverStanding[];
 };
 
 // TODO: Team History
