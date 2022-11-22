@@ -1,4 +1,5 @@
 import { trpc } from "../../utils/trpc";
+import Link from "next/link";
 import { getDriverName } from "../../utils/getDriverName";
 import {
   GetStaticPaths,
@@ -97,20 +98,33 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </div>
 
       <span className={styles.currentDrivers}>
-        {drivers?.current?.map((driver) => getDriverName(driver)).join(", ")}
+        {drivers?.current?.map((driver) => {
+          return (
+            <Link
+              key={driver.driverId}
+              href={`/driverProfiles/${driver.driverId}`}
+            >
+              {getDriverName(driver)}
+            </Link>
+          );
+        })}
       </span>
 
       <div className={styles.resultsInformation}>
         <span>{`Pole positions: ${
           polePositions?.totalNum.toString() ?? "0"
         }`}</span>
+
         <span>{`Race wins: ${raceWins?.totalNum.toString() ?? "0"}`}</span>
+
         <span>{`Fastest Laps: ${
           fastestLaps?.totalNum.toString() ?? "0"
         }`}</span>
+
         <span>{`World championships: ${
           championshipResults?.numChampionshipsWon ?? "0"
         }`}</span>
+
         {championshipResults &&
           championshipResults.numChampionshipsWon > 0 &&
           championshipResults.winningYears

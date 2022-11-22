@@ -1,5 +1,6 @@
 import intervalToDuration from "date-fns/intervalToDuration";
 import { trpc } from "../../utils/trpc";
+import Link from "next/link";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -102,7 +103,16 @@ const DriverProfile = (
       </div>
 
       <span className={styles.teamsDrivenFor}>
-        {teamsDrivenFor?.map((team) => team.name).join(", ")}
+        {teamsDrivenFor?.map((team) => {
+          return (
+            <Link
+              key={team.constructorId}
+              href={`/teamProfiles/${team.constructorId}`}
+            >
+              {team.name}
+            </Link>
+          );
+        })}
       </span>
 
       <div className={styles.resultsInformation}>
