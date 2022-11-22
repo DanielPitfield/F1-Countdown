@@ -1,11 +1,13 @@
 import type { NextPage } from "next";
+import DriverStanding from "../../components/Statistics/DriverStanding";
+import TeamStanding from "../../components/Statistics/TeamStanding";
 import { trpc } from "../../utils/trpc";
 
 const CurrentStandings: NextPage = () => {
   const { data: driverStandings } =
     trpc.statistics.getCurrentDriverStandings.useQuery();
 
-    console.log(driverStandings);
+  console.log(driverStandings);
 
   const { data: teamStandings } =
     trpc.statistics.getCurrentTeamStandings.useQuery();
@@ -14,14 +16,11 @@ const CurrentStandings: NextPage = () => {
     <>
       <div>
         {driverStandings?.map((standing) => {
-          const driver = standing.Driver;
-          const fullName = `${driver?.givenName} ${driver?.familyName}`;
-
           return (
-            <div key={fullName}>
-              <div>{`${standing.position} ${fullName} (${standing.Constructors[0]?.name})`}</div>
-              <div>{standing.points}</div>
-            </div>
+            <DriverStanding
+              key={standing.Driver.driverId}
+              standing={standing}
+            />
           );
         })}
       </div>
@@ -29,10 +28,7 @@ const CurrentStandings: NextPage = () => {
       <div>
         {teamStandings?.map((standing) => {
           return (
-            <div key={standing.Constructor.name}>
-              <div>{`${standing.position} ${standing.Constructor.name}`}</div>
-              <div>{standing.points}</div>
-            </div>
+            <TeamStanding key={standing.Constructor.name} standing={standing} />
           );
         })}
       </div>
