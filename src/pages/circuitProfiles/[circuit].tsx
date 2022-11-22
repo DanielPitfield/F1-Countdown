@@ -10,7 +10,7 @@ import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 
-import styles from "../../styles/driverProfile.module.scss";
+import styles from "../../styles/Profile.module.scss";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {

@@ -1,6 +1,6 @@
 import { DriverSeasonHistory } from "../../server/trpc/router/driver";
 
-import styles from "../../styles/statistics/DriverChampion.module.scss";
+import styles from "../../styles/Statistic.module.scss";
 
 interface DriverChampionProps {
   championshipsWon: DriverSeasonHistory[];

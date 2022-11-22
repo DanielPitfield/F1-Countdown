@@ -1,6 +1,6 @@
 import { RaceHistory } from "../../server/trpc/router/statistics";
 
-import styles from "../../styles/statistics/RaceWinner.module.scss";
+import styles from "../../styles/Statistic.module.scss";
 
 interface RaceWinnerProps {
   racesWon: RaceHistory[];

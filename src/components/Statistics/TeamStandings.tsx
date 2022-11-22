@@ -1,6 +1,6 @@
 import { TeamStanding as TeamStandings } from "../../server/trpc/router/statistics";
 
-import styles from "../../styles/statistics/DriverChampion.module.scss";
+import styles from "../../styles/Statistic.module.scss";
 
 interface TeamStandingsProps {
   standings: TeamStandings[];

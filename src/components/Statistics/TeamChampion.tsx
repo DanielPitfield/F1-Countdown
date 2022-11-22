@@ -1,6 +1,6 @@
 import { TeamSeasonHistory } from "../../server/trpc/router/team";
 
-import styles from "../../styles/statistics/TeamChampion.module.scss";
+import styles from "../../styles/Statistic.module.scss";
 
 interface TeamChampionProps {
   championshipsWon: TeamSeasonHistory[];
