@@ -1,21 +1,21 @@
-import { DriverStanding as DriverStandings } from "../../server/trpc/router/statistics";
+import { DriverStanding } from "../../server/trpc/router/statistics";
+import { getDriverName } from "../../utils/getDriverName";
 
 import styles from "../../styles/Statistic.module.scss";
 
 interface DriverStandingsProps {
-  standings: DriverStandings[];
+  standings: DriverStanding[];
 }
 
 const DriverStandings = (props: DriverStandingsProps) => {
   return (
     <div>
       {props.standings?.map((standing) => {
-        const driver = standing.Driver;
-        const fullName = `${driver?.givenName} ${driver?.familyName}`;
-        
         return (
           <div key={standing.Driver.driverId} className={styles.wrapper}>
-            <div>{`${standing.position} ${fullName} (${standing.Constructors[0]?.name})`}</div>
+            <div>{`${standing.position} ${getDriverName(standing.Driver)} (${
+              standing.Constructors[0]?.name
+            })`}</div>
             <div>{standing.points}</div>
           </div>
         );

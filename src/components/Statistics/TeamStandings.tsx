@@ -1,9 +1,9 @@
-import { TeamStanding as TeamStandings } from "../../server/trpc/router/statistics";
+import { TeamStanding } from "../../server/trpc/router/statistics";
 
 import styles from "../../styles/Statistic.module.scss";
 
 interface TeamStandingsProps {
-  standings: TeamStandings[];
+  standings: TeamStanding[];
 }
 
 const TeamStandings = (props: TeamStandingsProps) => {

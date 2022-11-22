@@ -21,10 +21,9 @@ export type DriverSeasonHistory = {
   DriverStandings: DriverStanding[];
 };
 
-// TODO: Team History
+// TODO: Team History (show time period driving for teams)
 // TODO: First race (first win?)
 // TODO: Most recent race (also most recent win?)
-// TODO: Championship result history
 // TODO: Is a current driver on the grid?
 // TODO: Picture (F1 22 card?)
 

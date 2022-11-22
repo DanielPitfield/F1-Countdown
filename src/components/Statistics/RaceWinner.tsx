@@ -1,4 +1,5 @@
 import { RaceHistory } from "../../server/trpc/router/statistics";
+import { getDriverName } from "../../utils/getDriverName";
 
 import styles from "../../styles/Statistic.module.scss";
 
@@ -8,7 +9,7 @@ interface RaceWinnerProps {
 
 const RaceWinner = (props: RaceWinnerProps) => {
   const driver = props.racesWon[0]?.Results[0]?.Driver;
-  const fullName = `${driver?.givenName} ${driver?.familyName}`;
+  const fullName = getDriverName(driver);
 
   return (
     <div key={fullName} className={styles.wrapper}>

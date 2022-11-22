@@ -1,4 +1,5 @@
 import { DriverSeasonHistory } from "../../server/trpc/router/driver";
+import { getDriverName } from "../../utils/getDriverName";
 
 import styles from "../../styles/Statistic.module.scss";
 
@@ -8,7 +9,7 @@ interface DriverChampionProps {
 
 const DriverChampion = (props: DriverChampionProps) => {
   const driver = props.championshipsWon[0]?.DriverStandings[0]?.Driver;
-  const fullName = `${driver?.givenName} ${driver?.familyName}`;
+  const fullName = getDriverName(driver);
 
   return (
     <div key={fullName} className={styles.wrapper}>

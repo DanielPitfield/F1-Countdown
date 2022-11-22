@@ -1,4 +1,5 @@
 import { trpc } from "../../utils/trpc";
+import { getDriverName } from "../../utils/getDriverName";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -96,9 +97,7 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </div>
 
       <span className={styles.currentDrivers}>
-        {drivers?.current
-          ?.map((driver) => `${driver.givenName} ${driver.familyName}`)
-          .join(", ")}
+        {drivers?.current?.map((driver) => getDriverName(driver)).join(", ")}
       </span>
 
       <div className={styles.resultsInformation}>
