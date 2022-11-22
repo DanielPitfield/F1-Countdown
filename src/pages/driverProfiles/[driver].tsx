@@ -109,11 +109,12 @@ const DriverProfile = (
         <span>{`Pole positions: ${polePositions?.totalNum ?? "0"}`}</span>
         <span>{`Race wins: ${raceWins?.totalNum ?? "0"}`}</span>
         <span>{`Fastest Laps: ${fastestLaps?.totalNum ?? "0"}`}</span>
-        <span>{`World championships: ${championshipResults?.numChampionshipsWon.toString() ?? "0"}`}</span>
-        {Boolean(
-          championshipResults && championshipResults.numChampionshipsWon > 0
-        ) &&
-          championshipResults?.winningYears
+        <span>{`World championships: ${
+          championshipResults?.numChampionshipsWon.toString() ?? "0"
+        }`}</span>
+        {championshipResults &&
+          championshipResults.numChampionshipsWon > 0 &&
+          championshipResults.winningYears
             ?.map((championship) => championship.season)
             .join(", ")}
       </div>

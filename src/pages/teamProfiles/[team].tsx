@@ -111,10 +111,9 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <span>{`World championships: ${
           championshipResults?.numChampionshipsWon ?? "0"
         }`}</span>
-        {Boolean(
-          championshipResults && championshipResults.numChampionshipsWon > 0
-        ) &&
-          championshipResults?.winningYears
+        {championshipResults &&
+          championshipResults.numChampionshipsWon > 0 &&
+          championshipResults.winningYears
             ?.map((championship) => championship.season)
             .join(", ")}
       </div>
