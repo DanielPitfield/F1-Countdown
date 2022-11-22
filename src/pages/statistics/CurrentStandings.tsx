@@ -7,13 +7,11 @@ const CurrentStandings: NextPage = () => {
   const { data: driverStandings } =
     trpc.statistics.getCurrentDriverStandings.useQuery();
 
-  console.log(driverStandings);
-
   const { data: teamStandings } =
     trpc.statistics.getCurrentTeamStandings.useQuery();
 
-  return (
-    <>
+  const DriverStandings = () => {
+    return (
       <div>
         {driverStandings?.map((standing) => {
           return (
@@ -24,7 +22,11 @@ const CurrentStandings: NextPage = () => {
           );
         })}
       </div>
+    );
+  };
 
+  const TeamStandings = () => {
+    return (
       <div>
         {teamStandings?.map((standing) => {
           return (
@@ -32,6 +34,13 @@ const CurrentStandings: NextPage = () => {
           );
         })}
       </div>
+    );
+  };
+
+  return (
+    <>
+      <DriverStandings />
+      <TeamStandings />
     </>
   );
 };
