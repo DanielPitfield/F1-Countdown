@@ -9,6 +9,7 @@ import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
+import { getDriverName } from "../../utils/getDriverName";
 
 import styles from "../../styles/Profile.module.scss";
 
@@ -35,6 +36,7 @@ export async function getStaticProps(
 
   // Pre-fetching data (so that it is immediately available)
   await ssg.circuit.getInfo.prefetch({ circuitID: circuit });
+  await ssg.circuit.getWinners.prefetch({ circuitID: circuit });
 
   return {
     props: {
@@ -54,11 +56,30 @@ const CircuitProfile = (
     circuitID: circuit,
   });
 
+  const { data: previousWinners } = trpc.circuit.getWinners.useQuery({
+    circuitID: circuit,
+  });
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.generalInformation}>
         <span>{generalInformation?.circuitName}</span>
         <span>{`${generalInformation?.location.locality}, ${generalInformation?.location.country}`}</span>
+      </div>
+
+      <div className={styles.generalInformation}>
+        <span>{`First Grand Prix: ${previousWinners?.firstYear ?? "-"}`}</span>
+        <span>{`Number of Grand Prix: ${
+          previousWinners?.totalNum ?? "-"
+        }`}</span>
+      </div>
+
+      <div className={styles.generalInformation}>
+        <span>{`Previous winners: ${previousWinners?.results
+          // TODO: How many previous winners?
+          .slice(-5)
+          .map((race) => getDriverName(race.Results[0]?.Driver))
+          .join(" , ")}`}</span>
       </div>
     </div>
   );

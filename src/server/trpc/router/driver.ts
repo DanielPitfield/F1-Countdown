@@ -2,7 +2,7 @@ import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { TeamInfo } from "./team";
 import { MAX_LIMIT } from "../../../utils/limits";
-import { DriverStanding } from "./statistics";
+import { DriverStanding, RaceHistory } from "./statistics";
 
 export type DriverInfo = {
   driverId: string;
@@ -80,7 +80,7 @@ export const driverRouter = router({
       const data = await response.json();
 
       return {
-        raceTable: data.MRData.RaceTable.Races,
+        raceTable: data.MRData.RaceTable.Races as RaceHistory[],
         totalNum: parseInt(data.MRData.total),
       };
     }),
@@ -94,7 +94,7 @@ export const driverRouter = router({
       const data = await response.json();
 
       return {
-        raceTable: data.MRData.RaceTable.Races,
+        raceTable: data.MRData.RaceTable.Races as RaceHistory[],
         totalNum: parseInt(data.MRData.total),
       };
     }),
@@ -108,7 +108,7 @@ export const driverRouter = router({
       const data = await response.json();
 
       return {
-        raceTable: data.MRData.RaceTable.Races,
+        raceTable: data.MRData.RaceTable.Races as RaceHistory[],
         totalNum: parseInt(data.MRData.total),
       };
     }),
@@ -122,7 +122,7 @@ export const driverRouter = router({
       const data = await response.json();
 
       return {
-        raceTable: data.MRData.RaceTable.Races,
+        raceTable: data.MRData.RaceTable.Races as RaceHistory[],
         totalNum: parseInt(data.MRData.total),
       };
     }),
