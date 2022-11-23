@@ -20,13 +20,13 @@ export type TeamSeasonHistory = {
 export const teamRouter = router({
   getInfo: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
-    .query(async ({ input }) => {
+    .query(async ({ input }): Promise<TeamInfo> => {
       const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}.json?limit=1`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await data.MRData.ConstructorTable.Constructors[0]) as TeamInfo;
+      return await data.MRData.ConstructorTable.Constructors[0];
     }),
 
   getDrivers: publicProcedure

@@ -30,13 +30,13 @@ export type DriverSeasonHistory = {
 export const driverRouter = router({
   getInfo: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
-    .query(async ({ input }) => {
+    .query(async ({ input }): Promise<DriverInfo> => {
       const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}.json?limit=1`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await data.MRData.DriverTable.Drivers[0]) as DriverInfo;
+      return await data.MRData.DriverTable.Drivers[0];
     }),
 
   getChampionshipResults: publicProcedure
@@ -62,13 +62,13 @@ export const driverRouter = router({
 
   getTeamsDrivenFor: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
-    .query(async ({ input }) => {
+    .query(async ({ input }): Promise<TeamInfo[]> => {
       const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/constructors.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return (await data.MRData.ConstructorTable.Constructors) as TeamInfo[];
+      return await data.MRData.ConstructorTable.Constructors;
     }),
 
   getRacesEntered: publicProcedure
