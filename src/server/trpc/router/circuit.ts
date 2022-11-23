@@ -29,18 +29,24 @@ export const circuitRouter = router({
 
   getWinners: publicProcedure
     .input(z.object({ circuitID: z.string().min(1).trim() }))
-    .query(async ({ input }) => {
-      const API_URL = `https://ergast.com/api/f1/circuits/${input.circuitID}/results/1.json?limit=${MAX_LIMIT}`;
+    .query(
+      async ({
+        input,
+      }): Promise<{
+        results: RaceHistory[];
+        firstYear: string;
+        totalNum: number;
+      }> => {
+        const API_URL = `https://ergast.com/api/f1/circuits/${input.circuitID}/results/1.json?limit=${MAX_LIMIT}`;
 
-      const response = await fetch(API_URL);
-      const data = await response.json();
+        const response = await fetch(API_URL);
+        const data = await response.json();
 
-      return {
-        results: data.MRData.RaceTable.Races as RaceHistory[],
-        firstYear: data.MRData.RaceTable.Races[0].season as string,
-        totalNum: parseInt(data.MRData.total),
-      };
-    }),
-
-  // TODO: Get circuit winners
+        return {
+          results: data.MRData.RaceTable.Races,
+          firstYear: data.MRData.RaceTable.Races[0].season,
+          totalNum: parseInt(data.MRData.total),
+        };
+      }
+    ),
 });
