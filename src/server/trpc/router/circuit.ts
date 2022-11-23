@@ -7,7 +7,7 @@ export type CircuitInfo = {
   circuitID: string;
   url: string;
   circuitName: string;
-  location: {
+  Location: {
     lat: string;
     long: string;
     locality: string;
@@ -24,7 +24,7 @@ export const circuitRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.CircuitTable.Circuit[0];
+      return await data.MRData.CircuitTable.Circuits[0];
     }),
 
   getWinners: publicProcedure

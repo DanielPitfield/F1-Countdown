@@ -64,7 +64,7 @@ const CircuitProfile = (
     <div className={styles.wrapper}>
       <div className={styles.generalInformation}>
         <span>{generalInformation?.circuitName}</span>
-        <span>{`${generalInformation?.location.locality}, ${generalInformation?.location.country}`}</span>
+        <span>{`${generalInformation?.Location.locality}, ${generalInformation?.Location.country}`}</span>
       </div>
 
       <div className={styles.generalInformation}>
@@ -79,7 +79,7 @@ const CircuitProfile = (
           // TODO: How many previous winners?
           .slice(-5)
           .map((race) => getDriverName(race.Results[0]?.Driver))
-          .join(" , ")}`}</span>
+          .join(", ")}`}</span>
       </div>
     </div>
   );

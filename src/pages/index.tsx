@@ -43,6 +43,11 @@ const Home: NextPage = () => {
             <Link href="/teamProfiles/red_bull">Red Bull</Link>
             <Link href="/teamProfiles/mercedes">Mercedes</Link>
 
+            <h3>Circuit Profiles</h3>
+            <Link href="/circuitProfiles/monza">Monza</Link>
+            <Link href="/circuitProfiles/spa">Spa</Link>
+            <Link href="/circuitProfiles/baku">Baku</Link>
+
             <h3>Other</h3>
             <Link href="/GuessingGame">Guessing Game</Link>
           </div>
