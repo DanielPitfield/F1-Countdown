@@ -42,7 +42,7 @@ export const Podium = (props: PodiumProps) => {
                 {podiumStep?.Constructor.name ?? ""}
               </Link>
             )}
-            {props.showTimes && <span>{podiumStep?.Time.time ?? ""}</span>}
+            {props.showTimes && <span>{podiumStep?.Time?.time ?? ""}</span>}
           </div>
         );
       })}

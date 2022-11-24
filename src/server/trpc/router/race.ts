@@ -16,7 +16,13 @@ export type DriverRaceResult = {
   grid: string;
   laps: string;
   status: string;
-  Time: { millis: string; time: string };
+  Time?: { millis: string; time: string };
+  FastestLap?: {
+    rank: string;
+    lap: string;
+    Time: { time: string };
+    AverageSpeed: { units: string; speed: string };
+  };
 };
 
 // Race information (including the finishing positions/result for every driver)
@@ -27,6 +33,7 @@ export type RaceInfo = {
   raceName: string;
   Circuit: CircuitInfo;
   date: string;
+  time?: string;
   Results: DriverRaceResult[];
 };
 
