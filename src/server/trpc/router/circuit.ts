@@ -27,7 +27,8 @@ export const circuitRouter = router({
       return await data.MRData.CircuitTable.Circuits[0];
     }),
 
-  getWinners: publicProcedure
+  // TODO: input object has a number property, return only that number of latest years
+  getPastWinners: publicProcedure
     .input(z.object({ circuitID: z.string().min(1).trim() }))
     .query(
       async ({

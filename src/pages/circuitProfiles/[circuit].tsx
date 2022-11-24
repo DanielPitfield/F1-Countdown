@@ -37,7 +37,7 @@ export async function getStaticProps(
 
   // Pre-fetching data (so that it is immediately available)
   await ssg.circuit.getInfo.prefetch({ circuitID: circuit });
-  await ssg.circuit.getWinners.prefetch({ circuitID: circuit });
+  await ssg.circuit.getPastWinners.prefetch({ circuitID: circuit });
 
   return {
     props: {
@@ -57,7 +57,7 @@ const CircuitProfile = (
     circuitID: circuit,
   });
 
-  const { data: previousWinners } = trpc.circuit.getWinners.useQuery({
+  const { data: pastWinners } = trpc.circuit.getPastWinners.useQuery({
     circuitID: circuit,
   });
 
@@ -79,24 +79,27 @@ const CircuitProfile = (
 
       <div className={styles.generalInformation}>
         {/* TODO: Link to the raceProfile for this firstYear race */}
-        <span>{`First Grand Prix: ${previousWinners?.firstYear ?? "-"}`}</span>
-        <span>{`Number of Grand Prix: ${
-          previousWinners?.totalNum ?? "-"
-        }`}</span>
+        <span>{`First Grand Prix: ${pastWinners?.firstYear ?? "-"}`}</span>
+        <span>{`Number of Grand Prix: ${pastWinners?.totalNum ?? "-"}`}</span>
       </div>
 
       <div className={styles.generalInformation}>
-        <span>Previous Winners</span>
-        {previousWinners?.results.slice(-NUM_PREVIOUS_YEARS).map((race) => {
+        <strong>Previous Winners</strong>
+        {pastWinners?.results.slice(-NUM_PREVIOUS_YEARS).map((race) => {
+          const driver = race.Results[0]?.Driver;
+
           return (
-            <Link
-              key={race.Results[0]?.Driver.driverId}
-              href={`/driverProfiles/${race.Results[0]?.Driver.driverId}`}
-            >
-              {`${race.season} ${getDriverName(race.Results[0]?.Driver)} (${
-                race.Results[0]?.Time.time
-              })`}
-            </Link>
+            <div key={driver?.driverId}>
+              <Link href={`/raceProfiles/${race.season}/${race.round}`}>
+                {race.season}
+              </Link>
+
+              <Link href={`/driverProfiles/${driver?.driverId}`}>
+                {getDriverName(driver)}
+              </Link>
+
+              {`(${race.Results[0]?.Time.time})`}
+            </div>
           );
         })}
       </div>
