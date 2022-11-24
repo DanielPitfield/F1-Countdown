@@ -31,13 +31,15 @@ export type RaceInfo = {
 
 export const raceRouter = router({
   getInfo: publicProcedure
-    .input(z.object({ raceID: z.string().min(1).trim() }))
-    .query(async ({ input }) => {
-      const API_URL = ``;
+    // Minimum length: "2022/3"
+    // Maximum length: "2022/24"
+    .input(z.object({ raceID: z.string().min(6).max(7).trim() }))
+    .query(async ({ input }): Promise<RaceInfo> => {
+      const API_URL = `https://ergast.com/api/f1/${input.raceID}/results.json?limit=1`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData;
+      return await data.MRData.RaceTable.Races[0];
     }),
 });
