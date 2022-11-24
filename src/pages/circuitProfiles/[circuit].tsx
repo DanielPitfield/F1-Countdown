@@ -14,6 +14,9 @@ import { getDriverName } from "../../utils/getDriverName";
 import styles from "../../styles/Profile.module.scss";
 import Link from "next/link";
 
+// For how many previous years should the results of races at this circuit be shown?
+const NUM_PAST_WINNERS = 5;
+
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     // TODO: Build time SSG
@@ -37,7 +40,10 @@ export async function getStaticProps(
 
   // Pre-fetching data (so that it is immediately available)
   await ssg.circuit.getInfo.prefetch({ circuitID: circuit });
-  await ssg.circuit.getPastWinners.prefetch({ circuitID: circuit });
+  await ssg.circuit.getPastWinners.prefetch({
+    circuitID: circuit,
+    numPastWinners: NUM_PAST_WINNERS,
+  });
 
   return {
     props: {
@@ -59,10 +65,8 @@ const CircuitProfile = (
 
   const { data: pastWinners } = trpc.circuit.getPastWinners.useQuery({
     circuitID: circuit,
+    numPastWinners: NUM_PAST_WINNERS,
   });
-
-  // For how many previous years should the results of races at this circuit be shown?
-  const NUM_PREVIOUS_YEARS = 5;
 
   return (
     <div className={styles.wrapper}>
@@ -85,7 +89,7 @@ const CircuitProfile = (
 
       <div className={styles.generalInformation}>
         <strong>Previous Winners</strong>
-        {pastWinners?.results.slice(-NUM_PREVIOUS_YEARS).map((race) => {
+        {pastWinners?.results.map((race) => {
           const driver = race.Results[0]?.Driver;
 
           return (

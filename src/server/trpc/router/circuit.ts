@@ -29,7 +29,7 @@ export const circuitRouter = router({
 
   // TODO: input object has a number property, return only that number of latest years
   getPastWinners: publicProcedure
-    .input(z.object({ circuitID: z.string().min(1).trim() }))
+    .input(z.object({ circuitID: z.string().min(1).trim(), numPastWinners: z.number() }))
     .query(
       async ({
         input,
@@ -44,7 +44,7 @@ export const circuitRouter = router({
         const data = await response.json();
 
         return {
-          results: data.MRData.RaceTable.Races,
+          results: data.MRData.RaceTable.Races.slice(-input.numPastWinners),
           firstYear: data.MRData.RaceTable.Races[0].season,
           totalNum: parseInt(data.MRData.total),
         };
