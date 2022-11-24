@@ -1,4 +1,5 @@
 import { trpc } from "../../utils/trpc";
+import Link from "next/link";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -12,7 +13,6 @@ import { REVALDATION_PERIOD } from "../../utils/limits";
 import { getDriverName } from "../../utils/getDriverName";
 
 import styles from "../../styles/Profile.module.scss";
-import Link from "next/link";
 
 // For how many previous years should the results of races at this circuit be shown?
 const NUM_PAST_WINNERS = 5;
@@ -102,7 +102,7 @@ const CircuitProfile = (
                 {getDriverName(driver)}
               </Link>
 
-              {`(${race.Results[0]?.Time.time})`}
+              {`(${race.Results[0]?.Time?.time})`}
             </div>
           );
         })}

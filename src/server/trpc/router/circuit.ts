@@ -4,7 +4,7 @@ import { MAX_LIMIT } from "../../../utils/limits";
 import { RaceInfo } from "./race";
 
 export type CircuitInfo = {
-  circuitID: string;
+  circuitId: string;
   url: string;
   circuitName: string;
   Location: {

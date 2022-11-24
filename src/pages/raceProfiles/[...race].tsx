@@ -69,8 +69,7 @@ const RaceProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       <div className={styles.generalInformation}>
         <span>{`${raceInfo?.season} - Round ${raceInfo?.round}`}</span>
         <span>{`${raceInfo?.raceName} (${raceInfo?.date})`}</span>
-        {/* TODO: Fix link */}
-        <Link href={`/circuitProfiles/${raceInfo?.Circuit.circuitID}`}>
+        <Link href={`/circuitProfiles/${raceInfo?.Circuit.circuitId}`}>
           {raceInfo?.Circuit.circuitName}
         </Link>
       </div>
