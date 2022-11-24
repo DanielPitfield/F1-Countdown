@@ -12,6 +12,7 @@ import { REVALDATION_PERIOD } from "../../utils/limits";
 import { getDriverName } from "../../utils/getDriverName";
 
 import styles from "../../styles/Profile.module.scss";
+import Link from "next/link";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -60,6 +61,9 @@ const CircuitProfile = (
     circuitID: circuit,
   });
 
+  // For how many previous years should the results of races at this circuit be shown?
+  const NUM_PREVIOUS_YEARS = 5;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.generalInformation}>
@@ -74,6 +78,7 @@ const CircuitProfile = (
       </div>
 
       <div className={styles.generalInformation}>
+        {/* TODO: Link to the raceProfile for this firstYear race */}
         <span>{`First Grand Prix: ${previousWinners?.firstYear ?? "-"}`}</span>
         <span>{`Number of Grand Prix: ${
           previousWinners?.totalNum ?? "-"
@@ -82,16 +87,18 @@ const CircuitProfile = (
 
       <div className={styles.generalInformation}>
         <span>Previous Winners</span>
-        {previousWinners?.results
-          // TODO: How many previous winners?
-          .slice(-5)
-          .map((race) => {
-            return (
-              <span key={race.date}>{`${race.season} ${getDriverName(
-                race.Results[0]?.Driver
-              )} (${race.Results[0]?.Time.time})`}</span>
-            );
-          })}
+        {previousWinners?.results.slice(-NUM_PREVIOUS_YEARS).map((race) => {
+          return (
+            <Link
+              key={race.Results[0]?.Driver.driverId}
+              href={`/driverProfiles/${race.Results[0]?.Driver.driverId}`}
+            >
+              {`${race.season} ${getDriverName(race.Results[0]?.Driver)} (${
+                race.Results[0]?.Time.time
+              })`}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
