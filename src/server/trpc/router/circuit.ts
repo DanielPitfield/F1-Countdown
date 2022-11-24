@@ -1,7 +1,7 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
-import { RaceHistory } from "./statistics";
 import { MAX_LIMIT } from "../../../utils/limits";
+import { RaceInfo } from "./race";
 
 export type CircuitInfo = {
   circuitID: string;
@@ -33,7 +33,7 @@ export const circuitRouter = router({
       async ({
         input,
       }): Promise<{
-        results: RaceHistory[];
+        results: RaceInfo[];
         firstYear: string;
         totalNum: number;
       }> => {

@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { RaceHistory } from "../../server/trpc/router/statistics";
 import { getDriverName } from "../../utils/getDriverName";
+import { RaceInfo } from "../../server/trpc/router/race";
 
 import styles from "../../styles/Statistic.module.scss";
 
 interface RaceWinnerProps {
-  racesWon: RaceHistory[];
+  racesWon: RaceInfo[];
 }
 
 const RaceWinner = (props: RaceWinnerProps) => {
@@ -18,7 +18,7 @@ const RaceWinner = (props: RaceWinnerProps) => {
           {getDriverName(driver)}
         </Link>
       </div>
-      
+
       <div className={styles.numRaces}>{props.racesWon.length}</div>
     </div>
   );

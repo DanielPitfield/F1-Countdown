@@ -2,7 +2,8 @@ import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { MAX_LIMIT } from "../../../utils/limits";
 import { DriverInfo } from "./driver";
-import { RaceHistory, TeamStanding } from "./statistics";
+import { TeamStanding } from "./statistics";
+import { RaceInfo } from "./race";
 
 export type TeamInfo = {
   constructorId: string;
@@ -83,7 +84,7 @@ export const teamRouter = router({
     .query(
       async ({
         input,
-      }): Promise<{ raceTable: RaceHistory[]; totalNum: number }> => {
+      }): Promise<{ raceTable: RaceInfo[]; totalNum: number }> => {
         const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/results.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -101,7 +102,7 @@ export const teamRouter = router({
     .query(
       async ({
         input,
-      }): Promise<{ raceTable: RaceHistory[]; totalNum: number }> => {
+      }): Promise<{ raceTable: RaceInfo[]; totalNum: number }> => {
         const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/qualifying/1.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -119,7 +120,7 @@ export const teamRouter = router({
     .query(
       async ({
         input,
-      }): Promise<{ raceTable: RaceHistory[]; totalNum: number }> => {
+      }): Promise<{ raceTable: RaceInfo[]; totalNum: number }> => {
         const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/results/1.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -137,7 +138,7 @@ export const teamRouter = router({
     .query(
       async ({
         input,
-      }): Promise<{ raceTable: RaceHistory[]; totalNum: number }> => {
+      }): Promise<{ raceTable: RaceInfo[]; totalNum: number }> => {
         const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/fastest/1/results.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
