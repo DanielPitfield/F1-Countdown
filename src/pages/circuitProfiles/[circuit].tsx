@@ -64,7 +64,13 @@ const CircuitProfile = (
     <div className={styles.wrapper}>
       <div className={styles.generalInformation}>
         <span>{generalInformation?.circuitName}</span>
-        <span>{`${generalInformation?.Location.locality}, ${generalInformation?.Location.country}`}</span>
+        <a
+          href={`https://www.google.com/maps/search/?api=1&query=${generalInformation?.Location.lat},${generalInformation?.Location.long}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {`${generalInformation?.Location.locality}, ${generalInformation?.Location.country}`}
+        </a>
       </div>
 
       <div className={styles.generalInformation}>
@@ -75,11 +81,17 @@ const CircuitProfile = (
       </div>
 
       <div className={styles.generalInformation}>
-        <span>{`Previous winners: ${previousWinners?.results
+        <span>Previous Winners</span>
+        {previousWinners?.results
           // TODO: How many previous winners?
           .slice(-5)
-          .map((race) => getDriverName(race.Results[0]?.Driver))
-          .join(", ")}`}</span>
+          .map((race) => {
+            return (
+              <span key={race.date}>{`${race.season} ${getDriverName(
+                race.Results[0]?.Driver
+              )} (${race.Results[0]?.Time.time})`}</span>
+            );
+          })}
       </div>
     </div>
   );
