@@ -97,7 +97,7 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         <span>{generalInformation?.nationality}</span>
       </div>
 
-      <span className={styles.currentDrivers}>
+      <div className={styles.currentDrivers}>
         {drivers?.current?.map((driver) => {
           return (
             <Link
@@ -108,7 +108,7 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             </Link>
           );
         })}
-      </span>
+      </div>
 
       <div className={styles.resultsInformation}>
         <span>{`Pole positions: ${

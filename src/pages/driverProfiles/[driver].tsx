@@ -102,7 +102,7 @@ const DriverProfile = (
         <span>{generalInformation?.nationality}</span>
       </div>
 
-      <span className={styles.teamsDrivenFor}>
+      <div className={styles.teamsDrivenFor}>
         {teamsDrivenFor?.map((team) => {
           return (
             <Link
@@ -113,7 +113,7 @@ const DriverProfile = (
             </Link>
           );
         })}
-      </span>
+      </div>
 
       <div className={styles.resultsInformation}>
         <span>{`Pole positions: ${polePositions?.totalNum ?? "0"}`}</span>
