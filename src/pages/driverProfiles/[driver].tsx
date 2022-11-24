@@ -97,20 +97,19 @@ const DriverProfile = (
     <div className={styles.wrapper}>
       <div className={styles.generalInformation}>
         <span>{`${generalInformation?.givenName} ${generalInformation?.familyName}`}</span>
-        <span>{generalInformation?.dateOfBirth}</span>
-        <span>{props.age}</span>
+        <span>{`${generalInformation?.dateOfBirth} (${props.age} years)`}</span>
         <span>{generalInformation?.nationality}</span>
       </div>
 
       <div className={styles.teamsDrivenFor}>
+        <strong>Teams Driven For</strong>
         {teamsDrivenFor?.map((team) => {
           return (
-            <Link
-              key={team.constructorId}
-              href={`/teamProfiles/${team.constructorId}`}
-            >
-              {team.name}
-            </Link>
+            <div key={team.constructorId}>
+              <Link href={`/teamProfiles/${team.constructorId}`}>
+                {team.name}
+              </Link>
+            </div>
           );
         })}
       </div>

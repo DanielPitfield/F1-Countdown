@@ -98,14 +98,14 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       </div>
 
       <div className={styles.currentDrivers}>
+        <strong>Current Drivers</strong>
         {drivers?.current?.map((driver) => {
           return (
-            <Link
-              key={driver.driverId}
-              href={`/driverProfiles/${driver.driverId}`}
-            >
-              {getDriverName(driver)}
-            </Link>
+            <div key={driver.driverId}>
+              <Link href={`/driverProfiles/${driver.driverId}`}>
+                {getDriverName(driver)}
+              </Link>
+            </div>
           );
         })}
       </div>
