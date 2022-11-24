@@ -3,6 +3,7 @@ import { z } from "zod";
 import { DriverInfo } from "./driver";
 import { TeamInfo } from "./team";
 import { CircuitInfo } from "./circuit";
+import { MAX_LIMIT } from "../../../utils/limits";
 
 // The results information for an individual driver in a particular race
 export type DriverRaceResult = {
@@ -38,7 +39,7 @@ export const raceRouter = router({
       })
     )
     .query(async ({ input }): Promise<RaceInfo> => {
-      const API_URL = `https://ergast.com/api/f1/${input.season}/${input.roundNumber}/results.json?limit=1`;
+      const API_URL = `https://ergast.com/api/f1/${input.season}/${input.roundNumber}/results.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
