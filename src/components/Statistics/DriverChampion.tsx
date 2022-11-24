@@ -24,16 +24,16 @@ const DriverChampion = (props: DriverChampionProps) => {
       </div>
 
       <div className={styles.winningYears}>
-        {`(${props.championshipsWon.map((x) => x.season).join(", ")})`}
+        {`(${props.championshipsWon.map((championship) => championship.season).join(", ")})`}
       </div>
 
       <div className={styles.winningYearsTeams}>
-        {props.championshipsWon.map((x) => {
-          const team = x.DriverStandings[0]?.Constructors[0];
+        {props.championshipsWon.map((championship, index) => {
+          const team = championship.DriverStandings[0]?.Constructors[0];
 
           return (
             <Link
-              key={team?.constructorId}
+              key={`${team?.constructorId}-${index}`}
               href={`/teamProfiles/${team?.constructorId}`}
             >
               {team?.name}
