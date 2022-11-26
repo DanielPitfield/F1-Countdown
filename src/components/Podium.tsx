@@ -13,7 +13,7 @@ export const Podium = (props: PodiumProps) => {
   if (!props.race) {
     return null;
   }
-  
+
   const NUM_PODIUM_STEPS = 3;
 
   const podiumOrder: DriverRaceResult[] = props.race.Results
@@ -32,11 +32,7 @@ export const Podium = (props: PodiumProps) => {
         return (
           <div key={index}>
             <DriverLink driver={podiumStep?.Driver} />
-
-            {props.showTeams && (
-              <TeamLink team={podiumStep?.Constructor}></TeamLink>
-            )}
-
+            {props.showTeams && <TeamLink team={podiumStep?.Constructor} />}
             {props.showTimes && <span>{podiumStep?.Time?.time ?? ""}</span>}
           </div>
         );
