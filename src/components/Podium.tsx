@@ -1,10 +1,11 @@
 import Link from "next/link";
 import React from "react";
-import { DriverRaceResult, RaceInfo } from "../server/trpc/router/race";
+import { DriverRaceResult, Race } from "../server/trpc/router/race";
+
 import { getDriverName } from "../utils/getDriverName";
 
 interface PodiumProps {
-  race: RaceInfo;
+  race: Race;
   showTeams: boolean;
   showTimes: boolean;
 }

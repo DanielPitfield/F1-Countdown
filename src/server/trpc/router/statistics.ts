@@ -1,16 +1,16 @@
 import { router, publicProcedure } from "../trpc";
 import { MAX_LIMIT } from "../../../utils/limits";
-import { DriverInfo, DriverSeasonHistory } from "./driver";
-import { TeamInfo, TeamSeasonHistory } from "./team";
-import { RaceInfo } from "./race";
+import { Driver, DriverSeasonHistory } from "./driver";
+import { Team, TeamSeasonHistory } from "./team";
+import { Race } from "./race";
 
 export type DriverStanding = {
   position: string;
   positionText: string;
   points: string;
   wins: string;
-  Driver: DriverInfo;
-  Constructors: TeamInfo[];
+  Driver: Driver;
+  Constructors: Team[];
 };
 
 export type TeamStanding = {
@@ -18,7 +18,7 @@ export type TeamStanding = {
   positionText: string;
   points: string;
   wins: string;
-  Constructor: TeamInfo;
+  Constructor: Team;
 };
 
 // The historical information of every driver that has won the Driver's World Championship (since 1950)
@@ -48,7 +48,7 @@ export const statisticsRouter = router({
 
   // The historical information of races won since 1950 (up to the max limit of 1000)
   getRaceWinnerHistoryPart1: publicProcedure.query(
-    async (): Promise<RaceInfo[]> => {
+    async (): Promise<Race[]> => {
       const API_URL = `https://ergast.com/api/f1/results/1.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
@@ -60,7 +60,7 @@ export const statisticsRouter = router({
 
   // The remaining historical information of races won (after the max limit of 1000)
   getRaceWinnerHistoryPart2: publicProcedure.query(
-    async (): Promise<RaceInfo[]> => {
+    async (): Promise<Race[]> => {
       const API_URL = `https://ergast.com/api/f1/results/1.json?limit=${MAX_LIMIT}&offset=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);

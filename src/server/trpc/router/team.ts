@@ -1,11 +1,11 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { MAX_LIMIT } from "../../../utils/limits";
-import { DriverInfo } from "./driver";
+import { Driver } from "./driver";
 import { TeamStanding } from "./statistics";
-import { RaceInfo } from "./race";
+import { Race } from "./race";
 
-export type TeamInfo = {
+export type Team = {
   constructorId: string;
   url: string;
   name: string;
@@ -21,7 +21,7 @@ export type TeamSeasonHistory = {
 export const teamRouter = router({
   getInfo: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
-    .query(async ({ input }): Promise<TeamInfo> => {
+    .query(async ({ input }): Promise<Team> => {
       const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}.json?limit=1`;
 
       const response = await fetch(API_URL);
@@ -32,24 +32,20 @@ export const teamRouter = router({
 
   getDrivers: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
-    .query(
-      async ({
-        input,
-      }): Promise<{ current: DriverInfo[]; all: DriverInfo[] }> => {
-        const CURRENT_DRIVERS_API_URL = `http://ergast.com/api/f1/current/constructors/${input.teamID}/drivers.json`;
-        const response_current = await fetch(CURRENT_DRIVERS_API_URL);
-        const data_current = await response_current.json();
+    .query(async ({ input }): Promise<{ current: Driver[]; all: Driver[] }> => {
+      const CURRENT_DRIVERS_API_URL = `http://ergast.com/api/f1/current/constructors/${input.teamID}/drivers.json`;
+      const response_current = await fetch(CURRENT_DRIVERS_API_URL);
+      const data_current = await response_current.json();
 
-        const ALL_DRIVERS_API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/drivers.json?limit=${MAX_LIMIT}`;
-        const response_all = await fetch(ALL_DRIVERS_API_URL);
-        const data_all = await response_all.json();
+      const ALL_DRIVERS_API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/drivers.json?limit=${MAX_LIMIT}`;
+      const response_all = await fetch(ALL_DRIVERS_API_URL);
+      const data_all = await response_all.json();
 
-        return {
-          current: data_current.MRData.DriverTable.Drivers,
-          all: data_all.MRData.DriverTable.Drivers,
-        };
-      }
-    ),
+      return {
+        current: data_current.MRData.DriverTable.Drivers,
+        all: data_all.MRData.DriverTable.Drivers,
+      };
+    }),
 
   getChampionshipResults: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
@@ -82,9 +78,7 @@ export const teamRouter = router({
   getRacesEntered: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(
-      async ({
-        input,
-      }): Promise<{ raceTable: RaceInfo[]; totalNum: number }> => {
+      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
         const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/results.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -100,9 +94,7 @@ export const teamRouter = router({
   getPolePositions: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(
-      async ({
-        input,
-      }): Promise<{ raceTable: RaceInfo[]; totalNum: number }> => {
+      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
         const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/qualifying/1.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -118,9 +110,7 @@ export const teamRouter = router({
   getRaceWins: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(
-      async ({
-        input,
-      }): Promise<{ raceTable: RaceInfo[]; totalNum: number }> => {
+      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
         const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/results/1.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -136,9 +126,7 @@ export const teamRouter = router({
   getFastestLaps: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(
-      async ({
-        input,
-      }): Promise<{ raceTable: RaceInfo[]; totalNum: number }> => {
+      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
         const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/fastest/1/results.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);

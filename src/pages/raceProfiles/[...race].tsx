@@ -1,4 +1,5 @@
 import { trpc } from "../../utils/trpc";
+import Link from "next/link";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -10,9 +11,10 @@ import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 import { Podium } from "../../components/Podium";
+import DriverStandings from "../../components/Statistics/DriverStandings";
+import TeamStandings from "../../components/Statistics/TeamStandings";
 
 import styles from "../../styles/Profile.module.scss";
-import Link from "next/link";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -41,7 +43,23 @@ export async function getStaticProps(
   const [season, roundNumber] = race;
 
   // Pre-fetching data (so that it is immediately available)
-  await ssg.race.getInfo.prefetch({
+  await ssg.race.getSchedule.prefetch({
+    season: season ?? "",
+    roundNumber: roundNumber ?? "",
+  });
+  await ssg.race.getQualifying.prefetch({
+    season: season ?? "",
+    roundNumber: roundNumber ?? "",
+  });
+  await ssg.race.getRace.prefetch({
+    season: season ?? "",
+    roundNumber: roundNumber ?? "",
+  });
+  await ssg.race.getDriverStandingsAfter.prefetch({
+    season: season ?? "",
+    roundNumber: roundNumber ?? "",
+  });
+  await ssg.race.getTeamStandingsAfter.prefetch({
     season: season ?? "",
     roundNumber: roundNumber ?? "",
   });
@@ -59,22 +77,59 @@ export async function getStaticProps(
 const RaceProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { season, roundNumber } = props;
 
-  const { data: raceInfo } = trpc.race.getInfo.useQuery({
+  const { data: schedule } = trpc.race.getSchedule.useQuery({
     season: season,
     roundNumber: roundNumber,
   });
 
+  const { data: qualifying } = trpc.race.getQualifying.useQuery({
+    season: season,
+    roundNumber: roundNumber,
+  });
+
+  const { data: race } = trpc.race.getRace.useQuery({
+    season: season,
+    roundNumber: roundNumber,
+  });
+
+  const { data: driverStandings } = trpc.race.getDriverStandingsAfter.useQuery({
+    season: season,
+    roundNumber: roundNumber,
+  });
+
+  const { data: teamStandings } = trpc.race.getTeamStandingsAfter.useQuery({
+    season: season,
+    roundNumber: roundNumber,
+  });
+
+  // TODO: Components to display qualifying and race results
+  // TODO: Fix driver and team standings
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.generalInformation}>
-        <span>{`${raceInfo?.season} - Round ${raceInfo?.round}`}</span>
-        <span>{`${raceInfo?.raceName} (${raceInfo?.date})`}</span>
-        <Link href={`/circuitProfiles/${raceInfo?.Circuit.circuitId}`}>
-          {raceInfo?.Circuit.circuitName}
+        <span>{`${schedule?.season} - Round ${schedule?.round}`}</span>
+        <span>{`${schedule?.raceName} (${schedule?.date})`}</span>
+        <Link href={`/circuitProfiles/${schedule?.Circuit.circuitId}`}>
+          {schedule?.Circuit.circuitName}
         </Link>
       </div>
 
-      {raceInfo && <Podium race={raceInfo} showTeams={true} showTimes={true} />}
+      <div className={styles.generalInformation}>
+        <span>
+          {JSON.stringify(qualifying?.QualifyingResults, undefined, 4)}
+        </span>
+      </div>
+
+      <div className={styles.generalInformation}>
+        <span>{JSON.stringify(race?.Results, undefined, 4)}</span>
+      </div>
+
+      {race && <Podium race={race} showTeams={true} showTimes={true} />}
+
+      <DriverStandings standings={driverStandings ?? []} />
+
+      <TeamStandings standings={teamStandings ?? []} />
     </div>
   );
 };

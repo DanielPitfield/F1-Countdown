@@ -1,9 +1,9 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { MAX_LIMIT } from "../../../utils/limits";
-import { RaceInfo } from "./race";
+import { Race } from "./race";
 
-export type CircuitInfo = {
+export type Circuit = {
   circuitId: string;
   url: string;
   circuitName: string;
@@ -18,7 +18,7 @@ export type CircuitInfo = {
 export const circuitRouter = router({
   getInfo: publicProcedure
     .input(z.object({ circuitID: z.string().min(1).trim() }))
-    .query(async ({ input }): Promise<CircuitInfo> => {
+    .query(async ({ input }): Promise<Circuit> => {
       const API_URL = `http://ergast.com/api/f1/circuits/${input.circuitID}.json?limit=1`;
 
       const response = await fetch(API_URL);
@@ -38,7 +38,7 @@ export const circuitRouter = router({
       async ({
         input,
       }): Promise<{
-        results: RaceInfo[];
+        results: Race[];
         firstYear: string;
         totalNum: number;
       }> => {

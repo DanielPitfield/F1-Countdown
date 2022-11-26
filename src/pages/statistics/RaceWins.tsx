@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
 import RaceWinner from "../../components/Statistics/RaceWinner";
-import { RaceInfo } from "../../server/trpc/router/race";
+import { Race } from "../../server/trpc/router/race";
 
 const RaceWins: NextPage = () => {
   const { data: historyPart1 } =
@@ -31,7 +31,7 @@ const RaceWins: NextPage = () => {
   return (
     <div>
       {uniqueRaceWinners.map((raceWinnerID) => {
-        const racesWon: RaceInfo[] = history.filter(
+        const racesWon: Race[] = history.filter(
           (race) => race.Results[0]?.Driver.driverId === raceWinnerID
         );
 

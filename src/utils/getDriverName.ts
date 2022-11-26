@@ -1,5 +1,5 @@
-import { DriverInfo } from "../server/trpc/router/driver";
+import { Driver } from "../server/trpc/router/driver";
 
-export function getDriverName(driver: DriverInfo | undefined): string {
+export function getDriverName(driver: Driver | undefined): string {
   return driver ? `${driver?.givenName} ${driver?.familyName}` : "";
 }
