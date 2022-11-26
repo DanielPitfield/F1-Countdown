@@ -40,35 +40,38 @@ export async function getStaticProps(
   // The dynamic parameter of the route (catch all route so this will always be an array)
   const grandPrix = context.params?.grandPrix as string[];
   // Destructure the season and roundNumber segments of the route
-  const [season, roundNumber] = grandPrix;
+  const [seasonParam, roundNumberParam] = grandPrix;
+
+  const season = seasonParam ?? "";
+  const roundNumber = roundNumberParam ?? "";
 
   // Pre-fetching data (so that it is immediately available)
   await ssg.grandPrix.getSchedule.prefetch({
-    season: season ?? "",
-    roundNumber: roundNumber ?? "",
+    season: season,
+    roundNumber: roundNumber,
   });
   await ssg.grandPrix.getQualifying.prefetch({
-    season: season ?? "",
-    roundNumber: roundNumber ?? "",
+    season: season,
+    roundNumber: roundNumber,
   });
   await ssg.grandPrix.getRace.prefetch({
-    season: season ?? "",
-    roundNumber: roundNumber ?? "",
+    season: season,
+    roundNumber: roundNumber,
   });
   await ssg.grandPrix.getDriverStandingsAfter.prefetch({
-    season: season ?? "",
-    roundNumber: roundNumber ?? "",
+    season: season,
+    roundNumber: roundNumber,
   });
   await ssg.grandPrix.getTeamStandingsAfter.prefetch({
-    season: season ?? "",
-    roundNumber: roundNumber ?? "",
+    season: season,
+    roundNumber: roundNumber,
   });
 
   return {
     props: {
       trpcState: ssg.dehydrate(),
-      season: season ?? "",
-      roundNumber: roundNumber ?? "",
+      season: season,
+      roundNumber: roundNumber,
     },
     revalidate: REVALDATION_PERIOD,
   };
