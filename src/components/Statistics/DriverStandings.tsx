@@ -8,8 +8,6 @@ interface DriverStandingsProps {
   standings: DriverStanding[];
 }
 
-// TODO: DriverLink (and similar) component?
-
 const DriverStandings = (props: DriverStandingsProps) => {
   return (
     <div>
