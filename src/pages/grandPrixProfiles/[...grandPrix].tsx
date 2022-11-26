@@ -15,6 +15,7 @@ import DriverStandings from "../../components/Statistics/DriverStandings";
 import TeamStandings from "../../components/Statistics/TeamStandings";
 
 import styles from "../../styles/Profile.module.scss";
+import QualifyingResults from "../../components/QualifyingResults";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -120,17 +121,13 @@ const GrandPrixProfile = (
         <CircuitLink circuit={schedule?.Circuit} />
       </div>
 
-      <div className={styles.generalInformation}>
-        <span>
-          {JSON.stringify(qualifying?.QualifyingResults, undefined, 4)}
-        </span>
-      </div>
+      <QualifyingResults qualifying={qualifying} />
 
       <div className={styles.generalInformation}>
         <span>{JSON.stringify(race?.Results, undefined, 4)}</span>
       </div>
 
-      {race && <Podium race={race} showTeams={true} showTimes={true} />}
+      <Podium race={race} showTeams={true} showTimes={true} />
 
       <DriverStandings standings={driverStandings} />
 

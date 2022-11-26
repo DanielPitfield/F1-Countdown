@@ -4,12 +4,16 @@ import DriverLink from "./Links/DriverLink";
 import TeamLink from "./Links/TeamLink";
 
 interface PodiumProps {
-  race: Race;
+  race: Race | undefined;
   showTeams: boolean;
   showTimes: boolean;
 }
 
 export const Podium = (props: PodiumProps) => {
+  if (!props.race) {
+    return null;
+  }
+  
   const NUM_PODIUM_STEPS = 3;
 
   const podiumOrder: DriverRaceResult[] = props.race.Results
