@@ -112,8 +112,6 @@ const GrandPrixProfile = (
     }
   );
 
-  // TODO: Components to display qualifying and race results
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.generalInformation}>
