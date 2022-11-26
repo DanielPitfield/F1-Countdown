@@ -82,8 +82,7 @@ const CircuitProfile = (
       </div>
 
       <div className={styles.generalInformation}>
-        {/* TODO: Link to the grandPrixProfile for this firstYear race */}
-        <span>{`First Grand Prix: ${pastWinners?.firstYear ?? "-"}`}</span>
+        First Grand Prix: <GrandPrixLink grandPrix={pastWinners?.firstYear} />
         <span>{`Number of Grand Prix: ${pastWinners?.totalNum ?? "-"}`}</span>
       </div>
 

@@ -39,7 +39,7 @@ export const circuitRouter = router({
         input,
       }): Promise<{
         results: Race[];
-        firstYear: string;
+        firstYear: Race;
         totalNum: number;
       }> => {
         const API_URL = `https://ergast.com/api/f1/circuits/${input.circuitID}/results/1.json?limit=${MAX_LIMIT}`;
@@ -49,7 +49,7 @@ export const circuitRouter = router({
 
         return {
           results: data.MRData.RaceTable.Races.slice(-input.numPastWinners),
-          firstYear: data.MRData.RaceTable.Races[0].season,
+          firstYear: data.MRData.RaceTable.Races[0],
           totalNum: parseInt(data.MRData.total),
         };
       }
