@@ -12,8 +12,8 @@ const CurrentStandings: NextPage = () => {
 
   return (
     <>
-      <DriverStandings standings={driverStandings ?? []} />
-      <TeamStandings standings={teamStandings ?? []} />
+      <DriverStandings standings={driverStandings} />
+      <TeamStandings standings={teamStandings} />
     </>
   );
 };

@@ -4,10 +4,14 @@ import TeamLink from "../Links/TeamLink";
 import styles from "../../styles/Statistic.module.scss";
 
 interface TeamStandingsProps {
-  standings: TeamStanding[];
+  standings: TeamStanding[] | undefined;
 }
 
 const TeamStandings = (props: TeamStandingsProps) => {
+  if (!props.standings) {
+    return null;
+  }
+  
   return (
     <div>
       {props.standings?.map((standing) => {

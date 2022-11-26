@@ -5,10 +5,14 @@ import TeamLink from "../Links/TeamLink";
 import styles from "../../styles/Statistic.module.scss";
 
 interface DriverStandingsProps {
-  standings: DriverStanding[];
+  standings: DriverStanding[] | undefined;
 }
 
 const DriverStandings = (props: DriverStandingsProps) => {
+  if (!props.standings) {
+    return null;
+  }
+  
   return (
     <div>
       {props.standings?.map((standing) => {

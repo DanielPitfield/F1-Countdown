@@ -117,7 +117,7 @@ const DriverProfile = (
         <span>{`Race wins: ${raceWins?.totalNum ?? "0"}`}</span>
         <span>{`Fastest Laps: ${fastestLaps?.totalNum ?? "0"}`}</span>
         <span>{`World championships: ${
-          championshipResults?.numChampionshipsWon.toString() ?? "0"
+          championshipResults?.numChampionshipsWon ?? "0"
         }`}</span>
         {championshipResults &&
           championshipResults.numChampionshipsWon > 0 &&

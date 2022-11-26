@@ -129,9 +129,9 @@ const GrandPrixProfile = (
 
       {race && <Podium race={race} showTeams={true} showTimes={true} />}
 
-      <DriverStandings standings={driverStandings ?? []} />
+      <DriverStandings standings={driverStandings} />
 
-      <TeamStandings standings={teamStandings ?? []} />
+      <TeamStandings standings={teamStandings} />
     </div>
   );
 };
