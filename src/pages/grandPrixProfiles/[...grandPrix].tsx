@@ -1,5 +1,5 @@
 import { trpc } from "../../utils/trpc";
-import Link from "next/link";
+import CircuitLink from "../../components/Links/CircuitLink";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -74,7 +74,9 @@ export async function getStaticProps(
   };
 }
 
-const GrandPrixProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+const GrandPrixProfile = (
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) => {
   const { season, roundNumber } = props;
 
   const { data: schedule } = trpc.grandPrix.getSchedule.useQuery({
@@ -92,15 +94,18 @@ const GrandPrixProfile = (props: InferGetStaticPropsType<typeof getStaticProps>)
     roundNumber: roundNumber,
   });
 
-  const { data: driverStandings } = trpc.grandPrix.getDriverStandingsAfter.useQuery({
-    season: season,
-    roundNumber: roundNumber,
-  });
+  const { data: driverStandings } =
+    trpc.grandPrix.getDriverStandingsAfter.useQuery({
+      season: season,
+      roundNumber: roundNumber,
+    });
 
-  const { data: teamStandings } = trpc.grandPrix.getTeamStandingsAfter.useQuery({
-    season: season,
-    roundNumber: roundNumber,
-  });
+  const { data: teamStandings } = trpc.grandPrix.getTeamStandingsAfter.useQuery(
+    {
+      season: season,
+      roundNumber: roundNumber,
+    }
+  );
 
   // TODO: Components to display qualifying and race results
 
@@ -109,9 +114,7 @@ const GrandPrixProfile = (props: InferGetStaticPropsType<typeof getStaticProps>)
       <div className={styles.generalInformation}>
         <span>{`${schedule?.season} - Round ${schedule?.round}`}</span>
         <span>{`${schedule?.raceName} (${schedule?.date})`}</span>
-        <Link href={`/circuitProfiles/${schedule?.Circuit.circuitId}`}>
-          {schedule?.Circuit.circuitName}
-        </Link>
+        <CircuitLink circuit={schedule?.Circuit} />
       </div>
 
       <div className={styles.generalInformation}>

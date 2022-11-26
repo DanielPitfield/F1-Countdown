@@ -1,4 +1,4 @@
-import Link from "next/link";
+import TeamLink from "../Links/TeamLink";
 import { TeamSeasonHistory } from "../../server/trpc/router/team";
 
 import styles from "../../styles/Statistic.module.scss";
@@ -13,7 +13,7 @@ const TeamChampion = (props: TeamChampionProps) => {
   return (
     <div key={team?.constructorId} className={styles.wrapper}>
       <div className={styles.name}>
-        <Link href={`/teamProfiles/${team?.constructorId}`}>{team?.name}</Link>
+        <TeamLink team={team} />
       </div>
 
       <div className={styles.numChampionships}>

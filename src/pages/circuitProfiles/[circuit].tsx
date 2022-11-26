@@ -1,5 +1,6 @@
 import { trpc } from "../../utils/trpc";
-import Link from "next/link";
+import GrandPrixLink from "../../components/Links/GrandPrixLink";
+import DriverLink from "../../components/Links/DriverLink";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -10,7 +11,6 @@ import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
-import { getDriverName } from "../../utils/getDriverName";
 
 import styles from "../../styles/Profile.module.scss";
 
@@ -94,14 +94,8 @@ const CircuitProfile = (
 
           return (
             <div key={driver?.driverId}>
-              <Link href={`/grandPrixProfiles/${race.season}/${race.round}`}>
-                {race.season}
-              </Link>
-
-              <Link href={`/driverProfiles/${driver?.driverId}`}>
-                {getDriverName(driver)}
-              </Link>
-
+              <GrandPrixLink grandPrix={race} />
+              <DriverLink driver={driver} />
               {`(${race.Results[0]?.Time?.time})`}
             </div>
           );

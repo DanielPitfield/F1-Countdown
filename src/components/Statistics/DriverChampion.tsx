@@ -1,6 +1,6 @@
-import Link from "next/link";
+import DriverLink from "../Links/DriverLink";
+import TeamLink from "../Links/TeamLink";
 import { DriverSeasonHistory } from "../../server/trpc/router/driver";
-import { getDriverName } from "../../utils/getDriverName";
 
 import styles from "../../styles/Statistic.module.scss";
 
@@ -14,9 +14,7 @@ const DriverChampion = (props: DriverChampionProps) => {
   return (
     <div key={driver?.driverId} className={styles.wrapper}>
       <div className={styles.name}>
-        <Link href={`/driverProfiles/${driver?.driverId}`}>
-          {getDriverName(driver)}
-        </Link>
+        <DriverLink driver={driver} />
       </div>
 
       <div className={styles.numChampionships}>
@@ -24,21 +22,15 @@ const DriverChampion = (props: DriverChampionProps) => {
       </div>
 
       <div className={styles.winningYears}>
-        {`(${props.championshipsWon.map((championship) => championship.season).join(", ")})`}
+        {`(${props.championshipsWon
+          .map((championship) => championship.season)
+          .join(", ")})`}
       </div>
 
       <div className={styles.winningYearsTeams}>
-        {props.championshipsWon.map((championship, index) => {
+        {props.championshipsWon.map((championship) => {
           const team = championship.DriverStandings[0]?.Constructors[0];
-
-          return (
-            <Link
-              key={`${team?.constructorId}-${index}`}
-              href={`/teamProfiles/${team?.constructorId}`}
-            >
-              {team?.name}
-            </Link>
-          );
+          return <TeamLink team={team} />;
         })}
       </div>
     </div>

@@ -1,6 +1,5 @@
-import Link from "next/link";
-import { getDriverName } from "../../utils/getDriverName";
 import { Race } from "../../server/trpc/router/grandPrix";
+import DriverLink from "../Links/DriverLink";
 
 import styles from "../../styles/Statistic.module.scss";
 
@@ -14,9 +13,7 @@ const RaceWinner = (props: RaceWinnerProps) => {
   return (
     <div key={driver?.driverId} className={styles.wrapper}>
       <div className={styles.name}>
-        <Link href={`/driverProfiles/${driver?.driverId}`}>
-          {getDriverName(driver)}
-        </Link>
+        <DriverLink driver={driver} />
       </div>
 
       <div className={styles.numRaces}>{props.racesWon.length}</div>

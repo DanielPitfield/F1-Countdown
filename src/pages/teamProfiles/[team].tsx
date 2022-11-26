@@ -1,6 +1,5 @@
 import { trpc } from "../../utils/trpc";
-import Link from "next/link";
-import { getDriverName } from "../../utils/getDriverName";
+import DriverLink from "../../components/Links/DriverLink";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -102,9 +101,7 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         {drivers?.current?.map((driver) => {
           return (
             <div key={driver.driverId}>
-              <Link href={`/driverProfiles/${driver.driverId}`}>
-                {getDriverName(driver)}
-              </Link>
+              <DriverLink driver={driver} />
             </div>
           );
         })}

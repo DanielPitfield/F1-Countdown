@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { TeamStanding } from "../../server/trpc/router/statistics";
+import TeamLink from "../Links/TeamLink";
 
 import styles from "../../styles/Statistic.module.scss";
 
@@ -12,15 +12,13 @@ const TeamStandings = (props: TeamStandingsProps) => {
     <div>
       {props.standings?.map((standing) => {
         return (
-          <div key={standing.Constructor.constructorId} className={styles.wrapper}>
+          <div
+            key={standing.Constructor.constructorId}
+            className={styles.wrapper}
+          >
             <div>
               {standing.position}
-
-              <Link
-                href={`/teamProfiles/${standing.Constructor.constructorId}`}
-              >
-                {standing.Constructor.name}
-              </Link>
+              <TeamLink team={standing.Constructor} />
             </div>
 
             <div>{standing.points}</div>

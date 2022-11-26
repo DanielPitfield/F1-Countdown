@@ -3,10 +3,14 @@ import { getDriverName } from "../../utils/getDriverName";
 import Link from "next/link";
 
 import styles from "../../styles/Statistic.module.scss";
+import DriverLink from "../Links/DriverLink";
+import TeamLink from "../Links/TeamLink";
 
 interface DriverStandingsProps {
   standings: DriverStanding[];
 }
+
+// TODO: DriverLink (and similar) component?
 
 const DriverStandings = (props: DriverStandingsProps) => {
   return (
@@ -16,16 +20,8 @@ const DriverStandings = (props: DriverStandingsProps) => {
           <div key={standing.Driver.driverId} className={styles.wrapper}>
             <div>
               {standing.position}
-
-              <Link href={`/driverProfiles/${standing.Driver.driverId}`}>
-                {getDriverName(standing.Driver)}
-              </Link>
-
-              <Link
-                href={`/teamProfiles/${standing.Constructors[0]?.constructorId}`}
-              >
-                {`(${standing.Constructors[0]?.name})`}
-              </Link>
+              <DriverLink driver={standing.Driver} />
+              <TeamLink team={standing.Constructors[0]} />
             </div>
 
             <div>{standing.points}</div>

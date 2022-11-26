@@ -3,6 +3,8 @@ import React from "react";
 import { DriverRaceResult, Race } from "../server/trpc/router/grandPrix";
 
 import { getDriverName } from "../utils/getDriverName";
+import DriverLink from "./Links/DriverLink";
+import TeamLink from "./Links/TeamLink";
 
 interface PodiumProps {
   race: Race;
@@ -28,21 +30,12 @@ export const Podium = (props: PodiumProps) => {
       {podiumOrder.map((podiumStep, index) => {
         return (
           <div key={index}>
-            <Link
-              key={podiumStep?.Driver.driverId}
-              href={`/driverProfiles/${podiumStep?.Driver.driverId}`}
-            >
-              {getDriverName(podiumStep?.Driver)}
-            </Link>
+            <DriverLink driver={podiumStep?.Driver} />
 
             {props.showTeams && (
-              <Link
-                key={podiumStep?.Constructor.constructorId}
-                href={`/teamProfiles/${podiumStep?.Constructor.constructorId}`}
-              >
-                {podiumStep?.Constructor.name ?? ""}
-              </Link>
+              <TeamLink team={podiumStep?.Constructor}></TeamLink>
             )}
+
             {props.showTimes && <span>{podiumStep?.Time?.time ?? ""}</span>}
           </div>
         );
