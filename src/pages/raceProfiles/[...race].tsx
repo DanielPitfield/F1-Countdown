@@ -103,7 +103,6 @@ const RaceProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   });
 
   // TODO: Components to display qualifying and race results
-  // TODO: Fix driver and team standings
 
   return (
     <div className={styles.wrapper}>

@@ -136,7 +136,7 @@ export const raceRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.StandingsTable.StandingsLists.DriverStandings;
+      return await data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
     }),
 
   getTeamStandingsAfter: publicProcedure
@@ -152,6 +152,6 @@ export const raceRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.StandingsTable.StandingsLists.ConstructorStandings;
+      return await data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
     }),
 });
