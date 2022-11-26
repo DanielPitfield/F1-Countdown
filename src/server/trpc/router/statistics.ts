@@ -2,7 +2,7 @@ import { router, publicProcedure } from "../trpc";
 import { MAX_LIMIT } from "../../../utils/limits";
 import { Driver, DriverSeasonHistory } from "./driver";
 import { Team, TeamSeasonHistory } from "./team";
-import { Race } from "./race";
+import { Race } from "./grandPrix";
 
 export type DriverStanding = {
   position: string;

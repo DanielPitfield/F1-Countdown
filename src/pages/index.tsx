@@ -38,9 +38,9 @@ const Home: NextPage = () => {
             <Link href="/circuitProfiles/spa">Spa</Link>
             <Link href="/circuitProfiles/baku">Baku</Link>
 
-            <h3>Race Profiles</h3>
-            <Link href="/raceProfiles/2022/3">2022/3</Link>
-            <Link href="/raceProfiles/2022/4">2022/4</Link>
+            <h3>Grand Prix Profiles</h3>
+            <Link href="/grandPrixProfiles/2022/3">2022/3</Link>
+            <Link href="/grandPrixProfiles/2022/4">2022/4</Link>
 
             <h3>Other</h3>
             <Link href="/GuessingGame">Guessing Game</Link>

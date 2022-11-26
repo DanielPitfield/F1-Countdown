@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
 import RaceWinner from "../../components/Statistics/RaceWinner";
-import { Race } from "../../server/trpc/router/race";
+import { Race } from "../../server/trpc/router/grandPrix";
 
 const RaceWins: NextPage = () => {
   const { data: historyPart1 } =

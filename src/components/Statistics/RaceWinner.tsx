@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getDriverName } from "../../utils/getDriverName";
-import { Race } from "../../server/trpc/router/race";
+import { Race } from "../../server/trpc/router/grandPrix";
 
 import styles from "../../styles/Statistic.module.scss";
 

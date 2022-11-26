@@ -3,7 +3,7 @@ import { z } from "zod";
 import { MAX_LIMIT } from "../../../utils/limits";
 import { Driver } from "./driver";
 import { TeamStanding } from "./statistics";
-import { Race } from "./race";
+import { Race } from "./grandPrix";
 
 export type Team = {
   constructorId: string;

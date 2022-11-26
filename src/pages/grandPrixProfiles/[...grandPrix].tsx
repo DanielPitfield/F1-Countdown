@@ -20,15 +20,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {
     // TODO: Build time SSG
     paths: [
-      { params: { race: ["2022", "3"] } },
-      { params: { race: ["2022", "4"] } },
+      { params: { grandPrix: ["2022", "3"] } },
+      { params: { grandPrix: ["2022", "4"] } },
     ],
     fallback: "blocking",
   };
 };
 
 export async function getStaticProps(
-  context: GetStaticPropsContext<{ race: string[] }>
+  context: GetStaticPropsContext<{ grandPrix: string[] }>
 ) {
   // Helper function
   const ssg = await createProxySSGHelpers({
@@ -38,28 +38,28 @@ export async function getStaticProps(
   });
 
   // The dynamic parameter of the route (catch all route so this will always be an array)
-  const race = context.params?.race as string[];
+  const grandPrix = context.params?.grandPrix as string[];
   // Destructure the season and roundNumber segments of the route
-  const [season, roundNumber] = race;
+  const [season, roundNumber] = grandPrix;
 
   // Pre-fetching data (so that it is immediately available)
-  await ssg.race.getSchedule.prefetch({
+  await ssg.grandPrix.getSchedule.prefetch({
     season: season ?? "",
     roundNumber: roundNumber ?? "",
   });
-  await ssg.race.getQualifying.prefetch({
+  await ssg.grandPrix.getQualifying.prefetch({
     season: season ?? "",
     roundNumber: roundNumber ?? "",
   });
-  await ssg.race.getRace.prefetch({
+  await ssg.grandPrix.getRace.prefetch({
     season: season ?? "",
     roundNumber: roundNumber ?? "",
   });
-  await ssg.race.getDriverStandingsAfter.prefetch({
+  await ssg.grandPrix.getDriverStandingsAfter.prefetch({
     season: season ?? "",
     roundNumber: roundNumber ?? "",
   });
-  await ssg.race.getTeamStandingsAfter.prefetch({
+  await ssg.grandPrix.getTeamStandingsAfter.prefetch({
     season: season ?? "",
     roundNumber: roundNumber ?? "",
   });
@@ -74,30 +74,30 @@ export async function getStaticProps(
   };
 }
 
-const RaceProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+const GrandPrixProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { season, roundNumber } = props;
 
-  const { data: schedule } = trpc.race.getSchedule.useQuery({
+  const { data: schedule } = trpc.grandPrix.getSchedule.useQuery({
     season: season,
     roundNumber: roundNumber,
   });
 
-  const { data: qualifying } = trpc.race.getQualifying.useQuery({
+  const { data: qualifying } = trpc.grandPrix.getQualifying.useQuery({
     season: season,
     roundNumber: roundNumber,
   });
 
-  const { data: race } = trpc.race.getRace.useQuery({
+  const { data: race } = trpc.grandPrix.getRace.useQuery({
     season: season,
     roundNumber: roundNumber,
   });
 
-  const { data: driverStandings } = trpc.race.getDriverStandingsAfter.useQuery({
+  const { data: driverStandings } = trpc.grandPrix.getDriverStandingsAfter.useQuery({
     season: season,
     roundNumber: roundNumber,
   });
 
-  const { data: teamStandings } = trpc.race.getTeamStandingsAfter.useQuery({
+  const { data: teamStandings } = trpc.grandPrix.getTeamStandingsAfter.useQuery({
     season: season,
     roundNumber: roundNumber,
   });
@@ -133,4 +133,4 @@ const RaceProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   );
 };
 
-export default RaceProfile;
+export default GrandPrixProfile;

@@ -74,7 +74,7 @@ export type Race = {
   Results: DriverRaceResult[];
 };
 
-export const raceRouter = router({
+export const grandPrixRouter = router({
   getSchedule: publicProcedure
     .input(
       z.object({
@@ -152,6 +152,7 @@ export const raceRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
+      return await data.MRData.StandingsTable.StandingsLists[0]
+        .ConstructorStandings;
     }),
 });

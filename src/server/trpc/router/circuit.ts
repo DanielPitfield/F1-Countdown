@@ -1,7 +1,7 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { MAX_LIMIT } from "../../../utils/limits";
-import { Race } from "./race";
+import { Race } from "./grandPrix";
 
 export type Circuit = {
   circuitId: string;

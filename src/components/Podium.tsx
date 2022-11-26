@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { DriverRaceResult, Race } from "../server/trpc/router/race";
+import { DriverRaceResult, Race } from "../server/trpc/router/grandPrix";
 
 import { getDriverName } from "../utils/getDriverName";
 

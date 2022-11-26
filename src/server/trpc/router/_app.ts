@@ -2,14 +2,14 @@ import { router } from "../trpc";
 import { statisticsRouter } from "./statistics";
 import { driverRouter } from "./driver";
 import { teamRouter } from "./team";
-import { raceRouter } from "./race";
+import { grandPrixRouter } from "./grandPrix";
 import { circuitRouter } from "./circuit";
 
 export const appRouter = router({
   statistics: statisticsRouter,
   driver: driverRouter,
   team: teamRouter,
-  race: raceRouter,
+  grandPrix: grandPrixRouter,
   circuit: circuitRouter,
 });
 
