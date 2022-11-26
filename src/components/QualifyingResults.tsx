@@ -6,6 +6,8 @@ import styles from "../styles/Statistic.module.scss";
 
 interface QualifyingResultsProps {
   qualifying: Qualifying | undefined;
+  showTeams: boolean;
+  showTimes: boolean;
 }
 
 const QualifyingResults = (props: QualifyingResultsProps) => {
@@ -23,8 +25,10 @@ const QualifyingResults = (props: QualifyingResultsProps) => {
             <div>
               {result.position}
               <DriverLink driver={result.Driver} />
-              <TeamLink team={result.Constructor} />
-              {result.Q3 ?? result.Q2 ?? result.Q1}
+              {props.showTeams && <TeamLink team={result.Constructor} />}
+              {props.showTimes && (
+                <span>{result.Q3 ?? result.Q2 ?? result.Q1 ?? ""}</span>
+              )}
             </div>
           </div>
         );

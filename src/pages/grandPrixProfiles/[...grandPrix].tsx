@@ -124,9 +124,13 @@ const GrandPrixProfile = (
 
       <Podium race={race} showTeams={true} showTimes={true} />
 
-      <QualifyingResults qualifying={qualifying} />
-      <RaceResults race={race} />
-      
+      <QualifyingResults
+        qualifying={qualifying}
+        showTeams={false}
+        showTimes={true}
+      />
+      <RaceResults race={race} showTeams={false} showTimes={true} />
+
       <DriverStandings standings={driverStandings} />
       <TeamStandings standings={teamStandings} />
     </div>
