@@ -4,6 +4,7 @@ import { MAX_LIMIT } from "../../../utils/limits";
 import { Driver } from "./driver";
 import { TeamStanding } from "./statistics";
 import { Race } from "./grandPrix";
+import { PodiumPositions } from "../../../components/Podium";
 
 export type Team = {
   constructorId: string;
@@ -111,7 +112,7 @@ export const teamRouter = router({
             const racePosition: number = parseInt(
               race.Results[0]?.position ?? "0"
             );
-            return racePosition >= 1 && racePosition <= 3;
+            return racePosition >= PodiumPositions.FIRST && racePosition <= PodiumPositions.THIRD;
           }),
           firstRace: data.MRData.RaceTable.Races[0],
           lastRace: data.MRData.RaceTable.Races.at(-1),

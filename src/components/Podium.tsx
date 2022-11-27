@@ -9,13 +9,16 @@ interface PodiumProps {
   showTimes: boolean;
 }
 
+export enum PodiumPositions {
+  FIRST = 1,
+  SECOND,
+  THIRD,
+}
+
 export const Podium = (props: PodiumProps) => {
   if (!props.race) {
     return null;
   }
-
-  // TODO: Position enum?
-  const NUM_PODIUM_STEPS = 3;
 
   const podiumOrder: DriverRaceResult[] = props.race.Results
     // First to last
@@ -23,7 +26,7 @@ export const Podium = (props: PodiumProps) => {
       return parseInt(a.position) - parseInt(b.position);
     })
     // Only the podium drivers
-    .slice(0, NUM_PODIUM_STEPS);
+    .slice(0, PodiumPositions.THIRD);
 
   return (
     // TODO: Podium Steps CSS, different heights, second place on left, first place in middle, third place on right
