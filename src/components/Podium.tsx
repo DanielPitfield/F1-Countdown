@@ -14,6 +14,7 @@ export const Podium = (props: PodiumProps) => {
     return null;
   }
 
+  // TODO: Position enum?
   const NUM_PODIUM_STEPS = 3;
 
   const podiumOrder: DriverRaceResult[] = props.race.Results

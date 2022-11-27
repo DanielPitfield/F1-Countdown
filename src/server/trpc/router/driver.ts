@@ -97,6 +97,7 @@ export const driverRouter = router({
         input,
       }): Promise<{
         raceTable: Race[];
+        podiums: Race[];
         firstRace: Race;
         lastRace: Race;
         totalNum: number;
@@ -108,6 +109,13 @@ export const driverRouter = router({
 
         return {
           raceTable: data.MRData.RaceTable.Races,
+          // TODO: Helper function?
+          podiums: data.MRData.RaceTable.Races.filter((race: Race) => {
+            const racePosition: number = parseInt(
+              race.Results[0]?.position ?? "0"
+            );
+            return racePosition >= 1 && racePosition <= 3;
+          }),
           firstRace: data.MRData.RaceTable.Races[0],
           lastRace: data.MRData.RaceTable.Races.at(-1),
           totalNum: parseInt(data.MRData.total),

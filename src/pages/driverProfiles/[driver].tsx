@@ -152,6 +152,7 @@ const DriverProfile = (
       <div className={styles.resultsInformation}>
         <span>{`Pole positions: ${polePositions?.totalNum ?? "0"}`}</span>
         <span>{`Race wins: ${raceWins?.totalNum ?? "0"}`}</span>
+        <span>{`Podiums: ${racesEntered?.podiums.length ?? "0"}`}</span>
         <span>{`Fastest Laps: ${fastestLaps?.totalNum ?? "0"}`}</span>
         <span>{`World championships: ${
           championshipResults?.numChampionshipsWon ?? "0"
