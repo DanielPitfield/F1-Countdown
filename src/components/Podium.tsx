@@ -2,6 +2,7 @@ import React from "react";
 import { DriverRaceResult, Race } from "../server/trpc/router/grandPrix";
 import DriverLink from "./Links/DriverLink";
 import TeamLink from "./Links/TeamLink";
+import styles from "../styles/Podium.module.scss";
 
 interface PodiumProps {
   race: Race | undefined;
@@ -32,15 +33,17 @@ export const Podium = (props: PodiumProps) => {
     // TODO: Podium Steps CSS, different heights, second place on left, first place in middle, third place on right
     <div>
       <strong>Podium</strong>
-      {podiumOrder.map((podiumStep, index) => {
-        return (
-          <div key={index}>
-            <DriverLink driver={podiumStep?.Driver} />
-            {props.showTeams && <TeamLink team={podiumStep?.Constructor} />}
-            {props.showTimes && <span>{podiumStep?.Time?.time ?? ""}</span>}
-          </div>
-        );
-      })}
+      <div className={styles.wrapper}>
+        {podiumOrder.map((podiumStep, index) => {
+          return (
+            <div key={index} className={styles.step} data-position={index + 1}>
+              <DriverLink driver={podiumStep?.Driver} />
+              {props.showTeams && <TeamLink team={podiumStep?.Constructor} />}
+              {props.showTimes && <span className={styles.time}>{podiumStep?.Time?.time ?? ""}</span>}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

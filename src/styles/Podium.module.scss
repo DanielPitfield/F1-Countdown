@@ -1,0 +1,71 @@
+.wrapper {
+  display: flex;
+  display: flex;
+  align-items: flex-end;
+
+  .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em 0.5em;
+    margin: 0.2em;
+    min-width: 10em;
+    border-radius: 0.75em;
+    &:hover {
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    &[data-position="1"] {
+      background-color: #e0d8a9;
+      border-top: 0.2em solid darken(#e0d8a9, 10%);
+      order: 2;
+      padding-bottom: 5em;
+      &::before {
+        background-color: lighten(#e0d8a9, 10%);
+      }
+      &:hover {
+        background-color: darken(#e0d8a9, 2%);
+      }
+    }
+    &[data-position="2"] {
+      background-color: #dfdfdf;
+      border-top: 0.2em solid darken(#dfdfdf, 10%);
+      order: 1;
+      padding-bottom: 2.5em;
+      &::before {
+        background-color: lighten(#dfdfdf, 10%);
+      }
+      &:hover {
+        background-color: darken(#dfdfdf, 2%);
+      }
+    }
+    &[data-position="3"] {
+      background-color: #d6cdca;
+      border-top: 0.2em solid darken(#d6cdca, 10%);
+      order: 3;
+      &::before {
+        background-color: lighten(#d6cdca, 10%);
+      }
+      &:hover {
+        background-color: darken(#d6cdca, 2%);
+      }
+    }
+
+    &::before {
+      content: attr(data-position);
+      font-size: 1.2em;
+      padding-bottom: 0.2em;
+      color: #777;
+      opacity: 0.8;
+      border: 0.1em solid #cccccc;
+      width: 1.7em;
+      height: 1.7em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5em;
+    }
+  }
+}

@@ -1,6 +1,10 @@
 .wrapper {
 }
 
+.title {
+  font-weight: normal;
+}
+
 .generalInformation, .resultsInformation {
   margin: 3em 0;
   & > * {
