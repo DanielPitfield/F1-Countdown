@@ -68,7 +68,6 @@ const SeasonProfile = (
   });
 
   // TODO: Schedule component?
-  // TODO: race.raceName property (use elsewhere?)
 
   return (
     <div className={styles.wrapper}>

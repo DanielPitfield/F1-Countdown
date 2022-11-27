@@ -12,6 +12,7 @@ import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 import GrandPrixLink from "../../components/Links/GrandPrixLink";
+import SeasonLink from "../../components/Links/SeasonLink";
 
 import styles from "../../styles/Profile.module.scss";
 
@@ -157,11 +158,17 @@ const DriverProfile = (
         <span>{`World championships: ${
           championshipResults?.numChampionshipsWon ?? "0"
         }`}</span>
+
         {championshipResults &&
           championshipResults.numChampionshipsWon > 0 &&
-          championshipResults.winningYears
-            ?.map((championship) => championship.season)
-            .join(", ")}
+          championshipResults.winningYears.map((championship) => {
+            return (
+              <SeasonLink
+                key={championship.season}
+                season={championship.season}
+              />
+            );
+          })}
       </div>
     </div>
   );

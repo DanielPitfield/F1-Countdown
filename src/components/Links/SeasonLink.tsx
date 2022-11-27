@@ -1,9 +1,7 @@
 import Link from "next/link";
-import { Race } from "../../server/trpc/router/grandPrix";
 
 interface SeasonLinkProps {
-  season: Race[] | undefined;
-  showRaceName: boolean;
+  season: string | undefined;
 }
 
 const SeasonLink = (props: SeasonLinkProps) => {
@@ -11,9 +9,7 @@ const SeasonLink = (props: SeasonLinkProps) => {
     return null;
   }
 
-  const year = props.season[0]?.season;
-
-  return <Link href={`/seasonProfiles/${year}`}>{year}</Link>;
+  return <Link href={`/seasonProfiles/${props.season}`}>{props.season ?? ""}</Link>;
 };
 
 export default SeasonLink;

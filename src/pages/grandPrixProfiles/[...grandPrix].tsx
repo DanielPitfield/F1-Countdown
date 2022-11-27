@@ -17,6 +17,7 @@ import TeamStandings from "../../components/Statistics/TeamStandings";
 import styles from "../../styles/Profile.module.scss";
 import QualifyingResults from "../../components/QualifyingResults";
 import RaceResults from "../../components/RaceResults";
+import SeasonLink from "../../components/Links/SeasonLink";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -115,7 +116,8 @@ const GrandPrixProfile = (
   return (
     <div className={styles.wrapper}>
       <div className={styles.generalInformation}>
-        <span>{`${schedule?.season} - Round ${schedule?.round}`}</span>
+        <SeasonLink season={schedule?.season} />
+        <span>{`Round ${schedule?.round}`}</span>
         <span>{`${schedule?.raceName} (${schedule?.date})`}</span>
         <CircuitLink circuit={schedule?.Circuit} />
       </div>

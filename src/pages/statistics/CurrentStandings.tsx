@@ -10,6 +10,8 @@ const CurrentStandings: NextPage = () => {
   const { data: teamStandings } =
     trpc.statistics.getCurrentTeamStandings.useQuery();
 
+  // TODO: Heading element with link to current season profile?
+
   return (
     <>
       <DriverStandings standings={driverStandings} />

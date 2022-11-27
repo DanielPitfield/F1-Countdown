@@ -1,5 +1,6 @@
 import TeamLink from "../Links/TeamLink";
 import { TeamSeasonHistory } from "../../server/trpc/router/team";
+import SeasonLink from "../Links/SeasonLink";
 
 import styles from "../../styles/Statistic.module.scss";
 
@@ -21,7 +22,14 @@ const TeamChampion = (props: TeamChampionProps) => {
       </div>
 
       <div className={styles.winningYears}>
-        {`(${props.championshipsWon.map((x) => x.season).join(", ")})`}
+        {props.championshipsWon.map((championship) => {
+          return (
+            <SeasonLink
+              key={championship.season}
+              season={championship.season}
+            />
+          );
+        })}
       </div>
     </div>
   );

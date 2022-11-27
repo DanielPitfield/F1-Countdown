@@ -10,9 +10,10 @@ import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
+import GrandPrixLink from "../../components/Links/GrandPrixLink";
+import SeasonLink from "../../components/Links/SeasonLink";
 
 import styles from "../../styles/Profile.module.scss";
-import GrandPrixLink from "../../components/Links/GrandPrixLink";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -154,9 +155,14 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
         {championshipResults &&
           championshipResults.numChampionshipsWon > 0 &&
-          championshipResults.winningYears
-            ?.map((championship) => championship.season)
-            .join(", ")}
+          championshipResults.winningYears.map((championship) => {
+            return (
+              <SeasonLink
+                key={championship.season}
+                season={championship.season}
+              />
+            );
+          })}
       </div>
     </div>
   );

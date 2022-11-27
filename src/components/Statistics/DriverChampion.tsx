@@ -1,6 +1,7 @@
 import DriverLink from "../Links/DriverLink";
 import TeamLink from "../Links/TeamLink";
 import { DriverSeasonHistory } from "../../server/trpc/router/driver";
+import SeasonLink from "../Links/SeasonLink";
 
 import styles from "../../styles/Statistic.module.scss";
 
@@ -22,15 +23,22 @@ const DriverChampion = (props: DriverChampionProps) => {
       </div>
 
       <div className={styles.winningYears}>
-        {`(${props.championshipsWon
-          .map((championship) => championship.season)
-          .join(", ")})`}
+        {props.championshipsWon.map((championship) => {
+          return (
+            <SeasonLink
+              key={championship.season}
+              season={championship.season}
+            />
+          );
+        })}
       </div>
 
       <div className={styles.winningYearsTeams}>
         {props.championshipsWon.map((championship, index) => {
           const team = championship.DriverStandings[0]?.Constructors[0];
-          return <TeamLink key={`${team?.constructorId}-${index}`} team={team} />;
+          return (
+            <TeamLink key={`${team?.constructorId}-${index}`} team={team} />
+          );
         })}
       </div>
     </div>
