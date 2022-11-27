@@ -30,6 +30,19 @@ export const teamRouter = router({
       return await data.MRData.ConstructorTable.Constructors[0];
     }),
 
+  isActive: publicProcedure
+    .input(z.object({ teamID: z.string().min(1).trim() }))
+    .query(async ({ input }): Promise<boolean> => {
+      const API_URL = `https://ergast.com/api/f1/current/constructors.json?limit=${MAX_LIMIT}`;
+
+      const response = await fetch(API_URL);
+      const data = await response.json();
+
+      return await data.MRData.ConstructorTable.Constructors.some(
+        (team: Team) => team.constructorId === input.teamID
+      );
+    }),
+
   getDrivers: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }): Promise<{ current: Driver[]; all: Driver[] }> => {

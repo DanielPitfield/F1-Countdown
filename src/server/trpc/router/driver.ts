@@ -22,9 +22,9 @@ export type DriverSeasonHistory = {
   DriverStandings: DriverStanding[];
 };
 
+// TODO: Toggle percentages (e.g wins/total races)
 // TODO: Team History (show time period driving for teams)
-// TODO: Is a current driver on the grid?
-// TODO: Picture (F1 22 card?)
+// TODO: Picture (F1 22 card?) along with driver code and number?
 
 export const driverRouter = router({
   getInfo: publicProcedure
@@ -36,6 +36,19 @@ export const driverRouter = router({
       const data = await response.json();
 
       return await data.MRData.DriverTable.Drivers[0];
+    }),
+
+  isActive: publicProcedure
+    .input(z.object({ driverID: z.string().min(1).trim() }))
+    .query(async ({ input }): Promise<boolean> => {
+      const API_URL = `https://ergast.com/api/f1/current/drivers.json?limit=${MAX_LIMIT}`;
+
+      const response = await fetch(API_URL);
+      const data = await response.json();
+
+      return await data.MRData.DriverTable.Drivers.some(
+        (driver: Driver) => driver.driverId === input.driverID
+      );
     }),
 
   getChampionshipResults: publicProcedure

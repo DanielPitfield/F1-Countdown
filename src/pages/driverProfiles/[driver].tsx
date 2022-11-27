@@ -41,6 +41,7 @@ export async function getStaticProps(
 
   // Pre-fetching data (so that it is immediately available)
   const driverInfo = await ssg.driver.getInfo.fetch({ driverID: driver });
+  await ssg.driver.isActive.prefetch({ driverID: driver });
   await ssg.driver.getTeamsDrivenFor.prefetch({ driverID: driver });
   await ssg.driver.getRacesEntered.prefetch({ driverID: driver });
   await ssg.driver.getPolePositions.prefetch({ driverID: driver });
@@ -76,6 +77,10 @@ const DriverProfile = (
     driverID: driver,
   });
 
+  const { data: isActive } = trpc.driver.isActive.useQuery({
+    driverID: driver,
+  });
+
   const { data: teamsDrivenFor } = trpc.driver.getTeamsDrivenFor.useQuery({
     driverID: driver,
   });
@@ -106,6 +111,8 @@ const DriverProfile = (
         <span>{`${generalInformation?.dateOfBirth} (${props.age} years)`}</span>
         <span>{generalInformation?.nationality}</span>
       </div>
+
+      <div>{`Active: ${isActive}`}</div>
 
       <div className={styles.teamsDrivenFor}>
         <strong>Teams Driven For</strong>
