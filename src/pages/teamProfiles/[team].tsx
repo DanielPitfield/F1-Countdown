@@ -123,24 +123,24 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         First Race:
         <GrandPrixLink
           grandPrix={racesEntered?.firstRace}
-          showLocation={true}
+          showRaceName={true}
         />
         Last Race:
-        <GrandPrixLink grandPrix={racesEntered?.lastRace} showLocation={true} />
+        <GrandPrixLink grandPrix={racesEntered?.lastRace} showRaceName={true} />
         First Pole:
         <GrandPrixLink
           grandPrix={polePositions?.firstPole}
-          showLocation={true}
+          showRaceName={true}
         />
         Last Pole:
         <GrandPrixLink
           grandPrix={polePositions?.lastPole}
-          showLocation={true}
+          showRaceName={true}
         />
         First Win:
-        <GrandPrixLink grandPrix={raceWins?.firstWin} showLocation={true} />
+        <GrandPrixLink grandPrix={raceWins?.firstWin} showRaceName={true} />
         Last Win:
-        <GrandPrixLink grandPrix={raceWins?.lastWin} showLocation={true} />
+        <GrandPrixLink grandPrix={raceWins?.lastWin} showRaceName={true} />
       </div>
 
       <div className={styles.resultsInformation}>

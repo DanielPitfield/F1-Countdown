@@ -3,7 +3,7 @@ import { GrandPrixWeekend, Race } from "../../server/trpc/router/grandPrix";
 
 interface GrandPrixLinkProps {
   grandPrix: GrandPrixWeekend | Race | undefined;
-  showLocation: boolean;
+  showRaceName: boolean;
 }
 
 const GrandPrixLink = (props: GrandPrixLinkProps) => {
@@ -11,8 +11,8 @@ const GrandPrixLink = (props: GrandPrixLinkProps) => {
     return null;
   }
 
-  const text = props.showLocation
-    ? `${props.grandPrix.Circuit.Location.locality} ${props.grandPrix.season}`
+  const text = props.showRaceName
+    ? `${props.grandPrix.season} ${props.grandPrix.raceName}`
     : props.grandPrix.season;
 
   return (

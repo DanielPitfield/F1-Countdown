@@ -82,7 +82,11 @@ const CircuitProfile = (
       </div>
 
       <div className={styles.generalInformation}>
-        First Grand Prix: <GrandPrixLink grandPrix={pastWinners?.firstYear} showLocation={false} />
+        First Grand Prix:
+        <GrandPrixLink
+          grandPrix={pastWinners?.firstYear}
+          showRaceName={false}
+        />
         <span>{`Number of Grand Prix: ${pastWinners?.totalNum ?? "-"}`}</span>
       </div>
 
@@ -93,7 +97,7 @@ const CircuitProfile = (
 
           return (
             <div key={driver?.driverId}>
-              <GrandPrixLink grandPrix={race} showLocation={false} />
+              <GrandPrixLink grandPrix={race} showRaceName={false} />
               <DriverLink driver={driver} />
               {`(${race.Results[0]?.Time?.time})`}
             </div>
