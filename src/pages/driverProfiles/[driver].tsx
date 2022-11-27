@@ -11,6 +11,7 @@ import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
+import GrandPrixLink from "../../components/Links/GrandPrixLink";
 
 import styles from "../../styles/Profile.module.scss";
 
@@ -41,6 +42,7 @@ export async function getStaticProps(
   // Pre-fetching data (so that it is immediately available)
   const driverInfo = await ssg.driver.getInfo.fetch({ driverID: driver });
   await ssg.driver.getTeamsDrivenFor.prefetch({ driverID: driver });
+  await ssg.driver.getRacesEntered.prefetch({ driverID: driver });
   await ssg.driver.getPolePositions.prefetch({ driverID: driver });
   await ssg.driver.getRaceWins.prefetch({ driverID: driver });
   await ssg.driver.getFastestLaps.prefetch({ driverID: driver });
@@ -78,6 +80,10 @@ const DriverProfile = (
     driverID: driver,
   });
 
+  const { data: racesEntered } = trpc.driver.getRacesEntered.useQuery({
+    driverID: driver,
+  });
+
   const { data: polePositions } = trpc.driver.getPolePositions.useQuery({
     driverID: driver,
   });
@@ -110,6 +116,30 @@ const DriverProfile = (
             </div>
           );
         })}
+      </div>
+
+      <div>
+        First Race:
+        <GrandPrixLink
+          grandPrix={racesEntered?.firstRace}
+          showLocation={true}
+        />
+        Last Race:
+        <GrandPrixLink grandPrix={racesEntered?.lastRace} showLocation={true} />
+        First Pole:
+        <GrandPrixLink
+          grandPrix={polePositions?.firstPole}
+          showLocation={true}
+        />
+        Last Pole:
+        <GrandPrixLink
+          grandPrix={polePositions?.lastPole}
+          showLocation={true}
+        />
+        First Win:
+        <GrandPrixLink grandPrix={raceWins?.firstWin} showLocation={true} />
+        Last Win:
+        <GrandPrixLink grandPrix={raceWins?.lastWin} showLocation={true} />
       </div>
 
       <div className={styles.resultsInformation}>

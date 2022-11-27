@@ -23,8 +23,6 @@ export type DriverSeasonHistory = {
 };
 
 // TODO: Team History (show time period driving for teams)
-// TODO: First race (first win?)
-// TODO: Most recent race (also most recent win?)
 // TODO: Is a current driver on the grid?
 // TODO: Picture (F1 22 card?)
 
@@ -82,7 +80,14 @@ export const driverRouter = router({
   getRacesEntered: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(
-      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
+      async ({
+        input,
+      }): Promise<{
+        raceTable: Race[];
+        firstRace: Race;
+        lastRace: Race;
+        totalNum: number;
+      }> => {
         const API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/results.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -90,6 +95,8 @@ export const driverRouter = router({
 
         return {
           raceTable: data.MRData.RaceTable.Races,
+          firstRace: data.MRData.RaceTable.Races[0],
+          lastRace: data.MRData.RaceTable.Races.at(-1),
           totalNum: parseInt(data.MRData.total),
         };
       }
@@ -98,7 +105,14 @@ export const driverRouter = router({
   getPolePositions: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(
-      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
+      async ({
+        input,
+      }): Promise<{
+        raceTable: Race[];
+        firstPole: Race;
+        lastPole: Race;
+        totalNum: number;
+      }> => {
         const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/qualifying/1.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -106,6 +120,8 @@ export const driverRouter = router({
 
         return {
           raceTable: data.MRData.RaceTable.Races,
+          firstPole: data.MRData.RaceTable.Races[0],
+          lastPole: data.MRData.RaceTable.Races.at(-1),
           totalNum: parseInt(data.MRData.total),
         };
       }
@@ -114,7 +130,14 @@ export const driverRouter = router({
   getRaceWins: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(
-      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
+      async ({
+        input,
+      }): Promise<{
+        raceTable: Race[];
+        firstWin: Race;
+        lastWin: Race;
+        totalNum: number;
+      }> => {
         const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/results/1.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -122,6 +145,8 @@ export const driverRouter = router({
 
         return {
           raceTable: data.MRData.RaceTable.Races,
+          firstWin: data.MRData.RaceTable.Races[0],
+          lastWin: data.MRData.RaceTable.Races.at(-1),
           totalNum: parseInt(data.MRData.total),
         };
       }

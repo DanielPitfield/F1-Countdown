@@ -78,7 +78,14 @@ export const teamRouter = router({
   getRacesEntered: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(
-      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
+      async ({
+        input,
+      }): Promise<{
+        raceTable: Race[];
+        firstRace: Race;
+        lastRace: Race;
+        totalNum: number;
+      }> => {
         const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/results.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -86,6 +93,8 @@ export const teamRouter = router({
 
         return {
           raceTable: data.MRData.RaceTable.Races,
+          firstRace: data.MRData.RaceTable.Races[0],
+          lastRace: data.MRData.RaceTable.Races.at(-1),
           totalNum: parseInt(data.MRData.total),
         };
       }
@@ -94,7 +103,14 @@ export const teamRouter = router({
   getPolePositions: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(
-      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
+      async ({
+        input,
+      }): Promise<{
+        raceTable: Race[];
+        firstPole: Race;
+        lastPole: Race;
+        totalNum: number;
+      }> => {
         const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/qualifying/1.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -102,6 +118,8 @@ export const teamRouter = router({
 
         return {
           raceTable: data.MRData.RaceTable.Races,
+          firstPole: data.MRData.RaceTable.Races[0],
+          lastPole: data.MRData.RaceTable.Races.at(-1),
           totalNum: parseInt(data.MRData.total),
         };
       }
@@ -110,7 +128,14 @@ export const teamRouter = router({
   getRaceWins: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(
-      async ({ input }): Promise<{ raceTable: Race[]; totalNum: number }> => {
+      async ({
+        input,
+      }): Promise<{
+        raceTable: Race[];
+        firstWin: Race;
+        lastWin: Race;
+        totalNum: number;
+      }> => {
         const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/results/1.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
@@ -118,6 +143,8 @@ export const teamRouter = router({
 
         return {
           raceTable: data.MRData.RaceTable.Races,
+          firstWin: data.MRData.RaceTable.Races[0],
+          lastWin: data.MRData.RaceTable.Races.at(-1),
           totalNum: parseInt(data.MRData.total),
         };
       }

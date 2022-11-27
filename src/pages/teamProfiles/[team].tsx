@@ -12,6 +12,7 @@ import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 
 import styles from "../../styles/Profile.module.scss";
+import GrandPrixLink from "../../components/Links/GrandPrixLink";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -74,6 +75,10 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     teamID: team,
   });
 
+  const { data: racesEntered } = trpc.team.getRacesEntered.useQuery({
+    teamID: team,
+  });
+
   const { data: polePositions } = trpc.team.getPolePositions.useQuery({
     teamID: team,
   });
@@ -105,6 +110,30 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             </div>
           );
         })}
+      </div>
+
+      <div>
+        First Race:
+        <GrandPrixLink
+          grandPrix={racesEntered?.firstRace}
+          showLocation={true}
+        />
+        Last Race:
+        <GrandPrixLink grandPrix={racesEntered?.lastRace} showLocation={true} />
+        First Pole:
+        <GrandPrixLink
+          grandPrix={polePositions?.firstPole}
+          showLocation={true}
+        />
+        Last Pole:
+        <GrandPrixLink
+          grandPrix={polePositions?.lastPole}
+          showLocation={true}
+        />
+        First Win:
+        <GrandPrixLink grandPrix={raceWins?.firstWin} showLocation={true} />
+        Last Win:
+        <GrandPrixLink grandPrix={raceWins?.lastWin} showLocation={true} />
       </div>
 
       <div className={styles.resultsInformation}>
