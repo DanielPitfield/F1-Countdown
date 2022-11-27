@@ -54,7 +54,7 @@ export async function getStaticProps(
   await ssg.team.getDrivers.prefetch({ teamID: team });
   await ssg.team.getPolePositions.prefetch({ teamID: team });
   await ssg.team.getRaceWins.prefetch({ teamID: team });
-  await ssg.team.getFastestLaps.prefetch({ teamID: team });
+  await ssg.team.getNumFastestLaps.prefetch({ teamID: team });
   await ssg.team.getChampionshipResults.prefetch({ teamID: team });
 
   return {
@@ -91,7 +91,7 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   const { data: raceWins } = trpc.team.getRaceWins.useQuery({ teamID: team });
 
-  const { data: fastestLaps } = trpc.team.getFastestLaps.useQuery({
+  const { data: numFastestLaps } = trpc.team.getNumFastestLaps.useQuery({
     teamID: team,
   });
 
@@ -147,8 +147,8 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
       <div className={styles.resultsInformation}>
         <span>{`Pole positions: ${polePositions?.totalNum ?? "0"}`}</span>
         <span>{`Race wins: ${raceWins?.totalNum ?? "0"}`}</span>
-        <span>{`Podiums: ${racesEntered?.podiums.length ?? "0"}`}</span>
-        <span>{`Fastest Laps: ${fastestLaps?.totalNum ?? "0"}`}</span>
+        <span>{`Podiums: ${racesEntered?.numPodiums ?? "0"}`}</span>
+        <span>{`Fastest Laps: ${numFastestLaps ?? "0"}`}</span>
         <span>{`World championships: ${
           championshipResults?.numChampionshipsWon ?? "0"
         }`}</span>

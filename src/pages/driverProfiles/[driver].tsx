@@ -47,7 +47,7 @@ export async function getStaticProps(
   await ssg.driver.getRacesEntered.prefetch({ driverID: driver });
   await ssg.driver.getPolePositions.prefetch({ driverID: driver });
   await ssg.driver.getRaceWins.prefetch({ driverID: driver });
-  await ssg.driver.getFastestLaps.prefetch({ driverID: driver });
+  await ssg.driver.getNumFastestLaps.prefetch({ driverID: driver });
   await ssg.driver.getChampionshipResults.prefetch({ driverID: driver });
 
   // TODO: Is age statically generated?
@@ -98,7 +98,7 @@ const DriverProfile = (
     driverID: driver,
   });
 
-  const { data: fastestLaps } = trpc.driver.getFastestLaps.useQuery({
+  const { data: numFastestLaps } = trpc.driver.getNumFastestLaps.useQuery({
     driverID: driver,
   });
 
@@ -153,8 +153,8 @@ const DriverProfile = (
       <div className={styles.resultsInformation}>
         <span>{`Pole positions: ${polePositions?.totalNum ?? "0"}`}</span>
         <span>{`Race wins: ${raceWins?.totalNum ?? "0"}`}</span>
-        <span>{`Podiums: ${racesEntered?.podiums.length ?? "0"}`}</span>
-        <span>{`Fastest Laps: ${fastestLaps?.totalNum ?? "0"}`}</span>
+        <span>{`Podiums: ${racesEntered?.numPodiums ?? "0"}`}</span>
+        <span>{`Fastest Laps: ${numFastestLaps ?? "0"}`}</span>
         <span>{`World championships: ${
           championshipResults?.numChampionshipsWon ?? "0"
         }`}</span>
