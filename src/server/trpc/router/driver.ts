@@ -18,8 +18,11 @@ export type Driver = {
 };
 
 export type DriverSeasonHistory = {
+  // The year of the championship season
   season: string;
+  // The round number of the last race in the season
   round: string;
+  // The driver standings at the end of the season
   DriverStandings: DriverStanding[];
 };
 
