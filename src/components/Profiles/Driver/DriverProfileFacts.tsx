@@ -3,7 +3,7 @@ import SeasonLink from "../../Links/SeasonLink";
 import GrandPrixLink from "../../Links/GrandPrixLink";
 import { Fact } from "../../Fact";
 
-import styles from "../../styles/DriverProfile.module.scss";
+import styles from "../../../styles/DriverProfile.module.scss";
 
 interface DriverProfileFactsProps {
   driverID: string;

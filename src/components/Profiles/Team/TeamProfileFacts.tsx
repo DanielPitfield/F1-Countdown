@@ -3,7 +3,7 @@ import SeasonLink from "../../Links/SeasonLink";
 import GrandPrixLink from "../../Links/GrandPrixLink";
 import { Fact } from "../../Fact";
 
-import styles from "../../styles/TeamProfile.module.scss";
+import styles from "../../../styles/TeamProfile.module.scss";
 
 interface TeamProfileFactsProps {
   teamID: string;

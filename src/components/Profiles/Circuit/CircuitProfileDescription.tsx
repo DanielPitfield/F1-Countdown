@@ -1,6 +1,6 @@
 import { trpc } from "../../../utils/trpc";
 
-import styles from "../../styles/CircuitProfile.module.scss";
+import styles from "../../../styles/CircuitProfile.module.scss";
 
 interface CircuitProfileDescriptionProps {
   circuitID: string;
