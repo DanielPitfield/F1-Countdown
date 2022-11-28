@@ -11,33 +11,38 @@ const DriverWorldChampionship: NextPage = () => {
     return null;
   }
 
-  const uniqueWorldChampions = Array.from(
-    new Set(history.map((season) => season.DriverStandings[0]?.Driver.driverId))
-  );
+  // The driverId of every driver that has won a world championship
+  const driverChampionIDs: string[] = Array.from(
+    new Set(
+      history.map((season) => season.DriverStandings[0]?.Driver.driverId ?? "")
+    )
+  ).filter((id) => id !== "");
 
-  // Descending order (of number of championships won)
-  uniqueWorldChampions.sort((a, b) => {
-    return (
-      history.filter(
-        (season) => season.DriverStandings[0]?.Driver.driverId === b
-      ).length -
-      history.filter(
-        (season) => season.DriverStandings[0]?.Driver.driverId === a
-      ).length
-    );
-  });
+  // The championships each driver has won
+  const driverChampionshipMappings = driverChampionIDs
+    .map((championID) => {
+      const championshipsWon: DriverSeasonHistory[] = history.filter(
+        (season) => season.DriverStandings[0]?.Driver.driverId === championID
+      );
+
+      return {
+        driver: championshipsWon[0]?.DriverStandings[0]?.Driver,
+        championshipsWon: championshipsWon,
+      };
+    })
+    // Descending order (of number of championships won)
+    .sort((a, b) => {
+      return a.championshipsWon.length - b.championshipsWon.length;
+    });
 
   return (
     <div>
-      {uniqueWorldChampions.map((championID) => {
-        const championshipsWon: DriverSeasonHistory[] = history.filter(
-          (season) => season.DriverStandings[0]?.Driver.driverId === championID
-        );
-
+      {driverChampionshipMappings.map((driverChampionshipMapping) => {
         return (
           <DriverChampion
-            key={championID}
-            championshipsWon={championshipsWon}
+            key={driverChampionshipMapping.driver?.driverId}
+            driver={driverChampionshipMapping.driver}
+            championshipsWon={driverChampionshipMapping.championshipsWon}
           />
         );
       })}

@@ -1,21 +1,24 @@
 import DriverLink from "../Links/DriverLink";
 import TeamLink from "../Links/TeamLink";
-import { DriverSeasonHistory } from "../../server/trpc/router/driver";
+import { Driver, DriverSeasonHistory } from "../../server/trpc/router/driver";
 import SeasonLink from "../Links/SeasonLink";
 
 import styles from "../../styles/Statistic.module.scss";
 
 interface DriverChampionProps {
+  driver: Driver | undefined;
   championshipsWon: DriverSeasonHistory[];
 }
 
 const DriverChampion = (props: DriverChampionProps) => {
-  const driver = props.championshipsWon[0]?.DriverStandings[0]?.Driver;
+  if (!props.driver) {
+    return null;
+  }
 
   return (
-    <div key={driver?.driverId} className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <div className={styles.name}>
-        <DriverLink driver={driver} />
+        <DriverLink driver={props.driver} />
       </div>
 
       <div className={styles.numChampionships}>

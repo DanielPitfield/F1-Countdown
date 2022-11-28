@@ -1,20 +1,23 @@
 import TeamLink from "../Links/TeamLink";
-import { TeamSeasonHistory } from "../../server/trpc/router/team";
+import { Team, TeamSeasonHistory } from "../../server/trpc/router/team";
 import SeasonLink from "../Links/SeasonLink";
 
 import styles from "../../styles/Statistic.module.scss";
 
 interface TeamChampionProps {
+  team: Team | undefined;
   championshipsWon: TeamSeasonHistory[];
 }
 
 const TeamChampion = (props: TeamChampionProps) => {
-  const team = props.championshipsWon[0]?.ConstructorStandings[0]?.Constructor;
+  if (!props.team) {
+    return null;
+  }
 
   return (
-    <div key={team?.constructorId} className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <div className={styles.name}>
-        <TeamLink team={team} />
+        <TeamLink team={props.team} />
       </div>
 
       <div className={styles.numChampionships}>

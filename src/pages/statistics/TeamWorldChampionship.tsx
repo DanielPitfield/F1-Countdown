@@ -11,39 +11,44 @@ const TeamWorldChampionship: NextPage = () => {
     return null;
   }
 
-  const uniqueWorldChampions = Array.from(
+  // The constructorId of every team that has won a world championship
+  const teamChampionIDs: string[] = Array.from(
     new Set(
       history.map(
-        (season) => season.ConstructorStandings[0]?.Constructor.constructorId
+        (season) =>
+          season.ConstructorStandings[0]?.Constructor.constructorId ?? ""
       )
     )
-  );
+  ).filter((id) => id !== "");
 
-  // Descending order (of number of championships won)
-  uniqueWorldChampions.sort((a, b) => {
-    return (
-      history.filter(
+  // The championships each team has won
+  const teamChampionshipMappings = teamChampionIDs
+    .map((championID) => {
+      const championshipsWon: TeamSeasonHistory[] = history.filter(
         (season) =>
-          season.ConstructorStandings[0]?.Constructor.constructorId === b
-      ).length -
-      history.filter(
-        (season) =>
-          season.ConstructorStandings[0]?.Constructor.constructorId === a
-      ).length
-    );
-  });
+          season.ConstructorStandings[0]?.Constructor.constructorId ===
+          championID
+      );
+
+      return {
+        team: championshipsWon[0]?.ConstructorStandings[0]?.Constructor,
+        championshipsWon: championshipsWon,
+      };
+    })
+    // Descending order (of number of championships won)
+    .sort((a, b) => {
+      return a.championshipsWon.length - b.championshipsWon.length;
+    });
 
   return (
     <div>
-      {uniqueWorldChampions.map((championID) => {
-        const championshipsWon: TeamSeasonHistory[] = history.filter(
-          (season) =>
-            season.ConstructorStandings[0]?.Constructor.constructorId ===
-            championID
-        );
-
+      {teamChampionshipMappings.map((teamChampionshipMapping) => {
         return (
-          <TeamChampion key={championID} championshipsWon={championshipsWon} />
+          <TeamChampion
+            key={teamChampionshipMapping.team?.constructorId}
+            team={teamChampionshipMapping.team}
+            championshipsWon={teamChampionshipMapping.championshipsWon}
+          />
         );
       })}
     </div>
