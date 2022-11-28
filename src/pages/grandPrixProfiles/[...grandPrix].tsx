@@ -83,39 +83,38 @@ export async function getStaticProps(
 const GrandPrixProfile = (
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-  const { season, roundNumber } = props;
 
   const { data: schedule } = trpc.grandPrix.getSchedule.useQuery({
-    season: season,
-    roundNumber: roundNumber,
+    season: props.season,
+    roundNumber: props.roundNumber,
   });
 
   const { data: qualifying } = trpc.grandPrix.getQualifying.useQuery({
-    season: season,
-    roundNumber: roundNumber,
+    season: props.season,
+    roundNumber: props.roundNumber,
   });
 
   const { data: race } = trpc.grandPrix.getRace.useQuery({
-    season: season,
-    roundNumber: roundNumber,
+    season: props.season,
+    roundNumber: props.roundNumber,
   });
 
   const { data: driverStandings } =
     trpc.grandPrix.getDriverStandingsAfter.useQuery({
-      season: season,
-      roundNumber: roundNumber,
+      season: props.season,
+      roundNumber: props.roundNumber,
     });
 
   const { data: teamStandings } = trpc.grandPrix.getTeamStandingsAfter.useQuery(
     {
-      season: season,
-      roundNumber: roundNumber,
+      season: props.season,
+      roundNumber: props.roundNumber,
     }
   );
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.generalInformation}>
+      <div>
         <SeasonLink season={schedule?.season} />
         <span>{`Round ${schedule?.round}`}</span>
         <span>{`${schedule?.raceName} (${schedule?.date})`}</span>

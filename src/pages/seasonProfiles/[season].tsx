@@ -11,7 +11,7 @@ import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 import DriverStandings from "../../components/Statistics/DriverStandings";
 import TeamStandings from "../../components/Statistics/TeamStandings";
-import { Race } from "../../server/trpc/router/grandPrix";
+import SeasonSchedule from "../../components/SeasonSchedule";
 
 import styles from "../../styles/Profile.module.scss";
 
@@ -53,35 +53,21 @@ export async function getStaticProps(
 const SeasonProfile = (
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-  const { season } = props;
-
   const { data: schedule } = trpc.season.getSchedule.useQuery({
-    seasonID: season,
+    seasonID: props.season,
   });
 
   const { data: driverStandings } = trpc.season.getDriverStandings.useQuery({
-    seasonID: season,
+    seasonID: props.season,
   });
 
   const { data: teamStandings } = trpc.season.getTeamStandings.useQuery({
-    seasonID: season,
+    seasonID: props.season,
   });
-
-  // TODO: Schedule component?
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.generalInformation}>
-        {schedule?.map((race: Race) => {
-          return (
-            <div key={race.round}>
-              <span>{race.raceName}</span>
-              <span>{race.date}</span>
-            </div>
-          );
-        })}
-      </div>
-
+      <SeasonSchedule schedule={schedule} showDates={true} />
       <DriverStandings standings={driverStandings} />
       <TeamStandings standings={teamStandings} />
     </div>
