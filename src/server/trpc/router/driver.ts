@@ -28,7 +28,7 @@ export type DriverSeasonHistory = {
 // TODO: Picture (F1 22 card?) along with driver code and number?
 
 export const driverRouter = router({
-  getInfo: publicProcedure
+  getDescription: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(async ({ input }): Promise<Driver> => {
       const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}.json?limit=1`;

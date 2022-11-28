@@ -12,8 +12,10 @@ import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 
+import CircuitProfileDescription from "../../components/Profiles/Circuit/CircuitProfileDescription";
+import CircuitProfileFacts from "../../components/Profiles/Circuit/CircuitProfileFacts";
+
 import styles from "../../styles/CircuitProfile.module.scss";
-import { Fact } from "../../components/Fact";
 
 // For how many previous years should the results of races at this circuit be shown?
 const NUM_PAST_WINNERS = 5;
@@ -58,45 +60,21 @@ export async function getStaticProps(
 const CircuitProfile = (
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-  const { circuit } = props;
-
-  const { data: generalInformation } = trpc.circuit.getInfo.useQuery({
-    circuitID: circuit,
-  });
-
   const { data: pastWinners } = trpc.circuit.getPastWinners.useQuery({
-    circuitID: circuit,
+    circuitID: props.circuit,
     numPastWinners: NUM_PAST_WINNERS,
   });
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.generalInformation}>
-        <h1 className={styles.title}>{generalInformation?.circuitName}</h1>
-        <h3 className={styles.subtitle}>
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query=${generalInformation?.Location.lat},${generalInformation?.Location.long}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {generalInformation?.Location.locality},{" "}
-            {generalInformation?.Location.country}
-          </a>
-        </h3>
-      </div>
+      <CircuitProfileDescription circuitID={props.circuit} />
 
-      <div className={styles.facts}>
-        <Fact label="First Grand Prix">
-          <GrandPrixLink
-            grandPrix={pastWinners?.firstYear}
-            showRaceName={false}
-          />
-        </Fact>
+      <CircuitProfileFacts
+        circuitID={props.circuit}
+        pastWinners={pastWinners}
+      />
 
-        <Fact label="Number of Grand Prix">{pastWinners?.totalNum ?? "-"}</Fact>
-      </div>
-      
-      <div className={styles.generalInformation}>
+      <div>
         <strong>Previous Winners</strong>
         {pastWinners?.results.map((race) => {
           const driver = race.Results[0]?.Driver;

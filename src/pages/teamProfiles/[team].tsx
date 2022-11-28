@@ -10,9 +10,9 @@ import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
-import GrandPrixLink from "../../components/Links/GrandPrixLink";
-import SeasonLink from "../../components/Links/SeasonLink";
-import { Fact } from "../../components/Fact";
+
+import TeamProfileDescription from "../../components/Profiles/Team/TeamProfileDescription";
+import TeamProfileFacts from "../../components/Profiles/Team/TeamProfileFacts";
 
 import styles from "../../styles/TeamProfile.module.scss";
 
@@ -68,47 +68,13 @@ export async function getStaticProps(
 }
 
 const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { team } = props;
-
-  const { data: generalInformation } = trpc.team.getInfo.useQuery({
-    teamID: team,
-  });
-
-  const { data: isActive } = trpc.team.isActive.useQuery({
-    teamID: team,
-  });
-
   const { data: drivers } = trpc.team.getDrivers.useQuery({
-    teamID: team,
+    teamID: props.team,
   });
-
-  const { data: racesEntered } = trpc.team.getRacesEntered.useQuery({
-    teamID: team,
-  });
-
-  const { data: polePositions } = trpc.team.getPolePositions.useQuery({
-    teamID: team,
-  });
-
-  const { data: raceWins } = trpc.team.getRaceWins.useQuery({ teamID: team });
-
-  const { data: numFastestLaps } = trpc.team.getNumFastestLaps.useQuery({
-    teamID: team,
-  });
-
-  const { data: championshipResults } =
-    trpc.team.getChampionshipResults.useQuery({
-      teamID: team,
-    });
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.generalInformation}>
-        <span>{generalInformation?.name}</span>
-        <span>{generalInformation?.nationality}</span>
-      </div>
-
-      <div>{`Active: ${isActive}`}</div>
+      <TeamProfileDescription teamID={props.team} />
 
       <div className={styles.currentDrivers}>
         <strong>Current Drivers</strong>
@@ -121,67 +87,7 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         })}
       </div>
 
-      <div className={styles.facts}>
-        <Fact label="First Race">
-          <GrandPrixLink
-            grandPrix={racesEntered?.firstRace}
-            showRaceName={true}
-          />
-        </Fact>
-        <Fact label="Last Race">
-          <GrandPrixLink
-            grandPrix={racesEntered?.lastRace}
-            showRaceName={true}
-          />
-        </Fact>
-        <Fact label="First Pole">
-          <GrandPrixLink
-            grandPrix={polePositions?.firstPole}
-            showRaceName={true}
-          />
-        </Fact>
-        <Fact label="Last Pole">
-          <GrandPrixLink
-            grandPrix={polePositions?.lastPole}
-            showRaceName={true}
-          />
-        </Fact>
-        <Fact label="First Win">
-          <GrandPrixLink grandPrix={raceWins?.firstWin} showRaceName={true} />
-        </Fact>
-        <Fact label="Last Win">
-          <GrandPrixLink grandPrix={raceWins?.lastWin} showRaceName={true} />
-        </Fact>
-      </div>
-
-      <div className={styles.facts}>
-        <Fact label="Pole positions">
-          <span>{polePositions?.totalNum ?? "0"}</span>
-        </Fact>
-        <Fact label="Race Wins">
-          <span>{raceWins?.totalNum ?? "0"}</span>
-        </Fact>
-        <Fact label="Podiums">
-          <span>{racesEntered?.numPodiums ?? "0"}</span>
-        </Fact>
-        <Fact label="Fastest Laps">
-          <span>{numFastestLaps ?? "0"}</span>
-        </Fact>
-        <Fact label="World Championships">
-          <span>{championshipResults?.numChampionshipsWon ?? "0"}</span>
-        </Fact>
-
-        {championshipResults &&
-          championshipResults.numChampionshipsWon > 0 &&
-          championshipResults.winningYears.map((championship) => {
-            return (
-              <SeasonLink
-                key={championship.season}
-                season={championship.season}
-              />
-            );
-          })}
-      </div>
+      <TeamProfileFacts teamID={props.team} />
     </div>
   );
 };
