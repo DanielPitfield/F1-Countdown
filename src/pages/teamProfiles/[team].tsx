@@ -12,8 +12,9 @@ import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 import GrandPrixLink from "../../components/Links/GrandPrixLink";
 import SeasonLink from "../../components/Links/SeasonLink";
+import { Fact } from "../../components/Fact";
 
-import styles from "../../styles/Profile.module.scss";
+import styles from "../../styles/TeamProfile.module.scss";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -120,38 +121,55 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         })}
       </div>
 
-      <div>
-        First Race:
-        <GrandPrixLink
-          grandPrix={racesEntered?.firstRace}
-          showRaceName={true}
-        />
-        Last Race:
-        <GrandPrixLink grandPrix={racesEntered?.lastRace} showRaceName={true} />
-        First Pole:
-        <GrandPrixLink
-          grandPrix={polePositions?.firstPole}
-          showRaceName={true}
-        />
-        Last Pole:
-        <GrandPrixLink
-          grandPrix={polePositions?.lastPole}
-          showRaceName={true}
-        />
-        First Win:
-        <GrandPrixLink grandPrix={raceWins?.firstWin} showRaceName={true} />
-        Last Win:
-        <GrandPrixLink grandPrix={raceWins?.lastWin} showRaceName={true} />
+      <div className={styles.facts}>
+        <Fact label="First Race">
+          <GrandPrixLink
+            grandPrix={racesEntered?.firstRace}
+            showRaceName={true}
+          />
+        </Fact>
+        <Fact label="Last Race">
+          <GrandPrixLink
+            grandPrix={racesEntered?.lastRace}
+            showRaceName={true}
+          />
+        </Fact>
+        <Fact label="First Pole">
+          <GrandPrixLink
+            grandPrix={polePositions?.firstPole}
+            showRaceName={true}
+          />
+        </Fact>
+        <Fact label="Last Pole">
+          <GrandPrixLink
+            grandPrix={polePositions?.lastPole}
+            showRaceName={true}
+          />
+        </Fact>
+        <Fact label="First Win">
+          <GrandPrixLink grandPrix={raceWins?.firstWin} showRaceName={true} />
+        </Fact>
+        <Fact label="Last Win">
+          <GrandPrixLink grandPrix={raceWins?.lastWin} showRaceName={true} />
+        </Fact>
       </div>
 
-      <div className={styles.resultsInformation}>
-        <span>{`Pole positions: ${polePositions?.totalNum ?? "0"}`}</span>
-        <span>{`Race wins: ${raceWins?.totalNum ?? "0"}`}</span>
-        <span>{`Podiums: ${racesEntered?.numPodiums ?? "0"}`}</span>
-        <span>{`Fastest Laps: ${numFastestLaps ?? "0"}`}</span>
-        <span>{`World championships: ${
-          championshipResults?.numChampionshipsWon ?? "0"
-        }`}</span>
+      <div className={styles.facts}>
+        <Fact label="Pole positions">
+          <span>{polePositions?.totalNum ?? "0"}</span>
+        </Fact>
+        <Fact label="Race Wins">
+          <span>{raceWins?.totalNum ?? "0"}</span>
+        </Fact>
+        <Fact label="Podiums">
+          <span>{racesEntered?.numPodiums ?? "0"}</span>
+        </Fact>
+        <Fact label="Fastest Laps">
+          <span>{numFastestLaps ?? "0"}</span>
+        </Fact>
+        <Fact label="World Championships">
+          <span>{championshipResults?.numChampionshipsWon ?? "0"}</span>
+        </Fact>
 
         {championshipResults &&
           championshipResults.numChampionshipsWon > 0 &&
