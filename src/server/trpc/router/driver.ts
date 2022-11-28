@@ -5,6 +5,7 @@ import { MAX_LIMIT } from "../../../utils/limits";
 import { DriverStanding } from "./statistics";
 import { Race } from "./grandPrix";
 import { filterPodiums } from "../../../utils/filterPodiums";
+import { getTotalNumChampionshipPoints } from "../../../utils/getTotalNumChampionshipPoints";
 
 export type Driver = {
   driverId: string;
@@ -17,12 +18,20 @@ export type Driver = {
   nationality: string;
 };
 
-export type DriverSeasonHistory = {
+export type DriverSeasonResult = {
   // The year of the championship season
   season: string;
   // The round number of the last race in the season
   round: string;
   // The driver standings at the end of the season
+
+  // TODO: Singular DriverStanding
+  
+  /*
+  The shape of the fetched data is an array
+  Although only of one element (the standings of the driver for that season)
+  The name DriverStandings and the array incorrectly suggests this is the driverStandings for every driver that season
+  */
   DriverStandings: DriverStanding[];
 };
 
@@ -63,8 +72,9 @@ export const driverRouter = router({
       }): Promise<{
         numChampionshipsWon: number;
         numChampionshipsEntered: number;
-        winningYears: DriverSeasonHistory[];
-        allYears: DriverSeasonHistory[];
+        numCareerPoints: number;
+        winningYears: DriverSeasonResult[];
+        allYears: DriverSeasonResult[];
       }> => {
         const WINNING_YEARS_API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/driverStandings/1.json?limit=${MAX_LIMIT}`;
         const response_winning = await fetch(WINNING_YEARS_API_URL);
@@ -74,11 +84,16 @@ export const driverRouter = router({
         const response_all = await fetch(ALL_YEARS_API_URL);
         const data_all = await response_all.json();
 
+        // Information about the driver's position in the driver standings for each year of their career
+        const allYears: DriverSeasonResult[] =
+          data_all.MRData.StandingsTable.StandingsLists;
+
         return {
           numChampionshipsWon: parseInt(data_winning.MRData.total),
           numChampionshipsEntered: parseInt(data_all.MRData.total),
+          numCareerPoints: getTotalNumChampionshipPoints(allYears),
           winningYears: data_winning.MRData.StandingsTable.StandingsLists,
-          allYears: data_all.MRData.StandingsTable.StandingsLists,
+          allYears: allYears,
         };
       }
     ),

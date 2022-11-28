@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
-import { DriverSeasonHistory } from "../../server/trpc/router/driver";
+import { DriverSeasonResult } from "../../server/trpc/router/driver";
 import DriverChampion from "../../components/Statistics/DriverChampion";
 
 const DriverWorldChampionship: NextPage = () => {
@@ -21,7 +21,7 @@ const DriverWorldChampionship: NextPage = () => {
   // The championships each driver has won
   const driverChampionshipMappings = driverChampionIDs
     .map((championID) => {
-      const championshipsWon: DriverSeasonHistory[] = history.filter(
+      const championshipsWon: DriverSeasonResult[] = history.filter(
         (season) => season.DriverStandings[0]?.Driver.driverId === championID
       );
 

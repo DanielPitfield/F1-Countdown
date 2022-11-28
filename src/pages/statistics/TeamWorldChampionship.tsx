@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
-import { TeamSeasonHistory } from "../../server/trpc/router/team";
+import { TeamSeasonResult } from "../../server/trpc/router/team";
 import TeamChampion from "../../components/Statistics/TeamChampion";
 
 const TeamWorldChampionship: NextPage = () => {
@@ -24,7 +24,7 @@ const TeamWorldChampionship: NextPage = () => {
   // The championships each team has won
   const teamChampionshipMappings = teamChampionIDs
     .map((championID) => {
-      const championshipsWon: TeamSeasonHistory[] = history.filter(
+      const championshipsWon: TeamSeasonResult[] = history.filter(
         (season) =>
           season.ConstructorStandings[0]?.Constructor.constructorId ===
           championID

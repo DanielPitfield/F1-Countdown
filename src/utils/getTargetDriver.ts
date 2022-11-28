@@ -31,8 +31,7 @@ export function getTargetDriver(): DriverGuess {
     numWorldChampionships: championshipResults?.numChampionshipsWon ?? 0,
     numWins: raceWins?.totalNum ?? 0,
     numPodiums: racesEntered?.numPodiums ?? 0,
-    // TODO: getDriverTotalNumPoints() helper function
-    numPoints: 1,
+    numPoints: championshipResults?.numCareerPoints ?? 0,
     numPoles: polePositions?.totalNum ?? 0,
     numRaceStarts: racesEntered?.totalNum ?? 0,
   };

@@ -1,13 +1,13 @@
 import DriverLink from "../Links/DriverLink";
 import TeamLink from "../Links/TeamLink";
-import { Driver, DriverSeasonHistory } from "../../server/trpc/router/driver";
+import { Driver, DriverSeasonResult } from "../../server/trpc/router/driver";
 import SeasonLink from "../Links/SeasonLink";
 
 import styles from "../../styles/Statistic.module.scss";
 
 interface DriverChampionProps {
   driver: Driver | undefined;
-  championshipsWon: DriverSeasonHistory[];
+  championshipsWon: DriverSeasonResult[];
 }
 
 const DriverChampion = (props: DriverChampionProps) => {

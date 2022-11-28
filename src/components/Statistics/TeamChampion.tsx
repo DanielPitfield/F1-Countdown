@@ -1,12 +1,12 @@
 import TeamLink from "../Links/TeamLink";
-import { Team, TeamSeasonHistory } from "../../server/trpc/router/team";
+import { Team, TeamSeasonResult } from "../../server/trpc/router/team";
 import SeasonLink from "../Links/SeasonLink";
 
 import styles from "../../styles/Statistic.module.scss";
 
 interface TeamChampionProps {
   team: Team | undefined;
-  championshipsWon: TeamSeasonHistory[];
+  championshipsWon: TeamSeasonResult[];
 }
 
 const TeamChampion = (props: TeamChampionProps) => {

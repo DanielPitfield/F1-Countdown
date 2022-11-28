@@ -13,7 +13,7 @@ export type Team = {
   nationality: string;
 };
 
-export type TeamSeasonHistory = {
+export type TeamSeasonResult = {
   season: string;
   round: string;
   ConstructorStandings: TeamStanding[];
@@ -69,8 +69,8 @@ export const teamRouter = router({
       }): Promise<{
         numChampionshipsWon: number;
         numChampionshipsEntered: number;
-        winningYears: TeamSeasonHistory[];
-        allYears: TeamSeasonHistory[];
+        winningYears: TeamSeasonResult[];
+        allYears: TeamSeasonResult[];
       }> => {
         const WINNING_YEARS_API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings/1.json?limit=${MAX_LIMIT}`;
         const response_winning = await fetch(WINNING_YEARS_API_URL);
