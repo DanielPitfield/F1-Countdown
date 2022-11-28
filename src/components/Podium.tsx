@@ -30,7 +30,6 @@ export const Podium = (props: PodiumProps) => {
     .slice(0, PodiumPositions.THIRD);
 
   return (
-    // TODO: Podium Steps CSS, different heights, second place on left, first place in middle, third place on right
     <div>
       <strong>Podium</strong>
       <div className={styles.wrapper}>
