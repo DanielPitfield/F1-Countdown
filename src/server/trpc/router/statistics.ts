@@ -35,18 +35,15 @@ export const statisticsRouter = router({
       const data = await response.json();
 
       // The driver's position in the driver standings - for each year they won the world championship
-      const history: DriverSeasonResult[] =
-        await data.MRData.StandingsTable.StandingsLists.map(
-          (x: DriverSeasonResultResponse) => {
-            return {
-              season: x.season,
-              round: x.round,
-              driverStanding: x.DriverStandings[0],
-            };
-          }
-        );
-
-      return await history;
+      return data.MRData.StandingsTable.StandingsLists.map(
+        (x: DriverSeasonResultResponse) => {
+          return {
+            season: x.season,
+            round: x.round,
+            driverStanding: x.DriverStandings[0],
+          };
+        }
+      );
     }
   ),
 
@@ -59,18 +56,15 @@ export const statisticsRouter = router({
       const data = await response.json();
 
       // The driver's position in the driver standings - for each year they won the world championship
-      const history: TeamSeasonResult[] =
-        await data.MRData.StandingsTable.StandingsLists.map(
-          (x: TeamSeasonResultResponse) => {
-            return {
-              season: x.season,
-              round: x.round,
-              teamStanding: x.ConstructorStandings[0],
-            };
-          }
-        );
-
-      return await history;
+      return data.MRData.StandingsTable.StandingsLists.map(
+        (x: TeamSeasonResultResponse) => {
+          return {
+            season: x.season,
+            round: x.round,
+            teamStanding: x.ConstructorStandings[0],
+          };
+        }
+      );
     }
   ),
 
@@ -82,7 +76,7 @@ export const statisticsRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.RaceTable.Races;
+      return data.MRData.RaceTable.Races;
     }
   ),
 
@@ -94,7 +88,7 @@ export const statisticsRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.RaceTable.Races;
+      return data.MRData.RaceTable.Races;
     }
   ),
 
@@ -106,7 +100,7 @@ export const statisticsRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+      return data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
     }
   ),
 
@@ -118,8 +112,7 @@ export const statisticsRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.StandingsTable.StandingsLists[0]
-        .ConstructorStandings;
+      return data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
     }
   ),
 });

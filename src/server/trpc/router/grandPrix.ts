@@ -88,7 +88,7 @@ export const grandPrixRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.RaceTable.Races[0];
+      return data.MRData.RaceTable.Races[0];
     }),
 
   getQualifying: publicProcedure
@@ -104,7 +104,7 @@ export const grandPrixRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.RaceTable.Races[0];
+      return data.MRData.RaceTable.Races[0];
     }),
 
   getRace: publicProcedure
@@ -120,7 +120,7 @@ export const grandPrixRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.RaceTable.Races[0];
+      return data.MRData.RaceTable.Races[0];
     }),
 
   getDriverStandingsAfter: publicProcedure
@@ -136,7 +136,7 @@ export const grandPrixRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+      return data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
     }),
 
   getTeamStandingsAfter: publicProcedure
@@ -152,7 +152,6 @@ export const grandPrixRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.StandingsTable.StandingsLists[0]
-        .ConstructorStandings;
+      return data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
     }),
 });

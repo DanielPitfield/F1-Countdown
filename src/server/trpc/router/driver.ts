@@ -48,7 +48,7 @@ export const driverRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.DriverTable.Drivers[0];
+      return data.MRData.DriverTable.Drivers[0];
     }),
 
   isActive: publicProcedure
@@ -59,7 +59,7 @@ export const driverRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.DriverTable.Drivers.some(
+      return data.MRData.DriverTable.Drivers.some(
         (driver: Driver) => driver.driverId === input.driverID
       );
     }),
@@ -86,7 +86,7 @@ export const driverRouter = router({
 
         // The driver's position in the driver standings - for each year they won the world championship
         const winningYears: DriverSeasonResult[] =
-          await data_winning.MRData.StandingsTable.StandingsLists.map(
+          data_winning.MRData.StandingsTable.StandingsLists.map(
             (x: DriverSeasonResultResponse) => {
               return {
                 season: x.season,
@@ -98,7 +98,7 @@ export const driverRouter = router({
 
         // The driver's position in the driver standings - for each year of their career
         const allYears: DriverSeasonResult[] =
-          await data_all.MRData.StandingsTable.StandingsLists.map(
+          data_all.MRData.StandingsTable.StandingsLists.map(
             (x: DriverSeasonResultResponse) => {
               return {
                 season: x.season,
@@ -126,7 +126,7 @@ export const driverRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.ConstructorTable.Constructors;
+      return data.MRData.ConstructorTable.Constructors;
     }),
 
   getRacesEntered: publicProcedure
@@ -146,10 +146,10 @@ export const driverRouter = router({
         const data = await response.json();
 
         return {
-          firstRace: await data.MRData.RaceTable.Races[0],
-          lastRace: await data.MRData.RaceTable.Races.at(-1),
-          numPodiums: filterPodiums(await data.MRData.RaceTable.Races).length,
-          totalNum: parseInt(await data.MRData.total),
+          firstRace: data.MRData.RaceTable.Races[0],
+          lastRace: data.MRData.RaceTable.Races.at(-1),
+          numPodiums: filterPodiums(data.MRData.RaceTable.Races).length,
+          totalNum: parseInt(data.MRData.total),
         };
       }
     ),
@@ -170,9 +170,9 @@ export const driverRouter = router({
         const data = await response.json();
 
         return {
-          firstPole: await data.MRData.RaceTable.Races[0],
-          lastPole: await data.MRData.RaceTable.Races.at(-1),
-          totalNum: parseInt(await data.MRData.total),
+          firstPole: data.MRData.RaceTable.Races[0],
+          lastPole: data.MRData.RaceTable.Races.at(-1),
+          totalNum: parseInt(data.MRData.total),
         };
       }
     ),
@@ -193,9 +193,9 @@ export const driverRouter = router({
         const data = await response.json();
 
         return {
-          firstWin: await data.MRData.RaceTable.Races[0],
-          lastWin: await data.MRData.RaceTable.Races.at(-1),
-          totalNum: parseInt(await data.MRData.total),
+          firstWin: data.MRData.RaceTable.Races[0],
+          lastWin: data.MRData.RaceTable.Races.at(-1),
+          totalNum: parseInt(data.MRData.total),
         };
       }
     ),
@@ -208,6 +208,6 @@ export const driverRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await parseInt(data.MRData.total);
+      return parseInt(data.MRData.total);
     }),
 });

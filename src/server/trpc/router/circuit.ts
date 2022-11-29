@@ -24,7 +24,7 @@ export const circuitRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.CircuitTable.Circuits[0];
+      return data.MRData.CircuitTable.Circuits[0];
     }),
 
   getPastWinners: publicProcedure

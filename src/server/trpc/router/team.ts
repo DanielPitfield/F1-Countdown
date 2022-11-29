@@ -34,7 +34,7 @@ export const teamRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.ConstructorTable.Constructors[0];
+      return data.MRData.ConstructorTable.Constructors[0];
     }),
 
   isActive: publicProcedure
@@ -45,7 +45,7 @@ export const teamRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.ConstructorTable.Constructors.some(
+      return data.MRData.ConstructorTable.Constructors.some(
         (team: Team) => team.constructorId === input.teamID
       );
     }),
@@ -88,7 +88,7 @@ export const teamRouter = router({
 
         // The team's position in the team standings - for each year they won the world championship
         const winningYears: TeamSeasonResult[] =
-          await data_winning.MRData.StandingsTable.StandingsLists.map(
+          data_winning.MRData.StandingsTable.StandingsLists.map(
             (x: TeamSeasonResultResponse) => {
               return {
                 season: x.season,
@@ -100,7 +100,7 @@ export const teamRouter = router({
 
         // The team's position in the team standings - for each year of their career
         const allYears: TeamSeasonResult[] =
-          await data_all.MRData.StandingsTable.StandingsLists.map(
+          data_all.MRData.StandingsTable.StandingsLists.map(
             (x: TeamSeasonResultResponse) => {
               return {
                 season: x.season,
@@ -111,10 +111,10 @@ export const teamRouter = router({
           );
 
         return {
-          numChampionshipsWon: parseInt(await data_winning.MRData.total),
-          numChampionshipsEntered: parseInt(await data_all.MRData.total),
-          winningYears: await winningYears,
-          allYears: await allYears,
+          numChampionshipsWon: parseInt(data_winning.MRData.total),
+          numChampionshipsEntered: parseInt(data_all.MRData.total),
+          winningYears: winningYears,
+          allYears: allYears,
         };
       }
     ),
@@ -198,6 +198,6 @@ export const teamRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await parseInt(data.MRData.total);
+      return parseInt(data.MRData.total);
     }),
 });
