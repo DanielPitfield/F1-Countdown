@@ -30,7 +30,9 @@ const DriverProfileDescription = (props: DriverProfileDescriptionProps) => {
       <h1 className={styles.title}>{getDriverName(description)}</h1>{" "}
       <h3 className={styles.subtitle}>{description?.nationality}</h3>
       <div>{`${description?.dateOfBirth} (${age} years)`}</div>
-      <div>{`Active: ${isActive}`}</div>
+      <div className={styles.activeStatus} data-isActive={isActive}>
+        {isActive ? "Active" : "Not Active"}
+      </div>
     </div>
   );
 };

@@ -9,6 +9,18 @@
   margin-top: 0;
 }
 
+.activeStatus {
+  font-weight: bold;
+
+  &[data-isActive="true"] {
+    color: #25d425;
+  }
+
+  &[data-isActive="false"] {
+    color: #eb0f0f;
+  }
+}
+
 .description {
   background-color: #238ea7;
   color: white;

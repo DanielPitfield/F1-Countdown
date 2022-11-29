@@ -19,7 +19,9 @@ const TeamProfileDescription = (props: TeamProfileDescriptionProps) => {
     <div className={styles.description}>
       <h1 className={styles.title}>{description?.name}</h1>
       <h3 className={styles.subtitle}>{description?.nationality}</h3>
-      <div>{`Active: ${isActive}`}</div>
+      <div className={styles.activeStatus} data-isActive={isActive}>
+        {isActive ? "Active" : "Not Active"}
+      </div>
     </div>
   );
 };
