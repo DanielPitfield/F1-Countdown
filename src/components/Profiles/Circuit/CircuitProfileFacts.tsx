@@ -25,7 +25,7 @@ const CircuitProfileFacts = (props: CircuitProfileFactsProps) => {
         </Fact>
 
         <Fact label="Number of Grand Prix">
-          {props.pastWinners?.totalNum ?? "-"}
+          {props.pastWinners?.totalNum ?? "0"}
         </Fact>
       </div>
     </div>

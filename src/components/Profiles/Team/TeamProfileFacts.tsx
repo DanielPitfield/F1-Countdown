@@ -34,18 +34,6 @@ const TeamProfileFacts = (props: TeamProfileFactsProps) => {
   return (
     <div>
       <div className={styles.facts}>
-        <Fact label="First Race">
-          <GrandPrixLink
-            grandPrix={racesEntered?.firstRace}
-            showRaceName={true}
-          />
-        </Fact>
-        <Fact label="Last Race">
-          <GrandPrixLink
-            grandPrix={racesEntered?.lastRace}
-            showRaceName={true}
-          />
-        </Fact>
         <Fact label="First Pole">
           <GrandPrixLink
             grandPrix={polePositions?.firstPole}
@@ -58,6 +46,19 @@ const TeamProfileFacts = (props: TeamProfileFactsProps) => {
             showRaceName={true}
           />
         </Fact>
+        <Fact label="First Race">
+          <GrandPrixLink
+            grandPrix={racesEntered?.firstRace}
+            showRaceName={true}
+          />
+        </Fact>
+        <Fact label="Last Race">
+          <GrandPrixLink
+            grandPrix={racesEntered?.lastRace}
+            showRaceName={true}
+          />
+        </Fact>
+
         <Fact label="First Win">
           <GrandPrixLink grandPrix={raceWins?.firstWin} showRaceName={true} />
         </Fact>

@@ -1,0 +1,30 @@
+.wrapper {
+}
+
+.title {
+  margin-bottom: 0.2em;
+}
+
+.subtitle {
+  margin-top: 0;
+}
+
+.description {
+  background-color: #238ea7;
+  color: white;
+  padding: 1em;
+
+  a {
+    color: #80e7ff;
+    &:hover {
+      color: lighten(#80e7ff, 15%);
+    }
+  }
+}
+
+.facts {
+  display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}

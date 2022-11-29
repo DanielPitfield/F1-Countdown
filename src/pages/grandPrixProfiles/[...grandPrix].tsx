@@ -13,11 +13,11 @@ import { REVALDATION_PERIOD } from "../../utils/limits";
 import { Podium } from "../../components/Podium";
 import DriverStandings from "../../components/Statistics/DriverStandings";
 import TeamStandings from "../../components/Statistics/TeamStandings";
-
-import styles from "../../styles/Profile.module.scss";
 import QualifyingResults from "../../components/QualifyingResults";
 import RaceResults from "../../components/RaceResults";
 import SeasonLink from "../../components/Links/SeasonLink";
+
+import styles from "../../styles/GrandPrixProfile.module.scss";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -83,7 +83,6 @@ export async function getStaticProps(
 const GrandPrixProfile = (
   props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-
   const { data: schedule } = trpc.grandPrix.getSchedule.useQuery({
     season: props.season,
     roundNumber: props.roundNumber,
@@ -114,12 +113,18 @@ const GrandPrixProfile = (
 
   return (
     <div className={styles.wrapper}>
-      <div>
-        <SeasonLink season={schedule?.season} />
-        <span>{`Round ${schedule?.round}`}</span>
-        <span>{`${schedule?.raceName} (${schedule?.date})`}</span>
-        <CircuitLink circuit={schedule?.Circuit} />
+      <div className={styles.description}>
+        <h1 className={styles.title}>
+          <SeasonLink season={schedule?.season} />
+          {` ${schedule?.raceName}`}
+        </h1>
+        <h3 className={styles.subtitle}>
+          <CircuitLink circuit={schedule?.Circuit} />
+        </h3>
       </div>
+
+      <div>{`Round ${schedule?.round}`}</div>
+      <div>{`(${schedule?.date})`}</div>
 
       <Podium race={race} showTeams={true} showTimes={true} />
 

@@ -9,7 +9,7 @@ const SeasonLink = (props: SeasonLinkProps) => {
     return null;
   }
 
-  return <Link href={`/seasonProfiles/${props.season}`}>{props.season ?? ""}</Link>;
+  return <Link href={`/seasonProfiles/${props.season}`}>{props.season}</Link>;
 };
 
 export default SeasonLink;
