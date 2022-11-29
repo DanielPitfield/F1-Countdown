@@ -12,11 +12,11 @@
 .activeStatus {
   font-weight: bold;
 
-  &[data-isActive="true"] {
+  &[data-active="true"] {
     color: #25d425;
   }
 
-  &[data-isActive="false"] {
+  &[data-active="false"] {
     color: #eb0f0f;
   }
 }
