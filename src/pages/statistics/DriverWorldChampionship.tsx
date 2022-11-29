@@ -14,7 +14,7 @@ const DriverWorldChampionship: NextPage = () => {
   // The driverId of every driver that has won a world championship
   const driverChampionIDs: string[] = Array.from(
     new Set(
-      history.map((season) => season.DriverStandings[0]?.Driver.driverId ?? "")
+      history.map((season) => season.driverStanding.Driver.driverId ?? "")
     )
   ).filter((id) => id !== "");
 
@@ -22,17 +22,17 @@ const DriverWorldChampionship: NextPage = () => {
   const driverChampionshipMappings = driverChampionIDs
     .map((championID) => {
       const championshipsWon: DriverSeasonResult[] = history.filter(
-        (season) => season.DriverStandings[0]?.Driver.driverId === championID
+        (season) => season.driverStanding.Driver.driverId === championID
       );
 
       return {
-        driver: championshipsWon[0]?.DriverStandings[0]?.Driver,
+        driver: championshipsWon[0]?.driverStanding?.Driver,
         championshipsWon: championshipsWon,
       };
     })
     // Descending order (of number of championships won)
     .sort((a, b) => {
-      return a.championshipsWon.length - b.championshipsWon.length;
+      return b.championshipsWon.length - a.championshipsWon.length;
     });
 
   return (

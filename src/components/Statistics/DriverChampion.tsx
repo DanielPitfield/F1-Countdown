@@ -38,7 +38,8 @@ const DriverChampion = (props: DriverChampionProps) => {
 
       <div className={styles.winningYearsTeams}>
         {props.championshipsWon.map((championship, index) => {
-          const team = championship.DriverStandings[0]?.Constructors[0];
+          const team = championship.driverStanding?.Constructors[0];
+
           return (
             <TeamLink key={`${team?.constructorId}-${index}`} team={team} />
           );

@@ -18,21 +18,21 @@ export type Driver = {
   nationality: string;
 };
 
+// Shape of fetched data for the finishing result of a driver in the world championship
+export type DriverSeasonResultResponse = {
+  season: string;
+  round: string;
+  // Property name and array INCORRECTLY suggest this is the driverStandings for every driver
+  DriverStandings: DriverStanding[];
+};
+
 export type DriverSeasonResult = {
   // The year of the championship season
   season: string;
   // The round number of the last race in the season
   round: string;
-  // The driver standings at the end of the season
-
-  // TODO: Singular DriverStanding
-  
-  /*
-  The shape of the fetched data is an array
-  Although only of one element (the standings of the driver for that season)
-  The name DriverStandings and the array incorrectly suggests this is the driverStandings for every driver that season
-  */
-  DriverStandings: DriverStanding[];
+  // The finishing result of a driver in the world championship (at the end of the season)
+  driverStanding: DriverStanding;
 };
 
 // TODO: Toggle percentages (e.g wins/total races)
@@ -84,15 +84,35 @@ export const driverRouter = router({
         const response_all = await fetch(ALL_YEARS_API_URL);
         const data_all = await response_all.json();
 
-        // Information about the driver's position in the driver standings for each year of their career
+        // The driver's position in the driver standings - for each year they won the world championship
+        const winningYears: DriverSeasonResult[] =
+          await data_winning.MRData.StandingsTable.StandingsLists.map(
+            (x: DriverSeasonResultResponse) => {
+              return {
+                season: x.season,
+                round: x.round,
+                driverStanding: x.DriverStandings[0],
+              };
+            }
+          );
+
+        // The driver's position in the driver standings - for each year of their career
         const allYears: DriverSeasonResult[] =
-          data_all.MRData.StandingsTable.StandingsLists;
+          await data_all.MRData.StandingsTable.StandingsLists.map(
+            (x: DriverSeasonResultResponse) => {
+              return {
+                season: x.season,
+                round: x.round,
+                driverStanding: x.DriverStandings[0],
+              };
+            }
+          );
 
         return {
           numChampionshipsWon: parseInt(data_winning.MRData.total),
           numChampionshipsEntered: parseInt(data_all.MRData.total),
           numCareerPoints: getTotalNumChampionshipPoints(allYears),
-          winningYears: data_winning.MRData.StandingsTable.StandingsLists,
+          winningYears: winningYears,
           allYears: allYears,
         };
       }
@@ -126,10 +146,10 @@ export const driverRouter = router({
         const data = await response.json();
 
         return {
-          firstRace: data.MRData.RaceTable.Races[0],
-          lastRace: data.MRData.RaceTable.Races.at(-1),
-          numPodiums: filterPodiums(data.MRData.RaceTable.Races).length,
-          totalNum: parseInt(data.MRData.total),
+          firstRace: await data.MRData.RaceTable.Races[0],
+          lastRace: await data.MRData.RaceTable.Races.at(-1),
+          numPodiums: filterPodiums(await data.MRData.RaceTable.Races).length,
+          totalNum: parseInt(await data.MRData.total),
         };
       }
     ),
@@ -150,9 +170,9 @@ export const driverRouter = router({
         const data = await response.json();
 
         return {
-          firstPole: data.MRData.RaceTable.Races[0],
-          lastPole: data.MRData.RaceTable.Races.at(-1),
-          totalNum: parseInt(data.MRData.total),
+          firstPole: await data.MRData.RaceTable.Races[0],
+          lastPole: await data.MRData.RaceTable.Races.at(-1),
+          totalNum: parseInt(await data.MRData.total),
         };
       }
     ),
@@ -173,9 +193,9 @@ export const driverRouter = router({
         const data = await response.json();
 
         return {
-          firstWin: data.MRData.RaceTable.Races[0],
-          lastWin: data.MRData.RaceTable.Races.at(-1),
-          totalNum: parseInt(data.MRData.total),
+          firstWin: await data.MRData.RaceTable.Races[0],
+          lastWin: await data.MRData.RaceTable.Races.at(-1),
+          totalNum: parseInt(await data.MRData.total),
         };
       }
     ),

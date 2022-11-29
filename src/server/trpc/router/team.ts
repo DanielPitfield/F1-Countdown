@@ -13,10 +13,16 @@ export type Team = {
   nationality: string;
 };
 
-export type TeamSeasonResult = {
+export type TeamSeasonResultResponse = {
   season: string;
   round: string;
   ConstructorStandings: TeamStanding[];
+};
+
+export type TeamSeasonResult = {
+  season: string;
+  round: string;
+  teamStanding: TeamStanding;
 };
 
 export const teamRouter = router({
@@ -80,11 +86,35 @@ export const teamRouter = router({
         const response_all = await fetch(ALL_YEARS_API_URL);
         const data_all = await response_all.json();
 
+        // The team's position in the team standings - for each year they won the world championship
+        const winningYears: TeamSeasonResult[] =
+          await data_winning.MRData.StandingsTable.StandingsLists.map(
+            (x: TeamSeasonResultResponse) => {
+              return {
+                season: x.season,
+                round: x.round,
+                teamStanding: x.ConstructorStandings[0],
+              };
+            }
+          );
+
+        // The team's position in the team standings - for each year of their career
+        const allYears: TeamSeasonResult[] =
+          await data_all.MRData.StandingsTable.StandingsLists.map(
+            (x: TeamSeasonResultResponse) => {
+              return {
+                season: x.season,
+                round: x.round,
+                teamStanding: x.ConstructorStandings[0],
+              };
+            }
+          );
+
         return {
-          numChampionshipsWon: parseInt(data_winning.MRData.total),
-          numChampionshipsEntered: parseInt(data_all.MRData.total),
-          winningYears: data_winning.MRData.StandingsTable.StandingsLists,
-          allYears: data_all.MRData.StandingsTable.StandingsLists,
+          numChampionshipsWon: parseInt(await data_winning.MRData.total),
+          numChampionshipsEntered: parseInt(await data_all.MRData.total),
+          winningYears: await winningYears,
+          allYears: await allYears,
         };
       }
     ),

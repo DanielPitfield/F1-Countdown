@@ -16,7 +16,7 @@ const TeamWorldChampionship: NextPage = () => {
     new Set(
       history.map(
         (season) =>
-          season.ConstructorStandings[0]?.Constructor.constructorId ?? ""
+          season.teamStanding?.Constructor.constructorId ?? ""
       )
     )
   ).filter((id) => id !== "");
@@ -26,18 +26,18 @@ const TeamWorldChampionship: NextPage = () => {
     .map((championID) => {
       const championshipsWon: TeamSeasonResult[] = history.filter(
         (season) =>
-          season.ConstructorStandings[0]?.Constructor.constructorId ===
+          season.teamStanding?.Constructor.constructorId ===
           championID
       );
 
       return {
-        team: championshipsWon[0]?.ConstructorStandings[0]?.Constructor,
+        team: championshipsWon[0]?.teamStanding?.Constructor,
         championshipsWon: championshipsWon,
       };
     })
     // Descending order (of number of championships won)
     .sort((a, b) => {
-      return a.championshipsWon.length - b.championshipsWon.length;
+      return b.championshipsWon.length - a.championshipsWon.length;
     });
 
   return (

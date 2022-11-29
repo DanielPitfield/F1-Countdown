@@ -1,7 +1,11 @@
 import { router, publicProcedure } from "../trpc";
 import { MAX_LIMIT } from "../../../utils/limits";
-import { Driver, DriverSeasonResult } from "./driver";
-import { Team, TeamSeasonResult } from "./team";
+import {
+  Driver,
+  DriverSeasonResult,
+  DriverSeasonResultResponse,
+} from "./driver";
+import { Team, TeamSeasonResult, TeamSeasonResultResponse } from "./team";
 import { Race } from "./grandPrix";
 
 export type DriverStanding = {
@@ -30,7 +34,19 @@ export const statisticsRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.StandingsTable.StandingsLists;
+      // The driver's position in the driver standings - for each year they won the world championship
+      const history: DriverSeasonResult[] =
+        await data.MRData.StandingsTable.StandingsLists.map(
+          (x: DriverSeasonResultResponse) => {
+            return {
+              season: x.season,
+              round: x.round,
+              driverStanding: x.DriverStandings[0],
+            };
+          }
+        );
+
+      return await history;
     }
   ),
 
@@ -42,7 +58,19 @@ export const statisticsRouter = router({
       const response = await fetch(API_URL);
       const data = await response.json();
 
-      return await data.MRData.StandingsTable.StandingsLists;
+      // The driver's position in the driver standings - for each year they won the world championship
+      const history: TeamSeasonResult[] =
+        await data.MRData.StandingsTable.StandingsLists.map(
+          (x: TeamSeasonResultResponse) => {
+            return {
+              season: x.season,
+              round: x.round,
+              teamStanding: x.ConstructorStandings[0],
+            };
+          }
+        );
+
+      return await history;
     }
   ),
 
