@@ -6,6 +6,7 @@ import styles from "../styles/Statistic.module.scss";
 
 interface RaceResultsProps {
   race: Race | undefined;
+  showPositions: boolean;
   showTeams: boolean;
   showTimes: boolean;
 }
@@ -21,7 +22,7 @@ const RaceResults = (props: RaceResultsProps) => {
         return (
           <div key={result.Driver.driverId} className={styles.wrapper}>
             <div>
-              {result.position}
+              {props.showPositions && <span>{result.position}</span>}
               <DriverLink driver={result.Driver} />
               {props.showTeams && <TeamLink team={result.Constructor} />}
               {props.showTimes && <span>{result.Time?.time ?? ""}</span>}

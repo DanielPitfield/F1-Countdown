@@ -1,6 +1,4 @@
 import { trpc } from "../../utils/trpc";
-import GrandPrixLink from "../../components/Links/GrandPrixLink";
-import DriverLink from "../../components/Links/DriverLink";
 import {
   GetStaticPaths,
   GetStaticPropsContext,
@@ -14,6 +12,7 @@ import { REVALDATION_PERIOD } from "../../utils/limits";
 
 import CircuitProfileDescription from "../../components/Profiles/Circuit/CircuitProfileDescription";
 import CircuitProfileFacts from "../../components/Profiles/Circuit/CircuitProfileFacts";
+import PreviousWinners from "../../components/PreviousWinners";
 
 import styles from "../../styles/CircuitProfile.module.scss";
 
@@ -74,20 +73,7 @@ const CircuitProfile = (
         pastWinners={pastWinners}
       />
 
-      <div>
-        <strong>Previous Winners</strong>
-        {pastWinners?.results.map((race) => {
-          const driver = race.Results[0]?.Driver;
-
-          return (
-            <div key={driver?.driverId}>
-              <GrandPrixLink grandPrix={race} showRaceName={false} />
-              <DriverLink driver={driver} />
-              {`(${race.Results[0]?.Time?.time})`}
-            </div>
-          );
-        })}
-      </div>
+      <PreviousWinners previousRaces={pastWinners?.results} />
     </div>
   );
 };

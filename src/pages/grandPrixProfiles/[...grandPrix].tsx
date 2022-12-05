@@ -133,7 +133,13 @@ const GrandPrixProfile = (
         showTeams={false}
         showTimes={true}
       />
-      <RaceResults race={race} showTeams={false} showTimes={true} />
+
+      <RaceResults
+        race={race}
+        showPositions={true}
+        showTeams={false}
+        showTimes={true}
+      />
 
       <DriverStandings standings={driverStandings} />
       <TeamStandings standings={teamStandings} />
