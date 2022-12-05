@@ -1,12 +1,16 @@
-import { trpc } from "../../../utils/trpc";
+import { AppRouterTypes, trpc } from "../../../utils/trpc";
 import SeasonLink from "../../Links/SeasonLink";
 import GrandPrixLink from "../../Links/GrandPrixLink";
 import { Fact } from "../../Fact";
 
 import styles from "../../../styles/DriverProfile.module.scss";
 
+type championshipResultsOutput =
+  AppRouterTypes["driver"]["getChampionshipResults"]["output"];
+
 interface DriverProfileFactsProps {
   driverID: string;
+  championshipResults: championshipResultsOutput | undefined;
 }
 
 const DriverProfileFacts = (props: DriverProfileFactsProps) => {
@@ -26,9 +30,6 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
     driverID: props.driverID,
   });
 
-  const { data: championshipResults } =
-    trpc.driver.getChampionshipResults.useQuery({ driverID: props.driverID });
-
   return (
     <div>
       <div className={styles.factsGroup}>
@@ -45,9 +46,9 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
           <span>{raceWins?.totalNum ?? "0"}</span>
         </Fact>
         <Fact label="World Championships">
-          <span>{championshipResults?.numChampionshipsWon ?? "0"}</span>
+          <span>{props.championshipResults?.numChampionshipsWon ?? "0"}</span>
           <span>
-            {championshipResults?.winningYears.map((championship) => {
+            {props.championshipResults?.winningYears.map((championship) => {
               return (
                 <SeasonLink
                   key={championship.season}

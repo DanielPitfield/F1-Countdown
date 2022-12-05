@@ -1,4 +1,5 @@
 import { trpc } from "../../utils/trpc";
+import Image from "next/image";
 import DriverLink from "../../components/Links/DriverLink";
 import {
   GetStaticPaths,
@@ -51,7 +52,6 @@ export async function getStaticProps(
 
   // Pre-fetching data (so that it is immediately available)
   await ssg.team.getInfo.prefetch({ teamID: team });
-  await ssg.team.isActive.prefetch({ teamID: team });
   await ssg.team.getDrivers.prefetch({ teamID: team });
   await ssg.team.getPolePositions.prefetch({ teamID: team });
   await ssg.team.getRaceWins.prefetch({ teamID: team });
@@ -72,9 +72,30 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     teamID: props.team,
   });
 
+  const { data: championshipResults } =
+    trpc.team.getChampionshipResults.useQuery({
+      teamID: props.team,
+    });
+
   return (
     <div className={styles.wrapper}>
-      <TeamProfileHeader teamID={props.team} />
+      <TeamProfileHeader
+        teamID={props.team}
+        isActive={championshipResults?.isActive}
+      />
+
+      <div className={styles.innerWrapper}>
+        <Image
+          src={`/images/teams/${props.team}.jpg`}
+          alt={props.team}
+          height={640}
+          width={640}
+        />
+        <TeamProfileFacts
+          teamID={props.team}
+          championshipResults={championshipResults}
+        />
+      </div>
 
       <div className={styles.currentDrivers}>
         <strong>Current Drivers</strong>
@@ -86,8 +107,6 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
           );
         })}
       </div>
-
-      <TeamProfileFacts teamID={props.team} />
     </div>
   );
 };

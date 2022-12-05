@@ -1,5 +1,5 @@
-import { getYear } from "date-fns";
 import { DriverGuess } from "../components/GuessingGame/GameConfig";
+import { getCurrentYear } from "./getCurrentYear";
 import { trpc } from "./trpc";
 
 export function getTargetDriver(): DriverGuess {
@@ -23,11 +23,9 @@ export function getTargetDriver(): DriverGuess {
     driverID: randomDriverID,
   });
 
-  const currentYear = getYear(new Date()).toString();
-
   return {
-    firstYear: championshipResults?.allYears[0]?.season ?? currentYear,
-    lastYear: championshipResults?.allYears.at(-1)?.season ?? currentYear,
+    firstYear: championshipResults?.allYears[0]?.season ?? getCurrentYear(),
+    lastYear: championshipResults?.allYears.at(-1)?.season ?? getCurrentYear(),
     numWorldChampionships: championshipResults?.numChampionshipsWon ?? 0,
     numWins: raceWins?.totalNum ?? 0,
     numPodiums: racesEntered?.numPodiums ?? 0,

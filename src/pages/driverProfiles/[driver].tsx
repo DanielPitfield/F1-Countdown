@@ -45,7 +45,6 @@ export async function getStaticProps(
   await ssg.driver.getDescription.fetch({
     driverID: driver,
   });
-  await ssg.driver.isActive.prefetch({ driverID: driver });
   await ssg.driver.getTeamsDrivenFor.prefetch({ driverID: driver });
   await ssg.driver.getRacesEntered.prefetch({ driverID: driver });
   await ssg.driver.getPolePositions.prefetch({ driverID: driver });
@@ -69,9 +68,17 @@ const DriverProfile = (
     driverID: props.driver,
   });
 
+  const { data: championshipResults } =
+    trpc.driver.getChampionshipResults.useQuery({
+      driverID: props.driver,
+    });
+
   return (
     <div className={styles.wrapper}>
-      <DriverProfileHeader driverID={props.driver} />
+      <DriverProfileHeader
+        driverID={props.driver}
+        isActive={championshipResults?.isActive}
+      />
 
       <div className={styles.innerWrapper}>
         <Image
@@ -80,7 +87,10 @@ const DriverProfile = (
           height={640}
           width={640}
         />
-        <DriverProfileFacts driverID={props.driver} />
+        <DriverProfileFacts
+          driverID={props.driver}
+          championshipResults={championshipResults}
+        />
       </div>
 
       <div className={styles.teamsDrivenFor}>

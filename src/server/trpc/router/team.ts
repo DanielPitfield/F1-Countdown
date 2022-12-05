@@ -5,6 +5,7 @@ import { Driver } from "./driver";
 import { TeamStanding } from "./statistics";
 import { Race } from "./grandPrix";
 import { filterPodiums } from "../../../utils/filterPodiums";
+import { getCurrentYear } from "../../../utils/getCurrentYear";
 
 export type Team = {
   constructorId: string;
@@ -37,19 +38,6 @@ export const teamRouter = router({
       return data.MRData.ConstructorTable.Constructors[0];
     }),
 
-  isActive: publicProcedure
-    .input(z.object({ teamID: z.string().min(1).trim() }))
-    .query(async ({ input }): Promise<boolean> => {
-      const API_URL = `https://ergast.com/api/f1/current/constructors.json?limit=${MAX_LIMIT}`;
-
-      const response = await fetch(API_URL);
-      const data = await response.json();
-
-      return data.MRData.ConstructorTable.Constructors.some(
-        (team: Team) => team.constructorId === input.teamID
-      );
-    }),
-
   getDrivers: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }): Promise<{ current: Driver[]; all: Driver[] }> => {
@@ -77,30 +65,15 @@ export const teamRouter = router({
         numChampionshipsEntered: number;
         winningYears: TeamSeasonResult[];
         allYears: TeamSeasonResult[];
+        isActive: boolean;
       }> => {
-        const WINNING_YEARS_API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings/1.json?limit=${MAX_LIMIT}`;
-        const response_winning = await fetch(WINNING_YEARS_API_URL);
-        const data_winning = await response_winning.json();
-
-        const ALL_YEARS_API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings.json?limit=${MAX_LIMIT}`;
-        const response_all = await fetch(ALL_YEARS_API_URL);
-        const data_all = await response_all.json();
-
-        // The team's position in the team standings - for each year they won the world championship
-        const winningYears: TeamSeasonResult[] =
-          data_winning.MRData.StandingsTable.StandingsLists.map(
-            (x: TeamSeasonResultResponse) => {
-              return {
-                season: x.season,
-                round: x.round,
-                teamStanding: x.ConstructorStandings[0],
-              };
-            }
-          );
+        const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings.json?limit=${MAX_LIMIT}`;
+        const response = await fetch(API_URL);
+        const data = await response.json();
 
         // The team's position in the team standings - for each year of their career
         const allYears: TeamSeasonResult[] =
-          data_all.MRData.StandingsTable.StandingsLists.map(
+          data.MRData.StandingsTable.StandingsLists.map(
             (x: TeamSeasonResultResponse) => {
               return {
                 season: x.season,
@@ -110,11 +83,16 @@ export const teamRouter = router({
             }
           );
 
+        const winningYears: TeamSeasonResult[] = allYears.filter(
+          (year) => year.teamStanding.position === "1"
+        );
+
         return {
-          numChampionshipsWon: parseInt(data_winning.MRData.total),
-          numChampionshipsEntered: parseInt(data_all.MRData.total),
+          numChampionshipsWon: winningYears.length,
+          numChampionshipsEntered: parseInt(data.MRData.total),
           winningYears: winningYears,
           allYears: allYears,
+          isActive: allYears.at(-1)?.season === getCurrentYear(),
         };
       }
     ),

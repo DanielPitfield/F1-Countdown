@@ -3,7 +3,7 @@ import { trpc } from "../../utils/trpc";
 import SeasonLink from "../../components/Links/SeasonLink";
 import DriverStandings from "../../components/Statistics/DriverStandings";
 import TeamStandings from "../../components/Statistics/TeamStandings";
-import { getYear } from "date-fns";
+import { getCurrentYear } from "../../utils/getCurrentYear";
 
 const CurrentStandings: NextPage = () => {
   const { data: driverStandings } =
@@ -12,12 +12,10 @@ const CurrentStandings: NextPage = () => {
   const { data: teamStandings } =
     trpc.statistics.getCurrentTeamStandings.useQuery();
 
-  const currentYear: string = getYear(new Date()).toString();
-
   return (
     <>
       <h1>
-        <SeasonLink season={currentYear} /> Standings
+        <SeasonLink season={getCurrentYear()} /> Standings
       </h1>
       <DriverStandings standings={driverStandings} />
       <TeamStandings standings={teamStandings} />

@@ -6,14 +6,11 @@ import styles from "../../../styles/DriverProfile.module.scss";
 
 interface DriverProfileHeaderProps {
   driverID: string;
+  isActive: boolean | undefined;
 }
 
 const DriverProfileHeader = (props: DriverProfileHeaderProps) => {
   const { data: description } = trpc.driver.getDescription.useQuery({
-    driverID: props.driverID,
-  });
-
-  const { data: isActive } = trpc.driver.isActive.useQuery({
     driverID: props.driverID,
   });
 
@@ -30,8 +27,8 @@ const DriverProfileHeader = (props: DriverProfileHeaderProps) => {
       <h1 className={styles.title}>{getDriverName(description)}</h1>{" "}
       <h3 className={styles.subtitle}>{description?.nationality}</h3>
       <div>{`${description?.dateOfBirth} (${age} years)`}</div>
-      <div className={styles.activeStatus} data-active={isActive}>
-        {isActive ? "Active" : "Not Active"}
+      <div className={styles.activeStatus} data-active={props.isActive}>
+        {props.isActive ? "Active" : "Not Active"}
       </div>
     </div>
   );

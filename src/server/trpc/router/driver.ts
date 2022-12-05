@@ -6,6 +6,7 @@ import { DriverStanding } from "./statistics";
 import { Race } from "./grandPrix";
 import { filterPodiums } from "../../../utils/filterPodiums";
 import { getTotalNumChampionshipPoints } from "../../../utils/getTotalNumChampionshipPoints";
+import { getCurrentYear } from "../../../utils/getCurrentYear";
 
 export type Driver = {
   driverId: string;
@@ -51,19 +52,6 @@ export const driverRouter = router({
       return data.MRData.DriverTable.Drivers[0];
     }),
 
-  isActive: publicProcedure
-    .input(z.object({ driverID: z.string().min(1).trim() }))
-    .query(async ({ input }): Promise<boolean> => {
-      const API_URL = `https://ergast.com/api/f1/current/drivers.json?limit=${MAX_LIMIT}`;
-
-      const response = await fetch(API_URL);
-      const data = await response.json();
-
-      return data.MRData.DriverTable.Drivers.some(
-        (driver: Driver) => driver.driverId === input.driverID
-      );
-    }),
-
   getChampionshipResults: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(
@@ -75,30 +63,16 @@ export const driverRouter = router({
         numCareerPoints: number;
         winningYears: DriverSeasonResult[];
         allYears: DriverSeasonResult[];
+        isActive: boolean;
       }> => {
-        const WINNING_YEARS_API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/driverStandings/1.json?limit=${MAX_LIMIT}`;
-        const response_winning = await fetch(WINNING_YEARS_API_URL);
-        const data_winning = await response_winning.json();
+        const API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/driverStandings.json?limit=${MAX_LIMIT}`;
 
-        const ALL_YEARS_API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/driverStandings.json?limit=${MAX_LIMIT}`;
-        const response_all = await fetch(ALL_YEARS_API_URL);
-        const data_all = await response_all.json();
-
-        // The driver's position in the driver standings - for each year they won the world championship
-        const winningYears: DriverSeasonResult[] =
-          data_winning.MRData.StandingsTable.StandingsLists.map(
-            (x: DriverSeasonResultResponse) => {
-              return {
-                season: x.season,
-                round: x.round,
-                driverStanding: x.DriverStandings[0],
-              };
-            }
-          );
+        const response = await fetch(API_URL);
+        const data = await response.json();
 
         // The driver's position in the driver standings - for each year of their career
         const allYears: DriverSeasonResult[] =
-          data_all.MRData.StandingsTable.StandingsLists.map(
+          data.MRData.StandingsTable.StandingsLists.map(
             (x: DriverSeasonResultResponse) => {
               return {
                 season: x.season,
@@ -108,12 +82,17 @@ export const driverRouter = router({
             }
           );
 
+        const winningYears: DriverSeasonResult[] = allYears.filter(
+          (year) => year.driverStanding.position === "1"
+        );
+
         return {
-          numChampionshipsWon: parseInt(data_winning.MRData.total),
-          numChampionshipsEntered: parseInt(data_all.MRData.total),
+          numChampionshipsWon: winningYears.length,
+          numChampionshipsEntered: parseInt(data.MRData.total),
           numCareerPoints: getTotalNumChampionshipPoints(allYears),
           winningYears: winningYears,
           allYears: allYears,
+          isActive: allYears.at(-1)?.season === getCurrentYear(),
         };
       }
     ),
