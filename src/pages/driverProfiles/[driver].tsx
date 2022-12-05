@@ -1,4 +1,5 @@
 import { trpc } from "../../utils/trpc";
+import Image from "next/image";
 import TeamLink from "../../components/Links/TeamLink";
 import {
   GetStaticPaths,
@@ -72,6 +73,16 @@ const DriverProfile = (
     <div className={styles.wrapper}>
       <DriverProfileDescription driverID={props.driver} />
 
+      <div className={styles.innerWrapper}>
+        <Image
+          src={`/images/drivers/${props.driver}.jpg`}
+          alt={props.driver}
+          height={640}
+          width={640}
+        />
+        <DriverProfileFacts driverID={props.driver} />
+      </div>
+
       <div className={styles.teamsDrivenFor}>
         <strong>Teams Driven For</strong>
         {teamsDrivenFor?.map((team) => {
@@ -82,8 +93,6 @@ const DriverProfile = (
           );
         })}
       </div>
-
-      <DriverProfileFacts driverID={props.driver} />
     </div>
   );
 };

@@ -1,6 +1,10 @@
 .wrapper {
 }
 
+.innerWrapper {
+  display: flex;
+}
+
 .title {
   margin-bottom: 0.2em;
 }
@@ -37,7 +41,7 @@
 .teamsDrivenFor {
 }
 
-.facts {
+.factsGroup {
   display: flex;
   @media (max-width: 768px) {
     flex-direction: column;

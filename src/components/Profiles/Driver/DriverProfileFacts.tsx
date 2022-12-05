@@ -31,19 +31,35 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
 
   return (
     <div>
-      <div className={styles.facts}>
-        <Fact label="First Pole">
-          <GrandPrixLink
-            grandPrix={polePositions?.firstPole}
-            showRaceName={true}
-          />
+      <div className={styles.factsGroup}>
+        <Fact label="Fastest Laps">
+          <span>{numFastestLaps ?? "0"}</span>
         </Fact>
-        <Fact label="Last Pole">
-          <GrandPrixLink
-            grandPrix={polePositions?.lastPole}
-            showRaceName={true}
-          />
+        <Fact label="Pole positions">
+          <span>{polePositions?.totalNum ?? "0"}</span>
         </Fact>
+        <Fact label="Podiums">
+          <span>{racesEntered?.numPodiums ?? "0"}</span>
+        </Fact>
+        <Fact label="Race Wins">
+          <span>{raceWins?.totalNum ?? "0"}</span>
+        </Fact>
+        <Fact label="World Championships">
+          <span>{championshipResults?.numChampionshipsWon ?? "0"}</span>
+          <span>
+            {championshipResults?.winningYears.map((championship) => {
+              return (
+                <SeasonLink
+                  key={championship.season}
+                  season={championship.season}
+                />
+              );
+            })}
+          </span>
+        </Fact>
+      </div>
+
+      <div className={styles.factsGroup}>
         <Fact label="First Race">
           <GrandPrixLink
             grandPrix={racesEntered?.firstRace}
@@ -56,42 +72,30 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
             showRaceName={true}
           />
         </Fact>
+      </div>
 
+      <div className={styles.factsGroup}>
+        <Fact label="First Pole">
+          <GrandPrixLink
+            grandPrix={polePositions?.firstPole}
+            showRaceName={true}
+          />
+        </Fact>
+        <Fact label="Last Pole">
+          <GrandPrixLink
+            grandPrix={polePositions?.lastPole}
+            showRaceName={true}
+          />
+        </Fact>
+      </div>
+
+      <div className={styles.factsGroup}>
         <Fact label="First Win">
           <GrandPrixLink grandPrix={raceWins?.firstWin} showRaceName={true} />
         </Fact>
         <Fact label="Last Win">
           <GrandPrixLink grandPrix={raceWins?.lastWin} showRaceName={true} />
         </Fact>
-      </div>
-
-      <div className={styles.facts}>
-        <Fact label="Pole positions">
-          <span>{polePositions?.totalNum ?? "0"}</span>
-        </Fact>
-        <Fact label="Race Wins">
-          <span>{raceWins?.totalNum ?? "0"}</span>
-        </Fact>
-        <Fact label="Podiums">
-          <span>{racesEntered?.numPodiums ?? "0"}</span>
-        </Fact>
-        <Fact label="Fastest Laps">
-          <span>{numFastestLaps ?? "0"}</span>
-        </Fact>
-        <Fact label="World Championships">
-          <span>{championshipResults?.numChampionshipsWon ?? "0"}</span>
-        </Fact>
-
-        {championshipResults &&
-          championshipResults.numChampionshipsWon > 0 &&
-          championshipResults.winningYears.map((championship) => {
-            return (
-              <SeasonLink
-                key={championship.season}
-                season={championship.season}
-              />
-            );
-          })}
       </div>
     </div>
   );
