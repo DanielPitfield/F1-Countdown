@@ -38,21 +38,26 @@ export const teamRouter = router({
       return data.MRData.ConstructorTable.Constructors[0];
     }),
 
-  getDrivers: publicProcedure
+  getCurrentDrivers: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
-    .query(async ({ input }): Promise<{ current: Driver[]; all: Driver[] }> => {
-      const CURRENT_DRIVERS_API_URL = `http://ergast.com/api/f1/current/constructors/${input.teamID}/drivers.json`;
-      const response_current = await fetch(CURRENT_DRIVERS_API_URL);
-      const data_current = await response_current.json();
+    .query(async ({ input }): Promise<Driver[]> => {
+      const API_URL = `http://ergast.com/api/f1/current/constructors/${input.teamID}/drivers.json`;
+      
+      const response = await fetch(API_URL);
+      const data = await response.json();
 
-      const ALL_DRIVERS_API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/drivers.json?limit=${MAX_LIMIT}`;
-      const response_all = await fetch(ALL_DRIVERS_API_URL);
-      const data_all = await response_all.json();
+      return data.MRData.DriverTable.Drivers;
+    }),
 
-      return {
-        current: data_current.MRData.DriverTable.Drivers,
-        all: data_all.MRData.DriverTable.Drivers,
-      };
+  getAllDrivers: publicProcedure
+    .input(z.object({ teamID: z.string().min(1).trim() }))
+    .query(async ({ input }): Promise<Driver[]> => {
+      const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/drivers.json?limit=${MAX_LIMIT}`;
+
+      const response = await fetch(API_URL);
+      const data = await response.json();
+
+      return data.MRData.DriverTable.Drivers;
     }),
 
   getChampionshipResults: publicProcedure
@@ -68,6 +73,7 @@ export const teamRouter = router({
         isActive: boolean;
       }> => {
         const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings.json?limit=${MAX_LIMIT}`;
+
         const response = await fetch(API_URL);
         const data = await response.json();
 
