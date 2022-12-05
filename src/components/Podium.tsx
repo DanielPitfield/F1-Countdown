@@ -30,19 +30,20 @@ export const Podium = (props: PodiumProps) => {
     .slice(0, PodiumPositions.THIRD);
 
   return (
-    <div>
-      <strong>Podium</strong>
-      <div className={styles.wrapper}>
-        {podiumOrder.map((podiumStep, index) => {
-          return (
-            <div key={index} className={styles.step} data-position={index + 1}>
-              <DriverLink driver={podiumStep?.Driver} />
-              {props.showTeams && <TeamLink team={podiumStep?.Constructor} />}
-              {props.showTimes && <span className={styles.time}>{podiumStep?.Time?.time ?? ""}</span>}
-            </div>
-          );
-        })}
-      </div>
+    <div className={styles.wrapper}>
+      {podiumOrder.map((podiumStep, index) => {
+        return (
+          <div key={index} className={styles.step} data-position={index + 1}>
+            <DriverLink driver={podiumStep?.Driver} />
+            {props.showTeams && <TeamLink team={podiumStep?.Constructor} />}
+            {props.showTimes && (
+              <span className={styles.time}>
+                {podiumStep?.Time?.time ?? ""}
+              </span>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
