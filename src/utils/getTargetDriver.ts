@@ -11,7 +11,7 @@ export function getTargetDriver(): DriverGuess {
       driverID: randomDriverID,
     });
 
-  const { data: racesEntered } = trpc.driver.getRacesEntered.useQuery({
+  const { data: races } = trpc.driver.getRaces.useQuery({
     driverID: randomDriverID,
   });
 
@@ -19,18 +19,14 @@ export function getTargetDriver(): DriverGuess {
     driverID: randomDriverID,
   });
 
-  const { data: raceWins } = trpc.driver.getRaceWins.useQuery({
-    driverID: randomDriverID,
-  });
-
   return {
     firstYear: championshipResults?.allYears[0]?.season ?? getCurrentYear(),
     lastYear: championshipResults?.allYears.at(-1)?.season ?? getCurrentYear(),
     numWorldChampionships: championshipResults?.numChampionshipsWon ?? 0,
-    numWins: raceWins?.totalNum ?? 0,
-    numPodiums: racesEntered?.numPodiums ?? 0,
+    numWins: races?.numWins ?? 0,
+    numPodiums: races?.numPodiums ?? 0,
     numPoints: championshipResults?.numCareerPoints ?? 0,
     numPoles: polePositions?.totalNum ?? 0,
-    numRaceStarts: racesEntered?.totalNum ?? 0,
+    numRaceStarts: races?.numRacesEntered ?? 0,
   };
 }

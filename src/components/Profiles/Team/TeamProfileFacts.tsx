@@ -14,15 +14,11 @@ interface TeamProfileFactsProps {
 }
 
 const TeamProfileFacts = (props: TeamProfileFactsProps) => {
-  const { data: racesEntered } = trpc.team.getRacesEntered.useQuery({
+  const { data: races } = trpc.team.getRaces.useQuery({
     teamID: props.teamID,
   });
 
   const { data: polePositions } = trpc.team.getPolePositions.useQuery({
-    teamID: props.teamID,
-  });
-
-  const { data: raceWins } = trpc.team.getRaceWins.useQuery({
     teamID: props.teamID,
   });
 
@@ -40,10 +36,10 @@ const TeamProfileFacts = (props: TeamProfileFactsProps) => {
           <span>{polePositions?.totalNum ?? "0"}</span>
         </Fact>
         <Fact label="Podiums">
-          <span>{racesEntered?.numPodiums ?? "0"}</span>
+          <span>{races?.numPodiums ?? "0"}</span>
         </Fact>
         <Fact label="Race Wins">
-          <span>{raceWins?.totalNum ?? "0"}</span>
+          <span>{races?.numWins ?? "0"}</span>
         </Fact>
         <Fact label="World Championships">
           <span>{props.championshipResults?.numChampionshipsWon ?? "0"}</span>
@@ -63,13 +59,13 @@ const TeamProfileFacts = (props: TeamProfileFactsProps) => {
       <div className={styles.factsGroup}>
         <Fact label="First Race">
           <GrandPrixLink
-            grandPrix={racesEntered?.firstRace}
+            grandPrix={races?.firstRace}
             showRaceName={true}
           />
         </Fact>
         <Fact label="Last Race">
           <GrandPrixLink
-            grandPrix={racesEntered?.lastRace}
+            grandPrix={races?.lastRace}
             showRaceName={true}
           />
         </Fact>
@@ -92,10 +88,10 @@ const TeamProfileFacts = (props: TeamProfileFactsProps) => {
 
       <div className={styles.factsGroup}>
         <Fact label="First Win">
-          <GrandPrixLink grandPrix={raceWins?.firstWin} showRaceName={true} />
+          <GrandPrixLink grandPrix={races?.firstWin} showRaceName={true} />
         </Fact>
         <Fact label="Last Win">
-          <GrandPrixLink grandPrix={raceWins?.lastWin} showRaceName={true} />
+          <GrandPrixLink grandPrix={races?.lastWin} showRaceName={true} />
         </Fact>
       </div>
     </div>

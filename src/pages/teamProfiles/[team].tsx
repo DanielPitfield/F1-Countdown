@@ -54,7 +54,7 @@ export async function getStaticProps(
   await ssg.team.getInfo.prefetch({ teamID: team });
   await ssg.team.getCurrentDrivers.prefetch({ teamID: team });
   await ssg.team.getPolePositions.prefetch({ teamID: team });
-  await ssg.team.getRaceWins.prefetch({ teamID: team });
+  await ssg.team.getRaces.prefetch({ teamID: team });
   await ssg.team.getNumFastestLaps.prefetch({ teamID: team });
   await ssg.team.getChampionshipResults.prefetch({ teamID: team });
 

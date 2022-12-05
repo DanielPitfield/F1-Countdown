@@ -42,7 +42,7 @@ export const teamRouter = router({
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(async ({ input }): Promise<Driver[]> => {
       const API_URL = `http://ergast.com/api/f1/current/constructors/${input.teamID}/drivers.json`;
-      
+
       const response = await fetch(API_URL);
       const data = await response.json();
 
@@ -103,27 +103,46 @@ export const teamRouter = router({
       }
     ),
 
-  getRacesEntered: publicProcedure
+  getRaces: publicProcedure
     .input(z.object({ teamID: z.string().min(1).trim() }))
     .query(
       async ({
         input,
       }): Promise<{
-        firstRace: Race;
-        lastRace: Race;
+        numRacesEntered: number;
         numPodiums: number;
-        totalNum: number;
+        numWins: number;
+        firstRace: Race | undefined;
+        lastRace: Race | undefined;
+        firstWin: Race | undefined;
+        lastWin: Race | undefined;
       }> => {
         const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/results.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
         const data = await response.json();
 
+        // Every race the team has participated in
+        const allRaces: Race[] = data.MRData.RaceTable.Races;
+
+        const winningRaces: Race[] = allRaces.filter((race) => {
+          // What is the team of the driver that won the race?
+          const winningTeam = race.Results.find(
+            (result) => result.position === "1"
+          )?.Constructor;
+
+          // Is that the team in question?
+          return winningTeam?.constructorId === input.teamID;
+        });
+
         return {
-          firstRace: data.MRData.RaceTable.Races[0],
-          lastRace: data.MRData.RaceTable.Races.at(-1),
-          numPodiums: filterPodiums(data.MRData.RaceTable.Races).length,
-          totalNum: parseInt(data.MRData.total),
+          numRacesEntered: parseInt(data.MRData.total),
+          numPodiums: filterPodiums(allRaces).length,
+          numWins: winningRaces.length,
+          firstRace: allRaces[0],
+          lastRace: allRaces.at(-1),
+          firstWin: winningRaces[0],
+          lastWin: winningRaces.at(-1),
         };
       }
     ),
@@ -146,29 +165,6 @@ export const teamRouter = router({
         return {
           firstPole: data.MRData.RaceTable.Races[0],
           lastPole: data.MRData.RaceTable.Races.at(-1),
-          totalNum: parseInt(data.MRData.total),
-        };
-      }
-    ),
-
-  getRaceWins: publicProcedure
-    .input(z.object({ teamID: z.string().min(1).trim() }))
-    .query(
-      async ({
-        input,
-      }): Promise<{
-        firstWin: Race;
-        lastWin: Race;
-        totalNum: number;
-      }> => {
-        const API_URL = `http://ergast.com/api/f1/constructors/${input.teamID}/results/1.json?limit=${MAX_LIMIT}`;
-
-        const response = await fetch(API_URL);
-        const data = await response.json();
-
-        return {
-          firstWin: data.MRData.RaceTable.Races[0],
-          lastWin: data.MRData.RaceTable.Races.at(-1),
           totalNum: parseInt(data.MRData.total),
         };
       }
