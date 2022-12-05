@@ -4,11 +4,11 @@ import intervalToDuration from "date-fns/intervalToDuration";
 
 import styles from "../../../styles/DriverProfile.module.scss";
 
-interface DriverProfileDescriptionProps {
+interface DriverProfileHeaderProps {
   driverID: string;
 }
 
-const DriverProfileDescription = (props: DriverProfileDescriptionProps) => {
+const DriverProfileHeader = (props: DriverProfileHeaderProps) => {
   const { data: description } = trpc.driver.getDescription.useQuery({
     driverID: props.driverID,
   });
@@ -37,4 +37,4 @@ const DriverProfileDescription = (props: DriverProfileDescriptionProps) => {
   );
 };
 
-export default DriverProfileDescription;
+export default DriverProfileHeader;

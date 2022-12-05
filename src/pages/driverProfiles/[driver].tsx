@@ -12,7 +12,7 @@ import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 
-import DriverProfileDescription from "../../components/Profiles/Driver/DriverProfileDescription";
+import DriverProfileHeader from "../../components/Profiles/Driver/DriverProfileHeader";
 import DriverProfileFacts from "../../components/Profiles/Driver/DriverProfileFacts";
 
 import styles from "../../styles/DriverProfile.module.scss";
@@ -71,7 +71,7 @@ const DriverProfile = (
 
   return (
     <div className={styles.wrapper}>
-      <DriverProfileDescription driverID={props.driver} />
+      <DriverProfileHeader driverID={props.driver} />
 
       <div className={styles.innerWrapper}>
         <Image

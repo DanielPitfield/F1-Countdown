@@ -2,11 +2,11 @@ import { trpc } from "../../../utils/trpc";
 
 import styles from "../../../styles/TeamProfile.module.scss";
 
-interface TeamProfileDescriptionProps {
+interface TeamProfileHeaderProps {
   teamID: string;
 }
 
-const TeamProfileDescription = (props: TeamProfileDescriptionProps) => {
+const TeamProfileHeader = (props: TeamProfileHeaderProps) => {
   const { data: description } = trpc.team.getInfo.useQuery({
     teamID: props.teamID,
   });
@@ -26,4 +26,4 @@ const TeamProfileDescription = (props: TeamProfileDescriptionProps) => {
   );
 };
 
-export default TeamProfileDescription;
+export default TeamProfileHeader;

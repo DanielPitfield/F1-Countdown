@@ -2,11 +2,11 @@ import { trpc } from "../../../utils/trpc";
 
 import styles from "../../../styles/CircuitProfile.module.scss";
 
-interface CircuitProfileDescriptionProps {
+interface CircuitProfileHeaderProps {
   circuitID: string;
 }
 
-const CircuitProfileDescription = (props: CircuitProfileDescriptionProps) => {
+const CircuitProfileHeader = (props: CircuitProfileHeaderProps) => {
   const { data: description } = trpc.circuit.getInfo.useQuery({
     circuitID: props.circuitID,
   });
@@ -20,12 +20,11 @@ const CircuitProfileDescription = (props: CircuitProfileDescriptionProps) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {description?.Location.locality},
-          {description?.Location.country}
+          {description?.Location.locality},{description?.Location.country}
         </a>
       </h3>
     </div>
   );
 };
 
-export default CircuitProfileDescription;
+export default CircuitProfileHeader;

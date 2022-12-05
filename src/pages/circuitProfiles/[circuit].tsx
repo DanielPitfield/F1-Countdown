@@ -10,7 +10,7 @@ import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 
-import CircuitProfileDescription from "../../components/Profiles/Circuit/CircuitProfileDescription";
+import CircuitProfileHeader from "../../components/Profiles/Circuit/CircuitProfileHeader";
 import CircuitProfileFacts from "../../components/Profiles/Circuit/CircuitProfileFacts";
 import PreviousWinners from "../../components/PreviousWinners";
 
@@ -66,7 +66,7 @@ const CircuitProfile = (
 
   return (
     <div className={styles.wrapper}>
-      <CircuitProfileDescription circuitID={props.circuit} />
+      <CircuitProfileHeader circuitID={props.circuit} />
 
       <CircuitProfileFacts
         circuitID={props.circuit}

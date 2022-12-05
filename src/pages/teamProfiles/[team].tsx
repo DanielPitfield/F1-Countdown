@@ -11,7 +11,7 @@ import superjson from "superjson";
 import { prisma } from "../../server/db/client";
 import { REVALDATION_PERIOD } from "../../utils/limits";
 
-import TeamProfileDescription from "../../components/Profiles/Team/TeamProfileDescription";
+import TeamProfileHeader from "../../components/Profiles/Team/TeamProfileHeader";
 import TeamProfileFacts from "../../components/Profiles/Team/TeamProfileFacts";
 
 import styles from "../../styles/TeamProfile.module.scss";
@@ -74,7 +74,7 @@ const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   return (
     <div className={styles.wrapper}>
-      <TeamProfileDescription teamID={props.team} />
+      <TeamProfileHeader teamID={props.team} />
 
       <div className={styles.currentDrivers}>
         <strong>Current Drivers</strong>
