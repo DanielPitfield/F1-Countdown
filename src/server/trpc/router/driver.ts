@@ -108,27 +108,46 @@ export const driverRouter = router({
       return data.MRData.ConstructorTable.Constructors;
     }),
 
-  getRacesEntered: publicProcedure
+  getRaces: publicProcedure
     .input(z.object({ driverID: z.string().min(1).trim() }))
     .query(
       async ({
         input,
       }): Promise<{
-        firstRace: Race;
-        lastRace: Race;
+        numRacesEntered: number;
         numPodiums: number;
-        totalNum: number;
+        numWins: number;
+        firstRace: Race | undefined;
+        lastRace: Race | undefined;
+        firstWin: Race | undefined;
+        lastWin: Race | undefined;
       }> => {
         const API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/results.json?limit=${MAX_LIMIT}`;
 
         const response = await fetch(API_URL);
         const data = await response.json();
 
+        // Every race the driver has participated in
+        const allRaces: Race[] = data.MRData.RaceTable.Races;
+
+        const winningRaces: Race[] = allRaces.filter((race) => {
+          // What position did the driver in question finish for the race?
+          const finishingPosition: string =
+            race.Results.find(
+              (result) => result.Driver.driverId === input.driverID
+            )?.position ?? "";
+          // Did they win the race?
+          return finishingPosition === "1";
+        });
+
         return {
-          firstRace: data.MRData.RaceTable.Races[0],
-          lastRace: data.MRData.RaceTable.Races.at(-1),
-          numPodiums: filterPodiums(data.MRData.RaceTable.Races).length,
-          totalNum: parseInt(data.MRData.total),
+          numRacesEntered: parseInt(data.MRData.total),
+          numPodiums: filterPodiums(allRaces).length,
+          numWins: winningRaces.length,
+          firstRace: allRaces[0],
+          lastRace: allRaces.at(-1),
+          firstWin: winningRaces[0],
+          lastWin: winningRaces.at(-1),
         };
       }
     ),
@@ -151,29 +170,6 @@ export const driverRouter = router({
         return {
           firstPole: data.MRData.RaceTable.Races[0],
           lastPole: data.MRData.RaceTable.Races.at(-1),
-          totalNum: parseInt(data.MRData.total),
-        };
-      }
-    ),
-
-  getRaceWins: publicProcedure
-    .input(z.object({ driverID: z.string().min(1).trim() }))
-    .query(
-      async ({
-        input,
-      }): Promise<{
-        firstWin: Race;
-        lastWin: Race;
-        totalNum: number;
-      }> => {
-        const API_URL = `http://ergast.com/api/f1/drivers/${input.driverID}/results/1.json?limit=${MAX_LIMIT}`;
-
-        const response = await fetch(API_URL);
-        const data = await response.json();
-
-        return {
-          firstWin: data.MRData.RaceTable.Races[0],
-          lastWin: data.MRData.RaceTable.Races.at(-1),
           totalNum: parseInt(data.MRData.total),
         };
       }

@@ -46,9 +46,8 @@ export async function getStaticProps(
     driverID: driver,
   });
   await ssg.driver.getTeamsDrivenFor.prefetch({ driverID: driver });
-  await ssg.driver.getRacesEntered.prefetch({ driverID: driver });
+  await ssg.driver.getRaces.prefetch({ driverID: driver });
   await ssg.driver.getPolePositions.prefetch({ driverID: driver });
-  await ssg.driver.getRaceWins.prefetch({ driverID: driver });
   await ssg.driver.getNumFastestLaps.prefetch({ driverID: driver });
   await ssg.driver.getChampionshipResults.prefetch({ driverID: driver });
 
