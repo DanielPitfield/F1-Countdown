@@ -1,6 +1,6 @@
 import { trpc } from "../../utils/trpc";
 import CircuitLink from "../../components/Links/CircuitLink";
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
@@ -15,8 +15,8 @@ import SeasonLink from "../../components/Links/SeasonLink";
 
 import styles from "../../styles/GrandPrixProfile.module.scss";
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<{ grandPrix: string[] }>
+export async function getServerSideProps(
+  context: GetServerSidePropsContext<{ grandPrix: string[] }>
 ) {
   // Helper function
   const ssg = await createProxySSGHelpers({
@@ -66,7 +66,7 @@ export async function getStaticProps(
 }
 
 const GrandPrixProfile = (
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
   const { data: schedule } = trpc.grandPrix.getSchedule.useQuery({
     season: props.season,

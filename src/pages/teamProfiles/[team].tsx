@@ -1,7 +1,7 @@
 import { trpc } from "../../utils/trpc";
 import Image from "next/image";
 import DriverLink from "../../components/Links/DriverLink";
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
@@ -13,8 +13,8 @@ import TeamProfileFacts from "../../components/Profiles/Team/TeamProfileFacts";
 
 import styles from "../../styles/TeamProfile.module.scss";
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<{ team: string }>
+export async function getServerSideProps(
+  context: GetServerSidePropsContext<{ team: string }>
 ) {
   // Helper function
   const ssg = await createProxySSGHelpers({
@@ -43,7 +43,9 @@ export async function getStaticProps(
   };
 }
 
-const TeamProfile = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+const TeamProfile = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
   const { data: currentDrivers } = trpc.team.getCurrentDrivers.useQuery({
     teamID: props.team,
   });

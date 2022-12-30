@@ -1,5 +1,5 @@
 import { trpc } from "../../utils/trpc";
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
@@ -11,8 +11,8 @@ import SeasonSchedule from "../../components/SeasonSchedule";
 
 import styles from "../../styles/Profile.module.scss";
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<{ season: string }>
+export async function getServerSideProps(
+  context: GetServerSidePropsContext<{ season: string }>
 ) {
   // Helper function
   const ssg = await createProxySSGHelpers({
@@ -39,7 +39,7 @@ export async function getStaticProps(
 }
 
 const SeasonProfile = (
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
   const { data: schedule } = trpc.season.getSchedule.useQuery({
     seasonID: props.season,

@@ -1,5 +1,5 @@
 import { trpc } from "../../utils/trpc";
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
@@ -15,8 +15,8 @@ import styles from "../../styles/CircuitProfile.module.scss";
 // For how many previous years should the results of races at this circuit be shown?
 const NUM_PAST_WINNERS = 5;
 
-export async function getStaticProps(
-  context: GetStaticPropsContext<{ circuit: string }>
+export async function getServerSideProps(
+  context: GetServerSidePropsContext<{ circuit: string }>
 ) {
   // Helper function
   const ssg = await createProxySSGHelpers({
@@ -45,7 +45,7 @@ export async function getStaticProps(
 }
 
 const CircuitProfile = (
-  props: InferGetStaticPropsType<typeof getStaticProps>
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
   const { data: pastWinners } = trpc.circuit.getPastWinners.useQuery({
     circuitID: props.circuit,
