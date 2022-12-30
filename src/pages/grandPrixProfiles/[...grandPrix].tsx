@@ -1,10 +1,6 @@
 import { trpc } from "../../utils/trpc";
 import CircuitLink from "../../components/Links/CircuitLink";
-import {
-  GetStaticPaths,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
@@ -18,17 +14,6 @@ import RaceResults from "../../components/RaceResults";
 import SeasonLink from "../../components/Links/SeasonLink";
 
 import styles from "../../styles/GrandPrixProfile.module.scss";
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    // TODO: Build time SSG
-    paths: [
-      { params: { grandPrix: ["2022", "3"] } },
-      { params: { grandPrix: ["2022", "4"] } },
-    ],
-    fallback: "blocking",
-  };
-};
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ grandPrix: string[] }>

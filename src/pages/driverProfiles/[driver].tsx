@@ -1,11 +1,7 @@
 import { trpc } from "../../utils/trpc";
 import Image from "next/image";
 import TeamLink from "../../components/Links/TeamLink";
-import {
-  GetStaticPaths,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
@@ -16,17 +12,6 @@ import DriverProfileHeader from "../../components/Profiles/Driver/DriverProfileH
 import DriverProfileFacts from "../../components/Profiles/Driver/DriverProfileFacts";
 
 import styles from "../../styles/DriverProfile.module.scss";
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    // TODO: Build time SSG
-    paths: [
-      { params: { driver: "max_verstappen" } },
-      { params: { driver: "hamilton" } },
-    ],
-    fallback: "blocking",
-  };
-};
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ driver: string }>

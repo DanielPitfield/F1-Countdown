@@ -1,9 +1,5 @@
 import { trpc } from "../../utils/trpc";
-import {
-  GetStaticPaths,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
@@ -14,14 +10,6 @@ import TeamStandings from "../../components/Statistics/TeamStandings";
 import SeasonSchedule from "../../components/SeasonSchedule";
 
 import styles from "../../styles/Profile.module.scss";
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    // TODO: Build time SSG
-    paths: [{ params: { season: "2021" } }, { params: { season: "2022" } }],
-    fallback: "blocking",
-  };
-};
 
 export async function getStaticProps(
   context: GetStaticPropsContext<{ season: string }>
