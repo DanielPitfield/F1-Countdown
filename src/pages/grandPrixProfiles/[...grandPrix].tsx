@@ -5,7 +5,6 @@ import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
-import { REVALDATION_PERIOD } from "../../utils/limits";
 import { Podium } from "../../components/Podium";
 import DriverStandings from "../../components/Statistics/DriverStandings";
 import TeamStandings from "../../components/Statistics/TeamStandings";
@@ -61,7 +60,6 @@ export async function getServerSideProps(
       season: season,
       roundNumber: roundNumber,
     },
-    revalidate: REVALDATION_PERIOD,
   };
 }
 

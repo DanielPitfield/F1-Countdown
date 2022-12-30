@@ -6,7 +6,6 @@ import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
-import { REVALDATION_PERIOD } from "../../utils/limits";
 
 import DriverProfileHeader from "../../components/Profiles/Driver/DriverProfileHeader";
 import DriverProfileFacts from "../../components/Profiles/Driver/DriverProfileFacts";
@@ -41,7 +40,6 @@ export async function getServerSideProps(
       trpcState: ssg.dehydrate(),
       driver,
     },
-    revalidate: REVALDATION_PERIOD,
   };
 }
 

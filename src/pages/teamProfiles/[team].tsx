@@ -6,7 +6,6 @@ import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
-import { REVALDATION_PERIOD } from "../../utils/limits";
 
 import TeamProfileHeader from "../../components/Profiles/Team/TeamProfileHeader";
 import TeamProfileFacts from "../../components/Profiles/Team/TeamProfileFacts";
@@ -39,7 +38,6 @@ export async function getServerSideProps(
       trpcState: ssg.dehydrate(),
       team,
     },
-    revalidate: REVALDATION_PERIOD,
   };
 }
 
