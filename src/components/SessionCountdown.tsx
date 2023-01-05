@@ -6,31 +6,30 @@ const SessionCountdown = () => {
   const { data: upcomingGrandPrixWeekend } =
     trpc.home.getUpcomingGrandPrixWeekend.useQuery();
 
-  const upcomingRaceDate = useRef<Date | null>(
-    upcomingGrandPrixWeekend?.sessions.gp
-      ? new Date(upcomingGrandPrixWeekend.sessions.gp)
-      : null
-  );
-
-  const [remainingTime, setRemainingTime] = useState<string>(
-    getFormattedTimeUntil(upcomingRaceDate.current)
-  );
+  const [remainingTime, setRemainingTime] = useState<string>();
 
   useEffect(() => {
+    if (!upcomingGrandPrixWeekend) {
+      return;
+    }
+
+    const upcomingRaceDate = new Date(upcomingGrandPrixWeekend.sessions.gp);
+
     const intervalId = setInterval(
-      () => setRemainingTime(getFormattedTimeUntil(upcomingRaceDate.current)),
+      () => setRemainingTime(getFormattedTimeUntil(upcomingRaceDate)),
       1000
     );
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+    return () => clearInterval(intervalId);
+  }, [upcomingGrandPrixWeekend, setRemainingTime]);
 
   return (
     <div>
       <h3>Race Countdown</h3>
-      <div>Time until next race: {remainingTime}</div>
+      <div>
+        Time until next race:<br/>
+        {remainingTime ? remainingTime : <em>Loading...</em>}
+      </div>
     </div>
   );
 };
