@@ -15,7 +15,7 @@ const CurrentStandings: NextPage = () => {
   return (
     <>
       <h1>
-        <SeasonLink season={getCurrentYear()} /> Standings
+        <SeasonLink season={getCurrentYear().toString()} /> Standings
       </h1>
       <DriverStandings standings={driverStandings} />
       <TeamStandings standings={teamStandings} />
