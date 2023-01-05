@@ -6,10 +6,10 @@ const SessionCountdown = () => {
   const { data: upcomingGrandPrixWeekend } =
     trpc.home.getUpcomingGrandPrixWeekend.useQuery();
 
-  const upcomingRaceDate = useRef<Date>(
+  const upcomingRaceDate = useRef<Date | null>(
     upcomingGrandPrixWeekend?.sessions.gp
       ? new Date(upcomingGrandPrixWeekend.sessions.gp)
-      : new Date()
+      : null
   );
 
   const [remainingTime, setRemainingTime] = useState<string>(
