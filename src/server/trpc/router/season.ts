@@ -5,6 +5,7 @@ import { DriverStanding, TeamStanding } from "./statistics";
 import { Race } from "./grandPrix";
 
 export const seasonRouter = router({
+  // Ergast endpoints only suitable for schedule information for previous seasons
   getSchedule: publicProcedure
     .input(z.object({ seasonID: z.string().min(1).trim() }))
     .query(async ({ input }): Promise<Race[]> => {
