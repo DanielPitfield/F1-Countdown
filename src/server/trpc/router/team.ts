@@ -5,7 +5,6 @@ import { Driver } from "./driver";
 import { TeamStanding } from "./statistics";
 import { Race } from "./grandPrix";
 import { filterPodiums } from "../../../utils/filterPodiums";
-import { getCurrentYear } from "../../../utils/getCurrentYear";
 
 export type Team = {
   constructorId: string;
@@ -70,7 +69,6 @@ export const teamRouter = router({
         numChampionshipsEntered: number;
         winningYears: TeamSeasonResult[];
         allYears: TeamSeasonResult[];
-        isActive: boolean;
       }> => {
         const API_URL = `https://ergast.com/api/f1/constructors/${input.teamID}/constructorStandings.json?limit=${MAX_LIMIT}`;
 
@@ -98,7 +96,6 @@ export const teamRouter = router({
           numChampionshipsEntered: parseInt(data.MRData.total),
           winningYears: winningYears,
           allYears: allYears,
-          isActive: allYears.at(-1)?.season === getCurrentYear(),
         };
       }
     ),

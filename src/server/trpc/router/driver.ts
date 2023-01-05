@@ -6,7 +6,6 @@ import { DriverStanding } from "./statistics";
 import { Race } from "./grandPrix";
 import { filterPodiums } from "../../../utils/filterPodiums";
 import { getTotalNumChampionshipPoints } from "../../../utils/getTotalNumChampionshipPoints";
-import { getCurrentYear } from "../../../utils/getCurrentYear";
 
 export type Driver = {
   driverId: string;
@@ -63,7 +62,6 @@ export const driverRouter = router({
         numCareerPoints: number;
         winningYears: DriverSeasonResult[];
         allYears: DriverSeasonResult[];
-        isActive: boolean;
       }> => {
         const API_URL = `https://ergast.com/api/f1/drivers/${input.driverID}/driverStandings.json?limit=${MAX_LIMIT}`;
 
@@ -92,7 +90,6 @@ export const driverRouter = router({
           numCareerPoints: getTotalNumChampionshipPoints(allYears),
           winningYears: winningYears,
           allYears: allYears,
-          isActive: allYears.at(-1)?.season === getCurrentYear(),
         };
       }
     ),

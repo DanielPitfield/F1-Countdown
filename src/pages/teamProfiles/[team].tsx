@@ -55,10 +55,7 @@ const TeamProfile = (
 
   return (
     <div className={styles.wrapper}>
-      <TeamProfileHeader
-        teamID={props.team}
-        isActive={championshipResults?.isActive}
-      />
+      <TeamProfileHeader teamID={props.team} />
 
       <div className={styles.innerWrapper}>
         <Image

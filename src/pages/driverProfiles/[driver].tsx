@@ -59,7 +59,6 @@ const DriverProfile = (
     <div className={styles.wrapper}>
       <DriverProfileHeader
         driverID={props.driver}
-        isActive={championshipResults?.isActive}
       />
 
       <div className={styles.innerWrapper}>

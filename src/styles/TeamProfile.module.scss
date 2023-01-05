@@ -13,18 +13,6 @@
   margin-top: 0;
 }
 
-.activeStatus {
-  font-weight: bold;
-
-  &[data-active="true"] {
-    color: #25d425;
-  }
-
-  &[data-active="false"] {
-    color: #eb0f0f;
-  }
-}
-
 .description {
   background-color: #238ea7;
   color: white;
