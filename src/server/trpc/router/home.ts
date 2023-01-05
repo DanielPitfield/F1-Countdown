@@ -1,5 +1,6 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
+import { getCurrentYear } from "../../../utils/getCurrentYear";
 
 // The schedule for an upcoming event
 export type UpcomingGrandPrixWeekend = {
@@ -20,11 +21,10 @@ export type UpcomingGrandPrixWeekend = {
 };
 
 export const homeRouter = router({
-  getUpcomingGrandPrixWeekend: publicProcedure
-    .input(z.object({ year: z.string().min(4).max(4).trim() }))
-    .query(async ({ input }): Promise<UpcomingGrandPrixWeekend | undefined> => {
+  getUpcomingGrandPrixWeekend: publicProcedure.query(
+    async (): Promise<UpcomingGrandPrixWeekend | undefined> => {
       // TODO: Instead of fetching from URL every reuqest, perhaps query prisma context that has these JSON files stored?
-      const API_URL = `https://raw.githubusercontent.com/sportstimes/f1/main/_db/f1/${input.year}.json`;
+      const API_URL = `https://raw.githubusercontent.com/sportstimes/f1/main/_db/f1/${getCurrentYear()}.json`;
 
       const response = await fetch(API_URL);
       const data = await response.json();
@@ -38,5 +38,6 @@ export const homeRouter = router({
           (session) => new Date(session) > new Date()
         )
       );
-    }),
+    }
+  ),
 });

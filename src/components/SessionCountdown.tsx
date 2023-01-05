@@ -1,32 +1,19 @@
-import { getCurrentYear } from "../utils/getCurrentYear";
 import { trpc } from "../utils/trpc";
 import { useEffect, useRef, useState } from "react";
 import { getFormattedTimeUntil } from "../utils/getFormattedTimeUntil";
 
 const SessionCountdown = () => {
-  const { data: currentYearUpcomingGrandPrixWeekend } =
-    trpc.home.getUpcomingGrandPrixWeekend.useQuery({
-      year: getCurrentYear(),
-    });
+  const { data: upcomingGrandPrixWeekend } =
+    trpc.home.getUpcomingGrandPrixWeekend.useQuery();
 
-  const { data: nextYearUpcomingGrandPrixWeekend } =
-    trpc.home.getUpcomingGrandPrixWeekend.useQuery({
-      year: (parseInt(getCurrentYear()) + 1).toString(),
-    });
-
-  function getUpcomingRaceDate(): Date {
-    return new Date(
-      currentYearUpcomingGrandPrixWeekend?.sessions.gp ??
-        nextYearUpcomingGrandPrixWeekend?.sessions.gp ??
-        ""
-    );
-  }
-
-  // TODO: Custom hook?
-  const upcomingRaceDate = useRef<Date>(getUpcomingRaceDate());
+  const upcomingRaceDate = useRef<Date>(
+    upcomingGrandPrixWeekend?.sessions.gp
+      ? new Date(upcomingGrandPrixWeekend.sessions.gp)
+      : new Date()
+  );
 
   const [remainingTime, setRemainingTime] = useState<string>(
-    getFormattedTimeUntil(getUpcomingRaceDate())
+    getFormattedTimeUntil(upcomingRaceDate.current)
   );
 
   useEffect(() => {
@@ -38,7 +25,7 @@ const SessionCountdown = () => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [upcomingRaceDate]);
+  }, []);
 
   return (
     <div>
