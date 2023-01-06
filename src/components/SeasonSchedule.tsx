@@ -1,7 +1,7 @@
-import { Race } from "../server/trpc/router/grandPrix";
+import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 
 interface SeasonScheduleProps {
-  schedule: Race[] | undefined;
+  schedule: GrandPrixWeekend[] | undefined;
   showDates: boolean;
 }
 
@@ -12,11 +12,11 @@ const SeasonSchedule = (props: SeasonScheduleProps) => {
 
   return (
     <div>
-      {props.schedule?.map((race: Race) => {
+      {props.schedule?.map((weekend: GrandPrixWeekend) => {
         return (
-          <div key={race.round}>
-            <span>{race.raceName}</span>
-            {props.showDates && <span>{race.date}</span>}
+          <div key={weekend.round}>
+            <span>{weekend.raceName}</span>
+            {props.showDates && <span>{weekend.date}</span>}
           </div>
         );
       })}
