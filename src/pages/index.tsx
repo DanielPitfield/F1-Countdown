@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import SessionCountdown from "../components/SessionCountdown";
+import UpcomingWeekendSummary from "../components/UpcomingWeekendSummary";
 
 import styles from "../styles/index.module.scss";
 
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
               <span className={styles.titlePink}>F1 Dashboard</span>
             </h1>
 
-            <SessionCountdown />
+            <UpcomingWeekendSummary />
 
             <h3>Statistics</h3>
             <Link href="/statistics/CurrentStandings">Current Standings</Link>
