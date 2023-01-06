@@ -1,53 +1,40 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { getCurrentYear } from "../../../utils/getCurrentYear";
-
-// The schedule for an upcoming event
-export type UpcomingGrandPrixWeekend = {
-  name: string;
-  location: string;
-  latitude: number;
-  longitude: number;
-  round: number;
-  slug: string;
-  localeKey: string;
-  sessions: {
-    fp1: string;
-    fp2: string;
-    fp3: string;
-    qualifying: string;
-    gp: string;
-  };
-};
+import { GrandPrixWeekend } from "./grandPrix";
+import { trpc } from "../../../utils/trpc";
+import { getGrandPrixWeekendSessions } from "../../../utils/getGrandPrixWeekendSessions";
 
 export const homeRouter = router({
+  // TODO: Not sure if you can use procedures within other procedures, either way this fails to find the next event and returns undefined
   getUpcomingGrandPrixWeekend: publicProcedure.query(
-    async (): Promise<UpcomingGrandPrixWeekend | undefined> => {
-      // Try getting the next event this year, if not (i.e. end of season), then try the next year
+    async (): Promise<GrandPrixWeekend | undefined> => {
+      // Try getting the next event within the schedule of the most recent season
+      const { data: currentSeasonSchedule } = trpc.season.getSchedule.useQuery({
+        seasonID: "current",
+      });
+
+      // If not (i.e. end of season), try getting the next event within the schedule of the current year
+      const { data: currentYearSchedule } = trpc.season.getSchedule.useQuery({
+        seasonID: getCurrentYear().toString(),
+      });
+
       return (
-        getNextEventInYear(getCurrentYear()) ??
-        getNextEventInYear(getCurrentYear() + 1)
+        getNextEventInYear(currentSeasonSchedule) ??
+        getNextEventInYear(currentYearSchedule)
       );
     }
   ),
 });
 
-async function getNextEventInYear(
-  year: number
-): Promise<UpcomingGrandPrixWeekend | undefined> {
-  // TODO: Instead of fetching from URL every reuqest, perhaps query prisma context that has these JSON files stored?
-  const API_URL = `https://raw.githubusercontent.com/sportstimes/f1/main/_db/f1/${year}.json`;
-
-  const response = await fetch(API_URL);
-  const data = await response.json();
-
-  // All the event information for the current season/year
-  const schedule: UpcomingGrandPrixWeekend[] = data.races;
-
+function getNextEventInYear(
+  schedule: GrandPrixWeekend[] | undefined
+): GrandPrixWeekend | undefined {
   // Find the first event which has a session in the future
-  return schedule.find((event) =>
-    Object.values(event.sessions).some(
-      (session) => new Date(session) > new Date()
-    )
-  );
+  return schedule?.find((weekend) => {
+    const sessionDates: Date[] = getGrandPrixWeekendSessions(weekend).map(
+      (session) => session.date
+    );
+    return sessionDates.some((sessionDate) => sessionDate > new Date());
+  });
 }
