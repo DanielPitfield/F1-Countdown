@@ -24,11 +24,10 @@ export const homeRouter = router({
   getUpcomingGrandPrixWeekend: publicProcedure.query(
     async (): Promise<UpcomingGrandPrixWeekend | undefined> => {
       // Try getting the next event this year, if not (i.e. end of season), then try the next year
-      const nextEvent =
+      return (
         getNextEventInYear(getCurrentYear()) ??
-        getNextEventInYear(getCurrentYear() + 1);
-
-      return nextEvent;
+        getNextEventInYear(getCurrentYear() + 1)
+      );
     }
   ),
 });
