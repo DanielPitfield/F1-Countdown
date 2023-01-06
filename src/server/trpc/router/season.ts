@@ -2,13 +2,12 @@ import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { MAX_LIMIT } from "../../../utils/limits";
 import { DriverStanding, TeamStanding } from "./statistics";
-import { Race } from "./grandPrix";
+import { GrandPrixWeekend } from "./grandPrix";
 
 export const seasonRouter = router({
-  // Ergast endpoints only suitable for schedule information for previous seasons
   getSchedule: publicProcedure
     .input(z.object({ seasonID: z.string().min(1).trim() }))
-    .query(async ({ input }): Promise<Race[]> => {
+    .query(async ({ input }): Promise<GrandPrixWeekend[]> => {
       const API_URL = `https://ergast.com/api/f1/${input.seasonID}.json?limit=${MAX_LIMIT}`;
 
       const response = await fetch(API_URL);
