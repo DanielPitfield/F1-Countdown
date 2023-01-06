@@ -17,7 +17,7 @@ const UpcomingWeekendSummary = () => {
   const upcomingSession = sessions.find((session) => session.date > new Date());
 
   // TODO: Should the hook include the logic of finding the next session or just be a countdown to a given date?
-  const remainingTime = useCountdown(upcomingSession?.date);
+  //const remainingTime = useCountdown(upcomingSession?.date);
 
   // TODO: Also render the remainingTime/countdown next to the session which is upcoming/next
   return (

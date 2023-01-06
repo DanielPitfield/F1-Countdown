@@ -1,0 +1,13 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+
+  .placeholder {
+    font-family: inherit;
+    font-size: 4em;
+    display: flex;
+    justify-content: center;
+  }
+}
