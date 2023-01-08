@@ -1,54 +1,64 @@
 import React from "react";
-import { trpc } from "../utils/trpc";
+import useUpcomingSessionCountdown from "../hooks/useUpcomingSessionCountdown";
+import {
+  getGrandPrixWeekendSessions,
+  WeekendSession,
+} from "../utils/getGrandPrixWeekendSessions";
+import { getUpcomingGrandPrixWeekend } from "../utils/getUpcomingGrandPrixWeekend";
+
+import styles from "../styles/UpcomingWeekendSummary.module.scss";
 
 const UpcomingWeekendSummary = () => {
-  const { data: upcomingGrandPrixWeekend } =
-    trpc.home.getUpcomingGrandPrixWeekend.useQuery();
+  // TODO: Ideally this would be a tRPC procedure, not a function
+  const upcomingGrandPrixWeekend = getUpcomingGrandPrixWeekend();
+
+  // All the sessions of the current/upcoming grand prix weekend
+  const sessions: WeekendSession[] = getGrandPrixWeekendSessions(
+    upcomingGrandPrixWeekend
+  );
+
+  // The first session which is in the future
+  const upcomingSession: WeekendSession | undefined = sessions.find(
+    (session) => session.date && session.date > new Date()
+  );
+  // How long until this next session?
+  const remainingTime = useUpcomingSessionCountdown(upcomingSession);
 
   if (!upcomingGrandPrixWeekend) {
-    return null;
+    return (
+      <div className={styles.wrapper}>
+        <h3>Upcoming Grand Prix Weekend</h3>
+        <div>Offseason</div>
+      </div>
+    );
   }
 
-  const sessionNameMappings: { key: string; name: string }[] = [
-    { key: "fp1", name: "Free Practice 1" },
-    { key: "fp2", name: "Free Practice 2" },
-    { key: "fp3", name: "Free Practice 3" },
-    { key: "qualifying", name: "Qualifying" },
-    { key: "gp", name: "Race" },
-  ];
-
-  // The first session of the upcoming/current grand prix weekend which is in the future
-  // TODO: Render countdown to the next/upcoming session
-  const upcomingSession: string | undefined = Object.values(
-    upcomingGrandPrixWeekend.sessions
-  ).find((session) => new Date(session) > new Date());
-
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h3>Upcoming Grand Prix Weekend</h3>
-      <strong>{upcomingGrandPrixWeekend.name}</strong>
-      <div>{upcomingGrandPrixWeekend.location}</div>
+      <strong>{upcomingGrandPrixWeekend.raceName}</strong>
+      <div>{upcomingGrandPrixWeekend.Circuit.circuitName}</div>
       <div>{`Round ${upcomingGrandPrixWeekend.round}`}</div>
 
       <div>
-        {Object.entries(upcomingGrandPrixWeekend.sessions).map(
-          ([key, value]) => {
-            const sessionDate: Date = new Date(value);
-            // The common name of the session
-            const formattedName: string =
-              sessionNameMappings.find((mapping) => mapping.key === key)
-                ?.name ?? key;
-            // Both the date and time of the session
-            const formattedDate = `${sessionDate.toLocaleDateString()} (${sessionDate.toLocaleTimeString()})`;
+        {sessions.map((session) => {
+          // Is the next upcoming session (the session for which the countdown should be displayed for)
+          const isUpcomingSession: boolean = session === upcomingSession;
+          // Both the date and time of the session
+          const formattedDate = `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString()})`;
 
-            return (
-              <div key={key} data-is-finished={sessionDate > new Date()}>
-                <div>{formattedName}</div>
-                <div>{formattedDate}</div>
-              </div>
-            );
-          }
-        )}
+          return (
+            <div className={styles.session}
+              key={session.name}
+              data-is-upcoming={isUpcomingSession}
+              data-is-finished={session.date && session.date < new Date()}
+            >
+              <div>{session.name}</div>
+              <div>{formattedDate}</div>
+              {isUpcomingSession && <div className={styles.countdown}>{remainingTime}</div>}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

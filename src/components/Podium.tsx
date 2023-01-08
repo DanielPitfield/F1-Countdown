@@ -16,7 +16,7 @@ export enum PodiumPositions {
   THIRD,
 }
 
-export const Podium = (props: PodiumProps) => {
+const Podium = (props: PodiumProps) => {
   if (!props.race) {
     return null;
   }
@@ -47,3 +47,5 @@ export const Podium = (props: PodiumProps) => {
     </div>
   );
 };
+
+export default Podium;

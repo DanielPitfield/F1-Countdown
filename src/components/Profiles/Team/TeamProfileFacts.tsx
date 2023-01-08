@@ -1,7 +1,7 @@
 import { AppRouterTypes, trpc } from "../../../utils/trpc";
 import SeasonLink from "../../Links/SeasonLink";
 import GrandPrixLink from "../../Links/GrandPrixLink";
-import { Fact } from "../../Fact";
+import Fact from "../../Fact";
 
 import styles from "../../../styles/TeamProfile.module.scss";
 
@@ -58,16 +58,10 @@ const TeamProfileFacts = (props: TeamProfileFactsProps) => {
 
       <div className={styles.factsGroup}>
         <Fact label="First Race">
-          <GrandPrixLink
-            grandPrix={races?.firstRace}
-            showRaceName={true}
-          />
+          <GrandPrixLink grandPrix={races?.firstRace} showRaceName={true} />
         </Fact>
         <Fact label="Last Race">
-          <GrandPrixLink
-            grandPrix={races?.lastRace}
-            showRaceName={true}
-          />
+          <GrandPrixLink grandPrix={races?.lastRace} showRaceName={true} />
         </Fact>
       </div>
 

@@ -5,7 +5,7 @@ interface FactProps {
   children: React.ReactNode;
 }
 
-export const Fact = (props: FactProps) => {
+const Fact = (props: FactProps) => {
   return (
     <div className={styles.wrapper}>
       <strong className={styles.label}>{props.label}</strong>
@@ -13,3 +13,5 @@ export const Fact = (props: FactProps) => {
     </div>
   );
 };
+
+export default Fact;

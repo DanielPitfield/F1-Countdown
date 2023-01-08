@@ -1,0 +1,25 @@
+.wrapper {
+  text-align: center;
+
+  .session {
+    margin: 1em 0;
+
+    // Highlight the upcoming session
+    &[data-is-upcoming="true"] {
+      border: 2px solid green;
+      background-color: #afccaf;
+    }
+
+    // Grey out sessions which are finished
+    &[data-is-finished="true"] {
+      color: grey;
+      opacity: 80%;
+    }
+
+    .countdown {
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 0.75em;
+    }
+  }
+}
