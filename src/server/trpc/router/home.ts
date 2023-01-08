@@ -6,10 +6,10 @@ import { trpc } from "../../../utils/trpc";
 import { getGrandPrixWeekendSessions } from "../../../utils/getGrandPrixWeekendSessions";
 
 export const homeRouter = router({
-  // TODO: Not sure if you can use procedures within other procedures, either way this fails to find the next event and returns undefined
+  // TODO: Not sure if you can use procedures within other procedures
   getUpcomingGrandPrixWeekend: publicProcedure.query(
     async (): Promise<GrandPrixWeekend | undefined> => {
-      // Try getting the next event within the schedule of the most recent season
+      // Try getting the next event within the schedule of the current/most recent season
       const { data: currentSeasonSchedule } = trpc.season.getSchedule.useQuery({
         seasonID: "current",
       });
@@ -27,14 +27,14 @@ export const homeRouter = router({
   ),
 });
 
+// Find the first event which has a session in the future
 function getNextEventInYear(
   schedule: GrandPrixWeekend[] | undefined
 ): GrandPrixWeekend | undefined {
-  // Find the first event which has a session in the future
-  return schedule?.find((weekend) => {
-    const sessionDates: Date[] = getGrandPrixWeekendSessions(weekend).map(
-      (session) => session.date
-    );
+  return schedule?.find((grandPrixWeekend) => {
+    const sessions = getGrandPrixWeekendSessions(grandPrixWeekend);
+    const sessionDates: Date[] = sessions.map((session) => session.date);
+
     return sessionDates.some((sessionDate) => sessionDate > new Date());
   });
 }
