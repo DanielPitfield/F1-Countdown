@@ -7,7 +7,7 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-export const Button = (props: ButtonProps) => {
+const Button = (props: ButtonProps) => {
   return (
     <button
       className={`btn ${props.mode}`}
@@ -20,3 +20,5 @@ export const Button = (props: ButtonProps) => {
     </button>
   );
 };
+
+export default Button;

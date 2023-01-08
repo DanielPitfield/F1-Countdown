@@ -5,7 +5,7 @@ import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
 import superjson from "superjson";
 import { prisma } from "../../server/db/client";
-import { Podium } from "../../components/Podium";
+import Podium from "../../components/Podium";
 import DriverStandings from "../../components/Statistics/DriverStandings";
 import TeamStandings from "../../components/Statistics/TeamStandings";
 import QualifyingResults from "../../components/QualifyingResults";
