@@ -6,6 +6,8 @@ import {
 } from "../utils/getGrandPrixWeekendSessions";
 import { getUpcomingGrandPrixWeekend } from "../utils/getUpcomingGrandPrixWeekend";
 
+import styles from "../styles/UpcomingWeekendSummary.module.scss";
+
 const UpcomingWeekendSummary = () => {
   // TODO: Ideally this would be a tRPC procedure, not a function
   const upcomingGrandPrixWeekend = getUpcomingGrandPrixWeekend();
@@ -22,26 +24,38 @@ const UpcomingWeekendSummary = () => {
   // How long until this next session?
   const remainingTime = useUpcomingSessionCountdown(upcomingSession);
 
+  if (!upcomingGrandPrixWeekend) {
+    return (
+      <div className={styles.wrapper}>
+        <h3>Upcoming Grand Prix Weekend</h3>
+        <div>Offseason</div>
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h3>Upcoming Grand Prix Weekend</h3>
-      <strong>{upcomingGrandPrixWeekend?.raceName}</strong>
-      <div>{upcomingGrandPrixWeekend?.Circuit.circuitName}</div>
-      <div>{`Round ${upcomingGrandPrixWeekend?.round}`}</div>
+      <strong>{upcomingGrandPrixWeekend.raceName}</strong>
+      <div>{upcomingGrandPrixWeekend.Circuit.circuitName}</div>
+      <div>{`Round ${upcomingGrandPrixWeekend.round}`}</div>
 
       <div>
         {sessions.map((session) => {
+          // Is the next upcoming session (the session for which the countdown should be displayed for)
+          const isUpcomingSession: boolean = session === upcomingSession;
           // Both the date and time of the session
           const formattedDate = `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString()})`;
 
           return (
-            <div
+            <div className={styles.session}
               key={session.name}
-              data-is-finished={session.date && session.date > new Date()}
+              data-is-upcoming={isUpcomingSession}
+              data-is-finished={session.date && session.date < new Date()}
             >
               <div>{session.name}</div>
               <div>{formattedDate}</div>
-              {session === upcomingSession && <div>{remainingTime}</div>}
+              {isUpcomingSession && <div className={styles.countdown}>{remainingTime}</div>}
             </div>
           );
         })}
