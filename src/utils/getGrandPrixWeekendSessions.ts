@@ -1,8 +1,14 @@
 import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 
+export type WeekendSession = { name: string; date: Date };
+
 export function getGrandPrixWeekendSessions(
-  weekend: GrandPrixWeekend
-): { name: string; date: Date }[] {
+  weekend: GrandPrixWeekend | undefined
+): WeekendSession[] {
+  if (!weekend) {
+    return [];
+  }
+
   return [
     {
       name: "Free Practice 1",
