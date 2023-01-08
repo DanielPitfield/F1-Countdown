@@ -1,6 +1,6 @@
 import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 
-export type WeekendSession = { name: string; date: Date };
+export type WeekendSession = { name: string; date: Date | null };
 
 export function getGrandPrixWeekendSessions(
   weekend: GrandPrixWeekend | undefined
@@ -9,29 +9,33 @@ export function getGrandPrixWeekendSessions(
     return [];
   }
 
+  // TODO: Add times to date objects (e.g weekend.FirstPractice.time)
   return [
     {
       name: "Free Practice 1",
-      date: new Date(
-        `${weekend.FirstPractice?.date}${weekend.FirstPractice?.time}`
-      ),
+      date: weekend.FirstPractice?.date
+        ? new Date(weekend.FirstPractice.date)
+        : null,
     },
     {
       name: "Free Practice 2",
-      date: new Date(
-        `${weekend.SecondPractice?.date}${weekend.SecondPractice?.time}`
-      ),
+      date: weekend.SecondPractice?.date
+        ? new Date(weekend.SecondPractice.date)
+        : null,
     },
     {
       name: "Free Practice 3",
-      date: new Date(
-        `${weekend.ThirdPractice?.date}${weekend.ThirdPractice?.time}`
-      ),
+      date: weekend.ThirdPractice?.date
+        ? new Date(weekend.ThirdPractice.date)
+        : null,
     },
     {
       name: "Qualifying",
-      date: new Date(`${weekend.Qualifying?.date}${weekend.Qualifying?.time}`),
+      date: weekend.Qualifying?.date ? new Date(weekend.Qualifying.date) : null,
     },
-    { name: "Race", date: new Date(`${weekend.date}${weekend.time}`) },
+    {
+      name: "Race",
+      date: new Date(weekend.date),
+    },
   ];
 }
