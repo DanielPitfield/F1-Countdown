@@ -1,4 +1,5 @@
 import React from "react";
+import { trpc } from "../utils/trpc";
 import useUpcomingSessionCountdown from "../hooks/useUpcomingSessionCountdown";
 import {
   getGrandPrixWeekendSessions,
@@ -6,7 +7,6 @@ import {
 } from "../utils/getGrandPrixWeekendSessions";
 
 import styles from "../styles/UpcomingWeekendSummary.module.scss";
-import { trpc } from "../utils/trpc";
 
 const UpcomingWeekendSummary = () => {
   const { data: upcomingGrandPrixWeekend } =

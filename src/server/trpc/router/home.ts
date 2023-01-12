@@ -7,6 +7,7 @@ import { getCurrentYear } from "../../../utils/getCurrentYear";
 import { getNextEventInYear } from "../../../utils/getNextEventInYear";
 import { Driver } from "./driver";
 import { Team } from "./team";
+import { Circuit } from "./circuit";
 
 // Create a caller to call queries from the seasonRouter directly from the server
 const caller = seasonRouter.createCaller({ prisma });
@@ -83,5 +84,22 @@ export const homeRouter = router({
     const data = await response.json();
 
     return data.MRData.ConstructorTable.Constructors;
+  }),
+
+  getCurrentCircuits: publicProcedure.query(async (): Promise<Circuit[]> => {
+    const currentCircuits =
+      (await caller.getCircuits({
+        seasonID: getCurrentYear().toString(),
+      })) ?? [];
+
+    if (currentCircuits) {
+      return currentCircuits;
+    }
+
+    return (
+      (await caller.getCircuits({
+        seasonID: "current",
+      })) ?? []
+    );
   }),
 });
