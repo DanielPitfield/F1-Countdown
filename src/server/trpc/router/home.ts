@@ -24,7 +24,6 @@ export const homeRouter = router({
         ) ??
         getNextEventInYear(
           // Otherwise, try getting the next event using "current" field within request URL
-          // TODO: This current schedule (if and when used) returns an incorrect next event
           await caller.getSchedule({
             seasonID: "current",
           })

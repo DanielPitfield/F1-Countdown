@@ -6,6 +6,7 @@ import { GrandPrixWeekend } from "./grandPrix";
 import { Circuit } from "./circuit";
 
 export const seasonRouter = router({
+  // NOTE: When the seasonID "current" is used, data with incorrect dates can be returned from the endpoint
   getSchedule: publicProcedure
     .input(z.object({ seasonID: z.string().min(1).trim() }))
     .query(async ({ input }): Promise<GrandPrixWeekend[]> => {
