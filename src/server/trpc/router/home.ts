@@ -33,6 +33,19 @@ export const homeRouter = router({
     }
   ),
 
+  getCurrentSchedule: publicProcedure.query(
+    async (): Promise<GrandPrixWeekend[]> => {
+      return (
+        (await caller.getSchedule({
+          seasonID: getCurrentYear().toString(),
+        })) ??
+        (await caller.getSchedule({
+          seasonID: "current",
+        }))
+      );
+    }
+  ),
+
   getCurrentDrivers: publicProcedure.query(async (): Promise<Driver[]> => {
     // Getting the drivers from the driver standings of the current year can provide more up-to-date information
     const drivers: Driver[] = (
