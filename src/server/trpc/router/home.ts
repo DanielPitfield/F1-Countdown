@@ -15,41 +15,31 @@ const caller = seasonRouter.createCaller({ prisma });
 export const homeRouter = router({
   getUpcomingGrandPrixWeekend: publicProcedure.query(
     async (): Promise<GrandPrixWeekend | undefined> => {
-      // Using the current year can provide more up-to-date information
-      const currentYearSchedule =
-        (await caller.getSchedule({
-          seasonID: getCurrentYear().toString(),
-        })) ?? [];
-
-      if (currentYearSchedule) {
-        const nextEvent = getNextEventInYear(currentYearSchedule);
-
-        if (nextEvent) {
-          return nextEvent;
-        }
-      }
-
-      // Otherwise, try getting the next event using "current" field within request URL
-      // TODO: The currentSeasonSchedule (if and when used) returns an incorrect next event
-      const currentSeasonSchedule =
-        (await caller.getSchedule({
-          seasonID: "current",
-        })) ?? [];
-
-      return getNextEventInYear(currentSeasonSchedule);
+      return (
+        getNextEventInYear(
+          // Using the current year can provide more up-to-date information
+          await caller.getSchedule({
+            seasonID: getCurrentYear().toString(),
+          })
+        ) ??
+        getNextEventInYear(
+          // Otherwise, try getting the next event using "current" field within request URL
+          // TODO: The currentSeasonSchedule (if and when used) returns an incorrect next event
+          await caller.getSchedule({
+            seasonID: "current",
+          })
+        )
+      );
     }
   ),
 
   getCurrentDrivers: publicProcedure.query(async (): Promise<Driver[]> => {
     // Getting the drivers from the driver standings of the current year can provide more up-to-date information
-    const currentDriverStandings =
-      (await caller.getDriverStandings({
+    const drivers: Driver[] = (
+      await caller.getDriverStandings({
         seasonID: getCurrentYear().toString(),
-      })) ?? [];
-
-    const drivers: Driver[] = currentDriverStandings.map(
-      (standing) => standing.Driver
-    );
+      })
+    ).map((standing) => standing.Driver);
 
     if (drivers) {
       return drivers;
@@ -65,14 +55,11 @@ export const homeRouter = router({
   }),
 
   getCurrentTeams: publicProcedure.query(async (): Promise<Team[]> => {
-    const currentTeamStandings =
-      (await caller.getTeamStandings({
+    const teams: Team[] = (
+      await caller.getTeamStandings({
         seasonID: getCurrentYear().toString(),
-      })) ?? [];
-
-    const teams: Team[] = currentTeamStandings.map(
-      (standing) => standing.Constructor
-    );
+      })
+    ).map((standing) => standing.Constructor);
 
     if (teams) {
       return teams;
@@ -87,19 +74,13 @@ export const homeRouter = router({
   }),
 
   getCurrentCircuits: publicProcedure.query(async (): Promise<Circuit[]> => {
-    const currentCircuits =
-      (await caller.getCircuits({
-        seasonID: getCurrentYear().toString(),
-      })) ?? [];
-
-    if (currentCircuits) {
-      return currentCircuits;
-    }
-
     return (
       (await caller.getCircuits({
+        seasonID: getCurrentYear().toString(),
+      })) ??
+      (await caller.getCircuits({
         seasonID: "current",
-      })) ?? []
+      }))
     );
   }),
 });
