@@ -4,8 +4,8 @@ import React from "react";
 const SubNavStandings = () => {
   return (
     <nav>
-      <Link href="/Statistics/">Driver Standings</Link>
-      <Link>Constructor Standings</Link>
+      <Link href="/standings/CurrentDriverStandings">Driver Standings</Link>
+      <Link href="/standings/CurrentTeamStandings">Constructor Standings</Link>
     </nav>
   );
 };
