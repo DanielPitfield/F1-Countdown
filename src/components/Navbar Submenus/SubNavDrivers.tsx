@@ -10,15 +10,15 @@ const SubNavDrivers = () => {
   }
 
   return (
-    <nav>
+    <ul>
       {currentDrivers.map((driver) => {
         return (
-          <div key={driver.driverId}>
+          <li key={driver.driverId}>
             <DriverLink driver={driver} />
-          </div>
+          </li>
         );
       })}
-    </nav>
+    </ul>
   );
 };
 

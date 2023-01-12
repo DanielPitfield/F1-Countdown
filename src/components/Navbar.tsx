@@ -7,18 +7,20 @@ import SubNavStatistics from "./Navbar Submenus/SubNavStatistics";
 
 import styles from "../styles/Navbar.module.scss";
 
-const Navbar = () => {
-  const items: string[] = [
-    "Schedule",
-    "Standings",
-    "Drivers",
-    "Teams",
-    "Circuits",
-    "Seasons",
-    "Grand Prixs",
-    "Statistics",
-  ];
+export type NavbarItem = { name: string; path: string };
 
+const items: NavbarItem[] = [
+  { name: "Schedule", path: "/Schedule" },
+  { name: "Standings", path: "/Standings" },
+  { name: "Drivers", path: "/Drivers" },
+  { name: "Teams", path: "/Teams" },
+  { name: "Circuits", path: "/Circuits" },
+  { name: "Seasons", path: "/Seasons" },
+  { name: "Grand Prixs", path: "/GrandPrixs" },
+  { name: "Statistics", path: "/Statistics" },
+];
+
+const Navbar = () => {
   /* TODO: Navbar sub-navigation rendering
   Bad enough that navigation bar sub-content is fetching data...
   But will the SubNav components re-render (and therefore re-fetch)? 
@@ -33,8 +35,8 @@ const Navbar = () => {
 
         <ul className={styles.menu}>
           {items.map((item) => (
-            <li key={item} className={styles.item}>
-              {item}
+            <li key={item.name} className={styles.item}>
+              <Link href={item.path}>{item.name}</Link>
             </li>
           ))}
         </ul>

@@ -10,15 +10,15 @@ const SubNavTeams = () => {
   }
 
   return (
-    <nav>
+    <ul>
       {currentTeams.map((team) => {
         return (
-          <div key={team.constructorId}>
+          <li key={team.constructorId}>
             <TeamLink team={team} />
-          </div>
+          </li>
         );
       })}
-    </nav>
+    </ul>
   );
 };
 

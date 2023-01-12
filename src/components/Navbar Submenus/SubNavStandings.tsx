@@ -1,12 +1,28 @@
 import Link from "next/link";
 import React from "react";
+import { NavbarItem } from "../Navbar";
+
+const items: NavbarItem[] = [
+  {
+    name: "Current Driver Standings",
+    path: "/standings/CurrentDriverStandings",
+  },
+  {
+    name: "Constructor Standings",
+    path: "/standings/CurrentTeamStandings",
+  },
+
+];
 
 const SubNavStandings = () => {
   return (
-    <nav>
-      <Link href="/standings/CurrentDriverStandings">Driver Standings</Link>
-      <Link href="/standings/CurrentTeamStandings">Constructor Standings</Link>
-    </nav>
+    <ul>
+      {items.map((item) => (
+        <li key={item.name}>
+          <Link href={item.path}>{item.name}</Link>
+        </li>
+      ))}
+    </ul>
   );
 };
 
