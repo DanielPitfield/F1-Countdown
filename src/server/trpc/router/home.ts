@@ -47,7 +47,9 @@ export const homeRouter = router({
       (standing) => standing.Driver
     );
 
-    // TODO: Early return
+    if (drivers) {
+      return drivers;
+    }
 
     // Otherwise, try getting the current drivers using "current" field within request URL
     const API_URL = `http://ergast.com/api/f1/current/drivers.json`;
@@ -55,7 +57,7 @@ export const homeRouter = router({
     const response = await fetch(API_URL);
     const data = await response.json();
 
-    return drivers ?? data.MRData.DriverTable.Drivers;
+    return data.MRData.DriverTable.Drivers;
   }),
 
   getCurrentTeams: publicProcedure.query(async (): Promise<Team[]> => {
@@ -63,18 +65,20 @@ export const homeRouter = router({
       (await caller.getTeamStandings({
         seasonID: getCurrentYear().toString(),
       })) ?? [];
-      
+
     const teams: Team[] = currentTeamStandings.map(
       (standing) => standing.Constructor
     );
 
-    // TODO: Early return
+    if (teams) {
+      return teams;
+    }
 
     const API_URL = `http://ergast.com/api/f1/current/constructors.json`;
 
     const response = await fetch(API_URL);
     const data = await response.json();
 
-    return teams ?? data.MRData.ConstructorTable.Constructors;
+    return data.MRData.ConstructorTable.Constructors;
   }),
 });
