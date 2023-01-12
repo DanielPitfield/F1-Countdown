@@ -4,13 +4,13 @@ import {
   getGrandPrixWeekendSessions,
   WeekendSession,
 } from "../utils/getGrandPrixWeekendSessions";
-import { getUpcomingGrandPrixWeekend } from "../utils/getUpcomingGrandPrixWeekend";
 
 import styles from "../styles/UpcomingWeekendSummary.module.scss";
+import { trpc } from "../utils/trpc";
 
 const UpcomingWeekendSummary = () => {
-  // TODO: Ideally this would be a tRPC procedure, not a function
-  const upcomingGrandPrixWeekend = getUpcomingGrandPrixWeekend();
+  const { data: upcomingGrandPrixWeekend } =
+    trpc.home.getUpcomingGrandPrixWeekend.useQuery();
 
   // All the sessions of the current/upcoming grand prix weekend
   const sessions: WeekendSession[] = getGrandPrixWeekendSessions(
@@ -48,14 +48,17 @@ const UpcomingWeekendSummary = () => {
           const formattedDate = `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString()})`;
 
           return (
-            <div className={styles.session}
+            <div
+              className={styles.session}
               key={session.name}
               data-is-upcoming={isUpcomingSession}
               data-is-finished={session.date && session.date < new Date()}
             >
               <div>{session.name}</div>
               <div>{formattedDate}</div>
-              {isUpcomingSession && <div className={styles.countdown}>{remainingTime}</div>}
+              {isUpcomingSession && (
+                <div className={styles.countdown}>{remainingTime}</div>
+              )}
             </div>
           );
         })}
