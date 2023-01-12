@@ -62,7 +62,7 @@ const UpcomingWeekendSummary = () => {
               <div>{formattedDate}</div>
               {isUpcomingSession && (
                 <div className={styles.countdown}>
-                  {remainingTime ?? "Loading..."}
+                  {remainingTime ? remainingTime : "Loading..."}
                 </div>
               )}
             </div>
