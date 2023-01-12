@@ -1,6 +1,6 @@
-import { DriverStanding } from "../../server/trpc/router/statistics";
-import DriverLink from "../Links/DriverLink";
-import TeamLink from "../Links/TeamLink";
+import { DriverStanding } from "../server/trpc/router/statistics";
+import DriverLink from "./Links/DriverLink";
+import TeamLink from "./Links/TeamLink";
 
 import styles from "../../styles/Statistic.module.scss";
 
@@ -12,7 +12,7 @@ const DriverStandings = (props: DriverStandingsProps) => {
   if (!props.standings) {
     return null;
   }
-  
+
   return (
     <div>
       {props.standings?.map((standing) => {
