@@ -20,7 +20,13 @@ export const homeRouter = router({
           seasonID: getCurrentYear().toString(),
         })) ?? [];
 
-      // TODO: Early return here if event has been found or would that be conditionally calling a hook?
+      if (currentYearSchedule) {
+        const nextEvent = getNextEventInYear(currentYearSchedule);
+
+        if (nextEvent) {
+          return nextEvent;
+        }
+      }
 
       // Otherwise, try getting the next event using "current" field within request URL
       // TODO: The currentSeasonSchedule (if and when used) returns an incorrect next event
@@ -29,10 +35,7 @@ export const homeRouter = router({
           seasonID: "current",
         })) ?? [];
 
-      return (
-        getNextEventInYear(currentYearSchedule) ??
-        getNextEventInYear(currentSeasonSchedule)
-      );
+      return getNextEventInYear(currentSeasonSchedule);
     }
   ),
 
