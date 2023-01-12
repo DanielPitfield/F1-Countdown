@@ -19,10 +19,6 @@ const Home: NextPage = () => {
 
       <div className={styles.containerOuter}>
         <div className={styles.containerInner}>
-          <h1 className={styles.title}>
-            <span className={styles.titlePink}>F1 Dashboard</span>
-          </h1>
-
           <UpcomingWeekendSummary />
           <TwitterProfileTimeline profileName="F1" isDarkMode />
         </div>
