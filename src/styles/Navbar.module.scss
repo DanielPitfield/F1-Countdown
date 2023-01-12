@@ -1,24 +1,47 @@
 .wrapper {
   display: flex;
-  font-size: 1.15em;
-  background-color: #333;
   justify-content: center;
   align-items: center;
+  font-size: 1.15em;
+  background-color: #333;
+  color: white;
 
   .title {
     // TODO: Link styling
+    display: flex;
+    flex-basis: 3em;
+    align-items: center;
+    text-decoration: none;
+
+    & > * {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 
   .menu {
     display: flex;
     list-style: none;
+    text-align: center;
     padding: 0;
     margin: 0;
 
     .item {
+      display: flex;
+      align-items: center;
       margin: 0 0.5em;
-      padding: 1em 1.25em;
-      color: white;
+      border-radius: 3px;
+
+      & > * {
+        color: inherit;
+        text-decoration: none;
+        padding: 1em;
+      }
+
+      &:hover {
+        background-color: #2394b1;
+        cursor: pointer;
+      }
     }
   }
 }
