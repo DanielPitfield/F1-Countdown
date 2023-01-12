@@ -5,6 +5,8 @@ import {
   getGrandPrixWeekendSessions,
   WeekendSession,
 } from "../utils/getGrandPrixWeekendSessions";
+import isBefore from "date-fns/isBefore";
+import isAfter from "date-fns/isAfter";
 
 import styles from "../styles/UpcomingWeekendSummary.module.scss";
 
@@ -19,7 +21,7 @@ const UpcomingWeekendSummary = () => {
 
   // The first session which is in the future
   const upcomingSession: WeekendSession | undefined = sessions.find(
-    (session) => session.date && session.date > new Date()
+    (session) => session.date && isAfter(session.date, new Date())
   );
   // How long until this next session?
   const remainingTime = useUpcomingSessionCountdown(upcomingSession);
@@ -52,12 +54,16 @@ const UpcomingWeekendSummary = () => {
               className={styles.session}
               key={session.name}
               data-is-upcoming={isUpcomingSession}
-              data-is-finished={session.date && session.date < new Date()}
+              data-is-finished={
+                session.date && isBefore(session.date, new Date())
+              }
             >
               <div>{session.name}</div>
               <div>{formattedDate}</div>
               {isUpcomingSession && (
-                <div className={styles.countdown}>{remainingTime}</div>
+                <div className={styles.countdown}>
+                  {remainingTime ?? "Loading..."}
+                </div>
               )}
             </div>
           );

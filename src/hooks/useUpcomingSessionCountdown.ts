@@ -6,7 +6,7 @@ function useUpcomingSessionCountdown(
   upcomingSession: WeekendSession | undefined
 ) {
   // The formatted time until the next session
-  const [remainingTime, setRemainingTime] = useState<string>();
+  const [remainingTime, setRemainingTime] = useState<string>("");
 
   useEffect(() => {
     if (!upcomingSession) {
@@ -15,6 +15,7 @@ function useUpcomingSessionCountdown(
 
     const intervalId = setInterval(
       () => setRemainingTime(getFormattedTimeUntil(upcomingSession.date)),
+      // TODO: If the countdown is still counting in days (not showing hours), check less often
       1000
     );
 

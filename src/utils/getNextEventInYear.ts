@@ -1,5 +1,6 @@
 import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 import { getGrandPrixWeekendSessions } from "./getGrandPrixWeekendSessions";
+import isAfter from "date-fns/isAfter";
 
 // Find the first event which has a session in the future
 export function getNextEventInYear(
@@ -13,6 +14,8 @@ export function getNextEventInYear(
       (session) => session.date
     );
 
-    return sessionDates.some((sessionDate) => sessionDate && sessionDate > new Date());
+    return sessionDates.some(
+      (sessionDate) => sessionDate && isAfter(sessionDate, new Date())
+    );
   });
 }
