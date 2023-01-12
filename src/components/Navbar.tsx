@@ -3,6 +3,7 @@ import Link from "next/link";
 import SubNavDrivers from "./Navbar Submenus/SubNavDrivers";
 import SubNavTeams from "./Navbar Submenus/SubNavTeams";
 import SubNavStandings from "./Navbar Submenus/SubNavStandings";
+import SubNavStatistics from "./Navbar Submenus/SubNavStatistics";
 
 import styles from "../styles/Navbar.module.scss";
 
@@ -42,6 +43,7 @@ const Navbar = () => {
       <SubNavDrivers />
       <SubNavTeams />
       <SubNavStandings />
+      <SubNavStatistics />
     </>
   );
 };
