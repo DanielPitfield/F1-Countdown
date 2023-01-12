@@ -91,28 +91,4 @@ export const statisticsRouter = router({
       return data.MRData.RaceTable.Races;
     }
   ),
-
-  // The driver standings for the current season
-  getCurrentDriverStandings: publicProcedure.query(
-    async (): Promise<DriverStanding[]> => {
-      const API_URL = `https://ergast.com/api/f1/current/driverStandings.json`;
-
-      const response = await fetch(API_URL);
-      const data = await response.json();
-
-      return data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
-    }
-  ),
-
-  // The constructor standings for the current season
-  getCurrentTeamStandings: publicProcedure.query(
-    async (): Promise<TeamStanding[]> => {
-      const API_URL = `https://ergast.com/api/f1/current/constructorStandings.json`;
-
-      const response = await fetch(API_URL);
-      const data = await response.json();
-
-      return data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
-    }
-  ),
 });

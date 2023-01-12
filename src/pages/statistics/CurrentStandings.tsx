@@ -6,11 +6,13 @@ import TeamStandings from "../../components/Statistics/TeamStandings";
 import { getCurrentYear } from "../../utils/getCurrentYear";
 
 const CurrentStandings: NextPage = () => {
-  const { data: driverStandings } =
-    trpc.statistics.getCurrentDriverStandings.useQuery();
+  const { data: driverStandings } = trpc.season.getDriverStandings.useQuery({
+    seasonID: "current",
+  });
 
-  const { data: teamStandings } =
-    trpc.statistics.getCurrentTeamStandings.useQuery();
+  const { data: teamStandings } = trpc.season.getTeamStandings.useQuery({
+    seasonID: "current",
+  });
 
   return (
     <>
