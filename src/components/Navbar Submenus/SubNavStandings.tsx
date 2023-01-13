@@ -2,6 +2,8 @@ import Link from "next/link";
 import React from "react";
 import { NavbarItem } from "../Navbar";
 
+import styles from "../../styles/SubNav.module.scss";
+
 const items: NavbarItem[] = [
   {
     name: "Current Driver Standings",
@@ -11,14 +13,13 @@ const items: NavbarItem[] = [
     name: "Constructor Standings",
     path: "/standings/CurrentTeamStandings",
   },
-
 ];
 
 const SubNavStandings = () => {
   return (
-    <ul>
+    <ul className={styles.menu}>
       {items.map((item) => (
-        <li key={item.name}>
+        <li key={item.name} className={styles.item}>
           <Link href={item.path}>{item.name}</Link>
         </li>
       ))}
