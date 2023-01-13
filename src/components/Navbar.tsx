@@ -30,7 +30,7 @@ const Navbar = () => {
   But will the SubNav components re-render (and therefore re-fetch)? 
   (each time their main item is hovered over?)
   */
-  const [currentSubMenu, setCurrentSubMenu] = useState<string | null>(null);
+  const [currentSubMenuName, setCurrentSubMenuName] = useState<string | null>(null);
 
   return (
     <>
@@ -44,11 +44,11 @@ const Navbar = () => {
             <li
               key={item.name}
               className={styles.item}
-              onMouseEnter={() => setCurrentSubMenu(item.name)}
-              onMouseLeave={() => setCurrentSubMenu(null)}
+              onMouseEnter={() => setCurrentSubMenuName(item.name)}
+              onMouseLeave={() => setCurrentSubMenuName(null)}
             >
               <Link href={item.path}>{item.name}</Link>
-              {currentSubMenu === item.name && item.subItem}
+              {currentSubMenuName === item.name && item.subItem}
             </li>
           ))}
         </ul>

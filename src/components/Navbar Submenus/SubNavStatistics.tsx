@@ -6,12 +6,12 @@ import styles from "../../styles/SubNav.module.scss";
 
 const items: NavbarItem[] = [
   {
-    name: "Driver World Championship",
-    path: "/statistics/DriverWorldChampionship",
-  },
-  {
     name: "Race Wins",
     path: "/statistics/RaceWins",
+  },
+  {
+    name: "Driver World Championship",
+    path: "/statistics/DriverWorldChampionship",
   },
   {
     name: "Constructor World Championship",

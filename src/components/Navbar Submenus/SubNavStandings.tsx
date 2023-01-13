@@ -6,7 +6,7 @@ import styles from "../../styles/SubNav.module.scss";
 
 const items: NavbarItem[] = [
   {
-    name: "Current Driver Standings",
+    name: "Driver Standings",
     path: "/standings/CurrentDriverStandings",
   },
   {
