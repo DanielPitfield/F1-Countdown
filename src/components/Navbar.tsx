@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import SubNavDrivers from "./Navbar Submenus/SubNavDrivers";
 import SubNavTeams from "./Navbar Submenus/SubNavTeams";
@@ -7,17 +7,21 @@ import SubNavStatistics from "./Navbar Submenus/SubNavStatistics";
 
 import styles from "../styles/Navbar.module.scss";
 
-export type NavbarItem = { name: string; path: string };
+export type NavbarItem = {
+  name: string;
+  path: string;
+  subItem?: React.ReactNode;
+};
 
 const items: NavbarItem[] = [
   { name: "Schedule", path: "/Schedule" },
-  { name: "Standings", path: "/Standings" },
-  { name: "Drivers", path: "/Drivers" },
-  { name: "Teams", path: "/Teams" },
+  { name: "Standings", path: "/Standings", subItem: <SubNavStandings /> },
+  { name: "Drivers", path: "/Drivers", subItem: <SubNavDrivers /> },
+  { name: "Teams", path: "/Teams", subItem: <SubNavTeams /> },
   { name: "Circuits", path: "/Circuits" },
   { name: "Seasons", path: "/Seasons" },
   { name: "Grand Prixs", path: "/GrandPrixs" },
-  { name: "Statistics", path: "/Statistics" },
+  { name: "Statistics", path: "/Statistics", subItem: <SubNavStatistics /> },
 ];
 
 const Navbar = () => {
@@ -26,6 +30,8 @@ const Navbar = () => {
   But will the SubNav components re-render (and therefore re-fetch)? 
   (each time their main item is hovered over?)
   */
+  const [currentSubMenu, setCurrentSubMenu] = useState<string | null>(null);
+
   return (
     <>
       <nav className={styles.wrapper}>
@@ -35,17 +41,18 @@ const Navbar = () => {
 
         <ul className={styles.menu}>
           {items.map((item) => (
-            <li key={item.name} className={styles.item}>
+            <li
+              key={item.name}
+              className={styles.item}
+              onMouseEnter={() => setCurrentSubMenu(item.name)}
+              onMouseLeave={() => setCurrentSubMenu(null)}
+            >
               <Link href={item.path}>{item.name}</Link>
+              {currentSubMenu === item.name && item.subItem}
             </li>
           ))}
         </ul>
       </nav>
-
-      <SubNavDrivers />
-      <SubNavTeams />
-      <SubNavStandings />
-      <SubNavStatistics />
     </>
   );
 };
