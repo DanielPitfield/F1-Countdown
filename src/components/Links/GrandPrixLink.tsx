@@ -8,7 +8,7 @@ interface GrandPrixLinkProps {
 
 const GrandPrixLink = (props: GrandPrixLinkProps) => {
   if (!props.grandPrix) {
-    return <>{"-"}</>;
+    return null;
   }
 
   const text = props.showRaceName
