@@ -4,6 +4,7 @@ import SubNavDrivers from "./Navbar Submenus/SubNavDrivers";
 import SubNavTeams from "./Navbar Submenus/SubNavTeams";
 import SubNavStandings from "./Navbar Submenus/SubNavStandings";
 import SubNavStatistics from "./Navbar Submenus/SubNavStatistics";
+import SubNavCircuits from "./Navbar Submenus/SubNavCircuits";
 
 import styles from "../styles/Navbar.module.scss";
 
@@ -18,7 +19,7 @@ const items: NavbarItem[] = [
   { name: "Standings", path: "/Standings", subItem: <SubNavStandings /> },
   { name: "Drivers", path: "/Drivers", subItem: <SubNavDrivers /> },
   { name: "Teams", path: "/Teams", subItem: <SubNavTeams /> },
-  { name: "Circuits", path: "/Circuits" },
+  { name: "Circuits", path: "/Circuits", subItem: <SubNavCircuits /> },
   { name: "Seasons", path: "/Seasons" },
   { name: "Grand Prixs", path: "/GrandPrixs" },
   { name: "Statistics", path: "/Statistics", subItem: <SubNavStatistics /> },
