@@ -11,7 +11,7 @@ Website displaying F1 statistics, schedule and information
 ### Home
 The main landing page shows information regarding the upcoming F1 Grand Prix weekend. The upcoming session of this weekend is highlighted with a countdown until when the session starts (sessions that have already been completed are greyed out). Recent news can also be seen with the Twitter feed (a profile timeline of the official F1 Twitter account).
 
-## Navbar
+### Navbar
 * **Schedule** (the order of events for the current/upcoming season)
 * **Drivers** (every driver currently on the grid showing background information, the teams they have driven for and performance statistics)
 * **Teams** (every team currently on the grid showing background information, their drivers and performance statistics)
