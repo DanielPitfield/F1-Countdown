@@ -1,27 +1,39 @@
-# Create T3 App
+# F1 Dashboard
+Website displaying F1 statistics, schedule and information
 
-This is an app bootstrapped according to the [init.tips](https://init.tips) stack, also known as the T3-Stack.
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
+![tRPC](https://img.shields.io/badge/tRPC-0078D7)
+![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
 
-## What's next? How do I make an app with this?
+## Usage / Instructions
+### Home
+The main landing page shows information regarding the upcoming F1 Grand Prix weekend. The upcoming session of this weekend is highlighted with a countdown until when the session starts (sessions that have already been completed are greyed out). Recent news can also be seen with the Twitter feed (a profile timeline of the official F1 Twitter account).
 
-We try to keep this project as simple as possible, so you can start with the most basic configuration and then move on to more advanced configuration.
+## Navbar
+### Schedule
+The schedule for the current/upcoming season
+### Drivers
+Profile pages of every driver currently on the grid showing background information, the teams they have driven for and performance statistics
+### Teams
+Profile pages of every team currently on the grid showing background information, their drivers and performance statistics
+### Circuits
+Profile pages of every circuit that is being raced at for the current/upcoming season
+### Seasons
+Profile pages showing the the season's schedule and final (or ongoing) standings
+### Grand Prixs
+Profile pages for Grand Prix weekend events showing a podium of the race outcome, timing information and session results
+### Statistics
+- Race Wins (drivers sorted by the number of races they have won)
+- Driver World Championship (drivers sorted by the number of world championships they have won)
+- Constructor World Championship (teams sorted by the number of world championships they have won)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Known Issues
+API rate limits (only 4 requests per second or 200 requests per minute), when the limit is exceeded, informational content may not be shown.
+The maximum number of results returned by a query is 1000 and so large responses must be split over different requests.
+No caching of fetched responses (even the navigation bar is populated with fetched data).
+Information about an upcoming season during offseason can be incorrect.
 
-- [Next-Auth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [TailwindCSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
-
-We also [roll our own docs](https://beta.create.t3.gg) with some summary information and links to the respective documentation.
-
-Also checkout these awesome tutorials on `create-t3-app`.
-
-- [Build a Blog With the T3 Stack - tRPC, TypeScript, Next.js, Prisma & Zod](https://www.youtube.com/watch?v=syEWlxVFUrY)
-- [Build a Live Chat Application with the T3 Stack - TypeScript, Tailwind, tRPC](https://www.youtube.com/watch?v=dXRRY37MPuk)
-- [Build a full stack app with create-t3-app](https://www.nexxel.dev/blog/ct3a-guestbook)
-- [A first look at create-t3-app](https://dev.to/ajcwebdev/a-first-look-at-create-t3-app-1i8f)
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://beta.create.t3.gg/en/deployment/vercel) and [Docker](https://beta.create.t3.gg/en/deployment/docker) for more information.
+## Acknowledgements
+Ergast F1 API
