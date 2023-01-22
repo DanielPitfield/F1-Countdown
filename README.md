@@ -18,10 +18,7 @@ The main landing page shows information regarding the upcoming F1 Grand Prix wee
 * **Circuits** (every circuit that is being raced at for the current/upcoming season)
 * **Seasons** (the season's schedule and final or ongoing standings)
 * **Grand Prixs** (profile pages for Grand Prix weekend events showing a podium of the race outcome, timing information and session results
-* **Statistics**
-    * Race Wins (drivers sorted by the number of races they have won)
-    * Driver World Championship (drivers sorted by the number of world championships they have won)
-    * Constructor World Championship (teams sorted by the number of world championships they have won)
+* **Statistics** (race wins, driver world championships and constructor world championships)
 
 **Throughout the website, navigational links (outside of the navbar) are highlighted in blue.**
 
