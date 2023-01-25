@@ -1,11 +1,13 @@
 # F1 Dashboard
-Website displaying F1 statistics, schedule and information
+Website for everything F1 including a countdown to the next Grand Prix weekend session and statistics for the current drivers, teams and more!
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![tRPC](https://img.shields.io/badge/tRPC-%23007ACC.svg?style=for-the-badge)
 ![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
+
+![F1 Dashboard](https://raw.githubusercontent.com/DanielPitfield/danielpitfield.github.io/main/public/Images/Projects/f1Dashboard.png)
 
 ## Usage / Instructions
 ### Home
