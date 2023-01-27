@@ -25,6 +25,7 @@ The main landing page shows information regarding the upcoming F1 Grand Prix wee
 **Throughout the website, navigational links (outside of the navbar) are highlighted in blue.**
 
 ## Known Issues
+* Very slow navigation between pages (waiting on data fetching)
 * API rate limits (only 4 requests per second or 200 requests per minute), when the limit is exceeded, informational content may not be shown
 * The maximum number of results returned by a query is 1000 and so large responses must be split over different requests
 * No caching of fetched responses (even the navigation bar is populated with fetched data)
