@@ -12,7 +12,6 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
   }
 
   const now = new Date();
-
   const daysDifference = differenceInCalendarDays(endDate, now);
 
   if (daysDifference > 7) {
@@ -23,6 +22,21 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
     start: now,
     end: endDate,
   });
+
+  // Less than hour to go
+  if (duration.hours !== undefined && duration.hours < 1) {
+    return [
+      duration.minutes !== undefined ? `${duration.minutes}m` : "",
+      duration.seconds !== undefined ? `${zeroPad(duration.seconds)}s` : "",
+    ]
+      .filter((part) => part)
+      .join(" ");
+  }
+
+  // Less than a minute to go
+  if (duration.minutes !== undefined && duration.minutes < 1) {
+    return `${duration.seconds}`.toUpperCase();
+  }
 
   // Return a concatenated string of the parts of the duration which are not undefined
   return [
