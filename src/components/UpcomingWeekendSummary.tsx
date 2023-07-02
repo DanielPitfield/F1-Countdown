@@ -36,7 +36,7 @@ const UpcomingWeekendSummary = () => {
     );
   }
 
-  // Culdn't find the next event
+  // Couldn't find the next event
   if (upcomingGrandPrixWeekend === null) {
     return (
       <div className={styles.wrapper}>

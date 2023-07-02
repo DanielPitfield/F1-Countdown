@@ -27,8 +27,7 @@ export function getGrandPrixWeekendSessions(
     },
     {
       name: "Free Practice 2",
-      date: getFullSessionDate(weekend.SecondPractice)
-
+      date: getFullSessionDate(weekend.SecondPractice),
     },
     {
       name: "Free Practice 3",
