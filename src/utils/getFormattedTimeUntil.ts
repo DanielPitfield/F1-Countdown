@@ -13,32 +13,44 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
 
   const now = new Date();
   const daysDifference = differenceInCalendarDays(endDate, now);
-
-  if (daysDifference > 7) {
-    return `${daysDifference} days`;
-  }
-
   const duration = intervalToDuration({
     start: now,
     end: endDate,
   });
 
-  // Less than hour to go
-  if (duration.hours !== undefined && duration.hours < 1) {
+  // More than a week (only show days)
+  if (daysDifference > 7) {
+    return `${daysDifference} days`;
+  }
+
+  // More than a day (only show days and hours)
+  if (duration.days !== undefined && duration.days >= 1) {
     return [
-      duration.minutes !== undefined ? `${duration.minutes}m` : "",
-      duration.seconds !== undefined ? `${zeroPad(duration.seconds)}s` : "",
+      duration.days !== undefined ? `${duration.days} days` : "",
+      duration.hours !== undefined ? `${zeroPad(duration.hours)} hours` : "",
     ]
       .filter((part) => part)
       .join(" ");
   }
 
-  // Less than a minute to go
+  // Less than an hour (only show minutes and seconds)
+  if (duration.hours !== undefined && duration.hours < 1) {
+    return [
+      duration.minutes !== undefined ? `${duration.minutes} minutes` : "",
+      duration.seconds !== undefined
+        ? `${zeroPad(duration.seconds)} seconds`
+        : "",
+    ]
+      .filter((part) => part)
+      .join(" ");
+  }
+
+  // Less than a minute (show seconds in uppercase)
   if (duration.minutes !== undefined && duration.minutes < 1) {
     return `${duration.seconds}`.toUpperCase();
   }
 
-  // Return a concatenated string of the parts of the duration which are not undefined
+  // Otherwise, a concatenated string of the parts of the duration which are not undefined
   return [
     duration.months !== undefined ? `${duration.months}m` : "",
     duration.weeks !== undefined ? `${duration.weeks}w` : "",
