@@ -14,10 +14,10 @@ const UpcomingWeekendSummary = () => {
   const { data: upcomingGrandPrixWeekend } =
     trpc.home.getUpcomingGrandPrixWeekend.useQuery();
 
-  // All the sessions of the current/upcoming grand prix weekend
+  // All the sessions of the current/upcoming grand prix weekend (which have a known date/time)
   const sessions: WeekendSession[] = getGrandPrixWeekendSessions(
     upcomingGrandPrixWeekend
-  );
+  ).filter(session => session.date);
 
   // The first session which is in the future
   const upcomingSession: WeekendSession | undefined = sessions.find(
@@ -62,7 +62,7 @@ const UpcomingWeekendSummary = () => {
               <div>{formattedDate}</div>
               {isUpcomingSession && (
                 <div className={styles.countdown}>
-                  {remainingTime ? remainingTime : "Loading..."}
+                  {remainingTime ?? "Loading..."}
                 </div>
               )}
             </div>
