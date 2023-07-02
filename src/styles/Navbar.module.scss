@@ -1,15 +1,19 @@
 .wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: stretch;
+  min-height: 3em;
   font-size: 1.15em;
   background-color: #333;
   color: white;
 
   .title {
-    // TODO: Link styling
     display: flex;
-    flex-basis: 3em;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4em;
+    text-decoration: none;
+    padding: 0 1em;
   }
 
   .menu {
@@ -23,7 +27,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0 0.5em;
+      padding: 0 0.5em;
       border-radius: 3px;
 
       & > a {
