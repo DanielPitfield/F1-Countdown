@@ -17,7 +17,7 @@ const UpcomingWeekendSummary = () => {
   // All the sessions of the current/upcoming grand prix weekend (which have a known date/time)
   const sessions: WeekendSession[] = getGrandPrixWeekendSessions(
     upcomingGrandPrixWeekend
-  ).filter(session => session.date);
+  ).filter((session) => session.date);
 
   // The first session which is in the future
   const upcomingSession: WeekendSession | undefined = sessions.find(
@@ -26,7 +26,18 @@ const UpcomingWeekendSummary = () => {
   // How long until this next session?
   const remainingTime = useUpcomingSessionCountdown(upcomingSession);
 
-  if (!upcomingGrandPrixWeekend) {
+  // Hasn't fetched yet (loading)
+  if (upcomingGrandPrixWeekend === undefined) {
+    return (
+      <div className={styles.wrapper}>
+        <h3>Upcoming Grand Prix Weekend</h3>
+        <div>Loading...</div>
+      </div>
+    );
+  }
+
+  // Culdn't find the next event
+  if (upcomingGrandPrixWeekend === null) {
     return (
       <div className={styles.wrapper}>
         <h3>Upcoming Grand Prix Weekend</h3>

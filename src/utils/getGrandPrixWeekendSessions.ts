@@ -14,7 +14,7 @@ function getFullSessionDate(
 }
 
 export function getGrandPrixWeekendSessions(
-  weekend: GrandPrixWeekend | undefined
+  weekend: GrandPrixWeekend | undefined | null
 ): WeekendSession[] {
   if (!weekend) {
     return [];

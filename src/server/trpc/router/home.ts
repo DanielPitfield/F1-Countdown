@@ -1,5 +1,4 @@
 import { router, publicProcedure } from "../trpc";
-import { z } from "zod";
 import { prisma } from "../../db/client";
 import { seasonRouter } from "./season";
 import { GrandPrixWeekend } from "./grandPrix";
@@ -14,7 +13,7 @@ const caller = seasonRouter.createCaller({ prisma });
 
 export const homeRouter = router({
   getUpcomingGrandPrixWeekend: publicProcedure.query(
-    async (): Promise<GrandPrixWeekend | undefined> => {
+    async (): Promise<GrandPrixWeekend | null> => {
       return (
         getNextEventInYear(
           // Using the current year can provide more up-to-date information
@@ -28,6 +27,11 @@ export const homeRouter = router({
             seasonID: "current",
           })
         )
+        /*
+        Explicitly return null (and not undefined) 
+        So that not finding an event can be differentiated from the fetch request/response not yet being complete
+        */
+        ?? null
       );
     }
   ),
