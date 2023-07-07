@@ -1,6 +1,5 @@
 import { trpc } from "../../utils/trpc";
 import Image from "next/image";
-import TeamLink from "../../components/Links/TeamLink";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "../../server/trpc/router/_app";
@@ -16,7 +15,7 @@ export async function getServerSideProps(
   context: GetServerSidePropsContext<{ driver: string }>
 ) {
   // Helper function
-  const ssg = await createProxySSGHelpers({
+  const ssg = createProxySSGHelpers({
     router: appRouter,
     ctx: { prisma },
     transformer: superjson,
@@ -29,7 +28,6 @@ export async function getServerSideProps(
   await ssg.driver.getDescription.fetch({
     driverID: driver,
   });
-  await ssg.driver.getTeamsDrivenFor.prefetch({ driverID: driver });
   await ssg.driver.getRaces.prefetch({ driverID: driver });
   await ssg.driver.getPolePositions.prefetch({ driverID: driver });
   await ssg.driver.getNumFastestLaps.prefetch({ driverID: driver });
@@ -46,10 +44,6 @@ export async function getServerSideProps(
 const DriverProfile = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const { data: teamsDrivenFor } = trpc.driver.getTeamsDrivenFor.useQuery({
-    driverID: props.driver,
-  });
-
   const { data: championshipResults } =
     trpc.driver.getChampionshipResults.useQuery({
       driverID: props.driver,
@@ -72,17 +66,6 @@ const DriverProfile = (
           driverID={props.driver}
           championshipResults={championshipResults}
         />
-      </div>
-
-      <div className={styles.teamsDrivenFor}>
-        <strong>Teams Driven For</strong>
-        {teamsDrivenFor?.map((team) => {
-          return (
-            <div key={team.constructorId}>
-              <TeamLink team={team} />
-            </div>
-          );
-        })}
       </div>
     </div>
   );

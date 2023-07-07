@@ -1,6 +1,7 @@
 import { AppRouterTypes, trpc } from "../../../utils/trpc";
 import SeasonLink from "../../Links/SeasonLink";
 import GrandPrixLink from "../../Links/GrandPrixLink";
+import TeamLink from "../../Links/TeamLink";
 import Fact from "../../Fact";
 
 import styles from "../../../styles/DriverProfile.module.scss";
@@ -26,21 +27,13 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
     driverID: props.driverID,
   });
 
+  const { data: teamsDrivenFor } = trpc.driver.getTeamsDrivenFor.useQuery({
+    driverID: props.driverID,
+  });
+
   return (
     <div>
       <div className={styles.factsGroup}>
-        <Fact label="Fastest Laps">
-          <span>{numFastestLaps ?? "0"}</span>
-        </Fact>
-        <Fact label="Pole positions">
-          <span>{polePositions?.totalNum ?? "0"}</span>
-        </Fact>
-        <Fact label="Podiums">
-          <span>{races?.numPodiums ?? "0"}</span>
-        </Fact>
-        <Fact label="Race Wins">
-          <span>{races?.numWins ?? "0"}</span>
-        </Fact>
         <Fact label="World Championships">
           <span>{props.championshipResults?.numChampionshipsWon ?? "0"}</span>
           <span>
@@ -54,6 +47,21 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
             })}
           </span>
         </Fact>
+        <Fact label="Race Wins">
+          <span>{races?.numWins ?? "0"}</span>
+        </Fact>
+      </div>
+
+      <div className={styles.factsGroup}>
+        <Fact label="Podiums">
+          <span>{races?.numPodiums ?? "0"}</span>
+        </Fact>
+        <Fact label="Fastest Laps">
+          <span>{numFastestLaps ?? "0"}</span>
+        </Fact>
+        <Fact label="Pole positions">
+          <span>{polePositions?.totalNum ?? "0"}</span>
+        </Fact>
       </div>
 
       <div className={styles.factsGroup}>
@@ -62,6 +70,15 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
         </Fact>
         <Fact label="Last Race">
           <GrandPrixLink grandPrix={races?.lastRace} showRaceName={true} />
+        </Fact>
+      </div>
+
+      <div className={styles.factsGroup}>
+        <Fact label="First Win">
+          <GrandPrixLink grandPrix={races?.firstWin} showRaceName={true} />
+        </Fact>
+        <Fact label="Last Win">
+          <GrandPrixLink grandPrix={races?.lastWin} showRaceName={true} />
         </Fact>
       </div>
 
@@ -81,11 +98,14 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
       </div>
 
       <div className={styles.factsGroup}>
-        <Fact label="First Win">
-          <GrandPrixLink grandPrix={races?.firstWin} showRaceName={true} />
-        </Fact>
-        <Fact label="Last Win">
-          <GrandPrixLink grandPrix={races?.lastWin} showRaceName={true} />
+        <Fact label="Teams Driven for">
+          {teamsDrivenFor?.map((team) => {
+            return (
+              <div key={team.constructorId}>
+                <TeamLink team={team} />
+              </div>
+            );
+          })}
         </Fact>
       </div>
     </div>
