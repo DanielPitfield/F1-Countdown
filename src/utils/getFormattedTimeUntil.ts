@@ -27,7 +27,17 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
   if (duration.days !== undefined && duration.days >= 1) {
     return [
       duration.days !== undefined ? `${duration.days} days` : "",
-      duration.hours !== undefined ? `${zeroPad(duration.hours)} hours` : "",
+      duration.hours !== undefined ? `${duration.hours} hours` : "",
+    ]
+      .filter((part) => part)
+      .join(" ");
+  }
+
+  // Less than a day (only show hours and minutes)
+  if (duration.days !== undefined && duration.days < 1) {
+    return [
+      duration.hours !== undefined ? `${duration.hours} hours` : "",
+      duration.minutes !== undefined ? `${duration.minutes} minutes` : "",
     ]
       .filter((part) => part)
       .join(" ");

@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import TwitterProfileTimeline from "../components/TwitterProfileTimeline";
 import UpcomingWeekendSummary from "../components/UpcomingWeekendSummary";
 
 import styles from "../styles/index.module.scss";
@@ -20,7 +19,6 @@ const Home: NextPage = () => {
       <div className={styles.containerOuter}>
         <div className={styles.containerInner}>
           <UpcomingWeekendSummary />
-          <TwitterProfileTimeline profileName="F1" isDarkMode />
         </div>
       </div>
     </>

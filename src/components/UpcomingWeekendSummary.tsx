@@ -6,6 +6,7 @@ import {
   WeekendSession,
 } from "../utils/getGrandPrixWeekendSessions";
 import isBefore from "date-fns/isBefore";
+import { isSameDay } from "date-fns";
 import isAfter from "date-fns/isAfter";
 
 import styles from "../styles/UpcomingWeekendSummary.module.scss";
@@ -55,10 +56,16 @@ const UpcomingWeekendSummary = () => {
 
       <div>
         {sessions.map((session) => {
-          // Is the next upcoming session (the session for which the countdown should be displayed for)
+          // Is the session the next upcoming session? (the session for which the countdown should be displayed for)
           const isUpcomingSession: boolean = session === upcomingSession;
-          // Both the date and time of the session
-          const formattedDate = `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString()})`;
+          
+          const formattedDate =
+            // If the session is today
+            session.date && isSameDay(session.date, new Date())
+              // Don't show the full date string, show 'TODAY' instead
+              ? `TODAY (${session.date?.toLocaleTimeString()})`
+              // Both the date and time of the session
+              : `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString()})`;
 
           return (
             <div
