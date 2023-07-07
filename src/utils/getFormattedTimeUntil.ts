@@ -26,29 +26,51 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
   // More than a day (only show days and hours)
   if (duration.days !== undefined && duration.days >= 1) {
     return [
-      duration.days !== undefined ? `${duration.days} days` : "",
-      duration.hours !== undefined && duration.hours >= 1 ? `${duration.hours} hours` : "",
+      duration.days !== undefined
+        ? `${duration.days} day${duration.days > 1 ? "s" : ""}`
+        : "",
+      duration.hours !== undefined && duration.hours >= 1
+        ? `${duration.hours} hour${duration.hours > 1 ? "s" : ""}`
+        : "",
     ]
       .filter((part) => part)
       .join(" ");
   }
 
   // Less than a day (only show hours and minutes)
-  if (duration.days !== undefined && duration.days < 1) {
+  if (
+    duration.days !== undefined &&
+    duration.days <= 0 &&
+    duration.hours !== undefined &&
+    duration.hours >= 1
+  ) {
     return [
-      duration.hours !== undefined ? `${duration.hours} hours` : "",
-      duration.minutes !== undefined && duration.minutes >= 1 ? `${duration.minutes} minutes` : "",
+      duration.hours !== undefined
+        ? `${duration.hours} hour${duration.hours > 1 ? "s" : ""}`
+        : "",
+      duration.minutes !== undefined && duration.minutes >= 1
+        ? `${duration.minutes} minute${duration.minutes > 1 ? "s" : ""}`
+        : "",
     ]
       .filter((part) => part)
       .join(" ");
   }
 
   // Less than an hour (only show minutes and seconds)
-  if (duration.hours !== undefined && duration.hours < 1) {
+  if (
+    duration.hours !== undefined &&
+    duration.hours < 1 &&
+    duration.minutes !== undefined &&
+    duration.minutes >= 1
+  ) {
     return [
-      duration.minutes !== undefined ? `${duration.minutes} minutes` : "",
+      duration.minutes !== undefined
+        ? `${duration.minutes} minute${duration.minutes > 1 ? "s" : ""}`
+        : "",
       duration.seconds !== undefined && duration.seconds >= 1
-        ? `${zeroPad(duration.seconds)} seconds`
+        ? `${zeroPad(duration.seconds)} second${
+            duration.seconds > 1 ? "s" : ""
+          }`
         : "",
     ]
       .filter((part) => part)
@@ -57,7 +79,9 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
 
   // Less than a minute (show seconds in uppercase)
   if (duration.minutes !== undefined && duration.minutes < 1) {
-    return `${duration.seconds}`.toUpperCase();
+    return duration.seconds !== undefined
+      ? `${duration.seconds}`.toUpperCase()
+      : "Starting...";
   }
 
   // Otherwise, a concatenated string of the parts of the duration which are not undefined

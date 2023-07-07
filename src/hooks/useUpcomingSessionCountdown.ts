@@ -16,24 +16,23 @@ function useUpcomingSessionCountdown(
     }
 
     const intervalId = setInterval(() => {
-      const formattedTime = getFormattedTimeUntil(upcomingSession.date); 
-      
-      // Only check once a day when the formatted time shows days (and not hours)
-      if (formattedTime.includes("days") && !formattedTime.includes("hours")) {
-        SetCountdownPollMs(hoursToMilliseconds(24));
-      }
-
-      // Only check once an hour when the formatted time shows hours
-      if (formattedTime.includes("hours")) {
-        SetCountdownPollMs(hoursToMilliseconds(1));
-      }
-
-      // Only check once a minute when the formatted time shows minutes
-      if (formattedTime.includes("minutes")) {
-        SetCountdownPollMs(minutesToMilliseconds(1));
-      }     
-
+      const formattedTime = getFormattedTimeUntil(upcomingSession.date);
       setRemainingTime(formattedTime);
+
+      // Check only once every minute when the formatted times is showing hours
+      if (formattedTime.includes("hours")) {
+        SetCountdownPollMs(minutesToMilliseconds(1));
+        return;
+      }
+
+      // Check once an hour when the formatted time is showing days
+      if (formattedTime.includes("days")) {
+        SetCountdownPollMs(hoursToMilliseconds(1));
+        return;
+      }
+      
+      // Otheriwse, update every second
+      SetCountdownPollMs(1000);
     }, countdownPollMs);
 
     return () => clearInterval(intervalId);
