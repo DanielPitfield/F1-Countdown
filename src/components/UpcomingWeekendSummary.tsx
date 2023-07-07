@@ -63,9 +63,9 @@ const UpcomingWeekendSummary = () => {
             // If the session is today
             session.date && isSameDay(session.date, new Date())
               // Don't show the full date string, show 'TODAY' instead
-              ? `TODAY (${session.date?.toLocaleTimeString()})`
+              ? `TODAY (${session.date?.toLocaleTimeString([], {timeStyle: 'short'})})`
               // Both the date and time of the session
-              : `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString()})`;
+              : `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString([], {timeStyle: 'short'})})`;
 
           return (
             <div
