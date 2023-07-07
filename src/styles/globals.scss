@@ -9,6 +9,10 @@ body {
   background-color: #f3f3f3;
 }
 
+main {
+  height: calc(100vh - 4em);
+}
+
 h1,
 h2,
 h3,
