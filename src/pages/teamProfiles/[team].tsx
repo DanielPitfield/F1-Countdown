@@ -59,7 +59,7 @@ const TeamProfile = (
 
       <div className={styles.innerWrapper}>
         <Image
-          src={`/images/teams/${props.team}.jpg`}
+          src={`/Images/teams/${props.team}.jpg`}
           alt={props.team}
           height={640}
           width={640}

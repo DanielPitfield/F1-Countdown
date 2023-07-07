@@ -57,7 +57,7 @@ const DriverProfile = (
 
       <div className={styles.innerWrapper}>
         <Image
-          src={`/images/drivers/${props.driver}.jpg`}
+          src={`/Images/drivers/${props.driver}.jpg`}
           alt={props.driver}
           height={640}
           width={640}
