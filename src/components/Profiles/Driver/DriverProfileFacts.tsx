@@ -35,16 +35,28 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
     <div>
       <div className={styles.factsGroup}>
         <Fact label="World Championships">
-          <span>{props.championshipResults?.numChampionshipsWon ?? "0"}</span>
+          <span className={styles.championshipsWon}>
+            {props.championshipResults?.numChampionshipsWon ?? "0"}
+          </span>
           <span>
-            {props.championshipResults?.winningYears.map((championship) => {
-              return (
+            {props.championshipResults?.winningYears.map(
+              (championship, index) => [
+                // Opening bracket before first year
+                index === 0 && "(",
+                // Seperate the season links with commas
+                index > 0 && ", ",
+
                 <SeasonLink
                   key={championship.season}
                   season={championship.season}
-                />
-              );
-            })}
+                />,
+
+                // Closing bracket after last year
+                index ===
+                  (props.championshipResults?.winningYears.length ?? 0) - 1 &&
+                  ")",
+              ]
+            )}
           </span>
         </Fact>
         <Fact label="Race Wins">
@@ -99,13 +111,11 @@ const DriverProfileFacts = (props: DriverProfileFactsProps) => {
 
       <div className={styles.factsGroup}>
         <Fact label="Teams Driven for">
-          {teamsDrivenFor?.map((team) => {
-            return (
-              <div key={team.constructorId}>
-                <TeamLink team={team} />
-              </div>
-            );
-          })}
+          {teamsDrivenFor?.map((team, index) => [
+            // Seperate the team links with commas
+            index > 0 && ", ",
+            <TeamLink key={team.constructorId} team={team} />,
+          ])}
         </Fact>
       </div>
     </div>
