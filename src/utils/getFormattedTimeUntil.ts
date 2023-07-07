@@ -27,7 +27,7 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
   if (duration.days !== undefined && duration.days >= 1) {
     return [
       duration.days !== undefined ? `${duration.days} days` : "",
-      duration.hours !== undefined ? `${duration.hours} hours` : "",
+      duration.hours !== undefined && duration.hours >= 1 ? `${duration.hours} hours` : "",
     ]
       .filter((part) => part)
       .join(" ");
@@ -37,7 +37,7 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
   if (duration.days !== undefined && duration.days < 1) {
     return [
       duration.hours !== undefined ? `${duration.hours} hours` : "",
-      duration.minutes !== undefined ? `${duration.minutes} minutes` : "",
+      duration.minutes !== undefined && duration.minutes >= 1 ? `${duration.minutes} minutes` : "",
     ]
       .filter((part) => part)
       .join(" ");
@@ -47,7 +47,7 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
   if (duration.hours !== undefined && duration.hours < 1) {
     return [
       duration.minutes !== undefined ? `${duration.minutes} minutes` : "",
-      duration.seconds !== undefined
+      duration.seconds !== undefined && duration.seconds >= 1
         ? `${zeroPad(duration.seconds)} seconds`
         : "",
     ]
