@@ -26,23 +26,24 @@ const DriverChampion = (props: DriverChampionProps) => {
       </div>
 
       <div className={styles.winningYears}>
-        {props.championshipsWon.map((championship) => {
-          return (
-            <SeasonLink
-              key={championship.season}
-              season={championship.season}
-            />
-          );
-        })}
+        {props.championshipsWon.map((championship, index) => [
+          index > 0 && ", ",
+          <SeasonLink key={championship.season} season={championship.season} />,
+        ])}
       </div>
 
       <div className={styles.winningYearsTeams}>
         {props.championshipsWon.map((championship, index) => {
+          /*
+          The teams/cars the driver won their championship(s) with
+          e.g (McLaren, Mercedes, Mercedes, Mercedes, Mercedes, Mercedes, Mercedes)
+          */
           const team = championship.driverStanding?.Constructors[0];
 
-          return (
-            <TeamLink key={`${team?.constructorId}-${index}`} team={team} />
-          );
+          return [
+            index > 0 && ", ",
+            <TeamLink key={`${team?.constructorId}-${index}`} team={team} />,
+          ];
         })}
       </div>
     </div>

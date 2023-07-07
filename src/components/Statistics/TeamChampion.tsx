@@ -25,14 +25,10 @@ const TeamChampion = (props: TeamChampionProps) => {
       </div>
 
       <div className={styles.winningYears}>
-        {props.championshipsWon.map((championship) => {
-          return (
-            <SeasonLink
-              key={championship.season}
-              season={championship.season}
-            />
-          );
-        })}
+        {props.championshipsWon.map((championship, index) => [
+          index > 0 && ", ",
+          <SeasonLink key={championship.season} season={championship.season} />,
+        ])}
       </div>
     </div>
   );
