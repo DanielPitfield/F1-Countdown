@@ -1,5 +1,5 @@
 import { router, publicProcedure } from "../trpc";
-import { MAX_LIMIT } from "../../../utils/limits";
+import { MAX_LIMIT } from "../../../data/limits";
 import {
   Driver,
   DriverSeasonResult,

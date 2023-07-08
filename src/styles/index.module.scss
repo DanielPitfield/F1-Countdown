@@ -14,16 +14,75 @@
       color: white;
       text-align: left;
 
-      .title {
-        margin: 0;
-        font-size: 3.5em;
-      }
-
-      .description {
+      .list {
         display: flex;
-        justify-content: center;
-        margin-bottom: 0;
-        font-weight: normal;
+        flex-direction: column;
+        list-style: none;
+        align-items: left;
+        padding: 0;
+        margin: 2em 0;
+
+        $backgroundColours: (
+          "Sky Sports": (
+            linear-gradient(0deg, rgba(0, 0, 0, 0.1), transparent 76%),
+            linear-gradient(90deg, #002672 0, #002672 50%, #e10000 0, #e10000),
+          ),
+          "F1 Quotes": black,
+          "Reddit": #fe4502,
+        );
+
+        $hoverColours: (
+          "Sky Sports": (
+            linear-gradient(0deg, rgba(0, 0, 0, 0.1), transparent 76%),
+            linear-gradient(90deg, #002d86 0, #002d86 50%, #f50000 0, #f50000),
+          ),
+          "F1 Quotes": lighten(black, 4%),
+          "Reddit": lighten(#fe4502, 4%),
+        );
+
+        .item {
+          display: flex;
+          justify-content: center;
+          margin: 0.5em 0;
+          border-radius: 8px;
+
+          @each $name, $color in $backgroundColours {
+            &[data-name="#{$name}"] {
+              background: $color;
+              transition: background-color 0.1s ease;
+              box-shadow: #0000004d 0px 3px 8px;
+              &:hover {
+                font-weight: bold;
+                outline: 3px solid black;
+
+                @each $name, $color in $hoverColours {
+                  &[data-name="#{$name}"] {
+                    background: $color;
+                  }
+                }
+              }
+            }
+          }
+
+          .link {
+            display: flex;
+            width: 100%;
+            justify-content: flex-start;
+            align-items: center;
+            text-decoration: none;
+            padding: 1em 0.75em;
+            margin: 0;
+            color: white;
+
+            .icon {
+              display: flex;
+              height: 2em;
+              width: 2em;
+              margin-right: 0.4em;
+              color: white;
+            }
+          }
+        }
       }
     }
   }

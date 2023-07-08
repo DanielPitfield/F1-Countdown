@@ -3,7 +3,7 @@ import { z } from "zod";
 import { Driver } from "./driver";
 import { Team } from "./team";
 import { Circuit } from "./circuit";
-import { MAX_LIMIT } from "../../../utils/limits";
+import { MAX_LIMIT } from "../../../data/limits";
 import { DriverStanding, TeamStanding } from "./statistics";
 
 // The schedule and information for a Grand Prix event/weekend

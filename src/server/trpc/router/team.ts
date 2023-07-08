@@ -1,6 +1,6 @@
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
-import { MAX_LIMIT } from "../../../utils/limits";
+import { MAX_LIMIT } from "../../../data/limits";
 import { Driver } from "./driver";
 import { TeamStanding } from "./statistics";
 import { Race } from "./grandPrix";
