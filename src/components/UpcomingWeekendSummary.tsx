@@ -29,28 +29,17 @@ const UpcomingWeekendSummary = () => {
 
   // Hasn't fetched yet (loading)
   if (upcomingGrandPrixWeekend === undefined) {
-    return (
-      <div className={styles.wrapper}>
-        <h3>Upcoming Grand Prix Weekend</h3>
-        <div>Loading...</div>
-      </div>
-    );
+    return <div className={styles.wrapper}>Loading...</div>;
   }
 
   // Couldn't find the next event
   if (upcomingGrandPrixWeekend === null) {
-    return (
-      <div className={styles.wrapper}>
-        <h3>Upcoming Grand Prix Weekend</h3>
-        <div>Offseason</div>
-      </div>
-    );
+    return <div className={styles.wrapper}>Offseason</div>;
   }
 
   return (
     <div className={styles.wrapper}>
-      <h3>Upcoming Grand Prix Weekend</h3>
-      <strong>{upcomingGrandPrixWeekend.raceName}</strong>
+      <h3>{upcomingGrandPrixWeekend.raceName}</h3>
       <div>{upcomingGrandPrixWeekend.Circuit.circuitName}</div>
       <div>{`Round ${upcomingGrandPrixWeekend.round}`}</div>
 
@@ -58,14 +47,19 @@ const UpcomingWeekendSummary = () => {
         {sessions.map((session) => {
           // Is the session the next upcoming session? (the session for which the countdown should be displayed for)
           const isUpcomingSession: boolean = session === upcomingSession;
-          
+
           const formattedDate =
             // If the session is today
             session.date && isSameDay(session.date, new Date())
-              // Don't show the full date string, show 'TODAY' instead
-              ? `TODAY (${session.date?.toLocaleTimeString([], {timeStyle: 'short'})})`
-              // Both the date and time of the session
-              : `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString([], {timeStyle: 'short'})})`;
+              ? // Don't show the full date string, show 'TODAY' instead
+                `TODAY (${session.date?.toLocaleTimeString([], {
+                  timeStyle: "short",
+                })})`
+              : // Both the date and time of the session
+                `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString(
+                  [],
+                  { timeStyle: "short" }
+                )})`;
 
           return (
             <div
