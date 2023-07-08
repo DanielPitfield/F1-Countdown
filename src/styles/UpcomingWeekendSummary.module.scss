@@ -1,8 +1,26 @@
 .wrapper {
   text-align: center;
 
+  .circuitWrapper {
+    display: flex;
+    padding: 0.5em;
+
+    .circuitDetails {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      align-items: flex-start;
+
+      .raceName {
+        margin: 0;
+      }
+    }
+  }
+
   .session {
+    padding: 0.5em;
     margin: 1em 0;
+    text-align: left;
 
     // Highlight the upcoming session
     &[data-is-upcoming="true"] {
@@ -19,7 +37,8 @@
     .countdown {
       font-size: 1.2em;
       font-weight: bold;
-      padding: 0.75em;
+      margin-top: 0.5em;
+      margin-bottom: 0.25em;
     }
   }
 }

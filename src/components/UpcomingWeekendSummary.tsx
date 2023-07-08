@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 import useUpcomingSessionCountdown from "../hooks/useUpcomingSessionCountdown";
 import {
@@ -40,9 +41,23 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
 
   return (
     <div className={styles.wrapper}>
-      <h3>{props.upcomingGrandPrixWeekend.raceName}</h3>
-      <div>{props.upcomingGrandPrixWeekend.Circuit.circuitName}</div>
-      <div>{`Round ${props.upcomingGrandPrixWeekend.round}`}</div>
+      <div className={styles.circuitWrapper}>
+        <div className={styles.circuitDetails}>
+          <h3 className={styles.raceName}>{props.upcomingGrandPrixWeekend.raceName}</h3>
+          <div>{props.upcomingGrandPrixWeekend.Circuit.circuitName}</div>
+          <div>{`Round ${props.upcomingGrandPrixWeekend.round}`}</div>
+        </div>
+
+        <Image
+          src={`/Images/tracks/${props.upcomingGrandPrixWeekend.Circuit.circuitName.replaceAll(
+            " ",
+            "-"
+          )}.svg`}
+          width={75}
+          height={75}
+          alt={props.upcomingGrandPrixWeekend.Circuit.circuitName}
+        />
+      </div>
 
       <div>
         {sessions.map((session) => {
