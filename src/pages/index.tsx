@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { trpc } from "../utils/trpc";
 import Head from "next/head";
 import Image from "next/image";
 import BannerImage from "../../public/Images/Banner.png";
@@ -9,6 +10,9 @@ import { SocialMediaNames } from "../data/SocialMedia";
 import styles from "../styles/index.module.scss";
 
 const Home: NextPage = () => {
+  const { data: upcomingGrandPrixWeekend } =
+    trpc.home.getUpcomingGrandPrixWeekend.useQuery();
+
   return (
     <>
       <Head>
@@ -23,12 +27,16 @@ const Home: NextPage = () => {
       <section className={styles.wrapper}>
         <aside className={styles.navigation}>
           <div className={styles.titleWrapper}>
-            <UpcomingWeekendSummary />
-            <ul className={styles.list}>
-              {SocialMediaNames.map((name) => (
-                <SocialMediaButton key={name} name={name} />
-              ))}
-            </ul>
+            <UpcomingWeekendSummary
+              upcomingGrandPrixWeekend={upcomingGrandPrixWeekend}
+            />
+            {upcomingGrandPrixWeekend !== undefined && (
+              <ul className={styles.list}>
+                {SocialMediaNames.map((name) => (
+                  <SocialMediaButton key={name} name={name} />
+                ))}
+              </ul>
+            )}
           </div>
         </aside>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { trpc } from "../utils/trpc";
+import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 import useUpcomingSessionCountdown from "../hooks/useUpcomingSessionCountdown";
 import {
   getGrandPrixWeekendSessions,
@@ -11,13 +11,14 @@ import isAfter from "date-fns/isAfter";
 
 import styles from "../styles/UpcomingWeekendSummary.module.scss";
 
-const UpcomingWeekendSummary = () => {
-  const { data: upcomingGrandPrixWeekend } =
-    trpc.home.getUpcomingGrandPrixWeekend.useQuery();
+interface UpcomingWeekendSummaryProps {
+  upcomingGrandPrixWeekend: GrandPrixWeekend | null | undefined;
+}
 
+const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
   // All the sessions of the current/upcoming grand prix weekend (which have a known date/time)
   const sessions: WeekendSession[] = getGrandPrixWeekendSessions(
-    upcomingGrandPrixWeekend
+    props.upcomingGrandPrixWeekend
   ).filter((session) => session.date);
 
   // The first session which is in the future
@@ -28,20 +29,20 @@ const UpcomingWeekendSummary = () => {
   const remainingTime = useUpcomingSessionCountdown(upcomingSession);
 
   // Hasn't fetched yet (loading)
-  if (upcomingGrandPrixWeekend === undefined) {
+  if (props.upcomingGrandPrixWeekend === undefined) {
     return <div className={styles.wrapper}>Loading...</div>;
   }
 
   // Couldn't find the next event
-  if (upcomingGrandPrixWeekend === null) {
+  if (props.upcomingGrandPrixWeekend === null) {
     return <div className={styles.wrapper}>Offseason</div>;
   }
 
   return (
     <div className={styles.wrapper}>
-      <h3>{upcomingGrandPrixWeekend.raceName}</h3>
-      <div>{upcomingGrandPrixWeekend.Circuit.circuitName}</div>
-      <div>{`Round ${upcomingGrandPrixWeekend.round}`}</div>
+      <h3>{props.upcomingGrandPrixWeekend.raceName}</h3>
+      <div>{props.upcomingGrandPrixWeekend.Circuit.circuitName}</div>
+      <div>{`Round ${props.upcomingGrandPrixWeekend.round}`}</div>
 
       <div>
         {sessions.map((session) => {
