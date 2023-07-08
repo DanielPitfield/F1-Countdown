@@ -8,7 +8,7 @@ function useUpcomingSessionCountdown(
 ) {
   // The formatted time until the next session
   const [remainingTime, setRemainingTime] = useState<string>("");
-  const [countdownPollMs, SetCountdownPollMs] = useState<number>(1000);
+  const [countdownPollMs, SetCountdownPollMs] = useState<number>(0);
 
   useEffect(() => {
     if (!upcomingSession) {
