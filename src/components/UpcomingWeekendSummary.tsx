@@ -43,16 +43,15 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
     <div className={styles.wrapper}>
       <div className={styles.circuitWrapper}>
         <div className={styles.circuitDetails}>
-          <h3 className={styles.raceName}>{props.upcomingGrandPrixWeekend.raceName}</h3>
+          <h3 className={styles.raceName}>
+            {props.upcomingGrandPrixWeekend.raceName}
+          </h3>
           <div>{props.upcomingGrandPrixWeekend.Circuit.circuitName}</div>
           <div>{`Round ${props.upcomingGrandPrixWeekend.round}`}</div>
         </div>
 
         <Image
-          src={`/Images/tracks/${props.upcomingGrandPrixWeekend.Circuit.circuitName.replaceAll(
-            " ",
-            "-"
-          )}.svg`}
+          src={`/Images/tracks/${props.upcomingGrandPrixWeekend.Circuit.circuitId}.svg`}
           width={75}
           height={75}
           alt={props.upcomingGrandPrixWeekend.Circuit.circuitName}
