@@ -1,5 +1,5 @@
 .wrapper {
-  text-align: center;
+  text-align: left;
 
   .circuitWrapper {
     display: flex;
@@ -8,19 +8,22 @@
     .circuitDetails {
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
+      //flex-grow: 1;
       align-items: flex-start;
 
       .raceName {
         margin: 0;
       }
     }
+
+    .trackImage {
+      margin-top: 0.25em;
+    }
   }
 
   .session {
     padding: 0.5em;
     margin: 1em 0;
-    text-align: left;
 
     // Highlight the upcoming session
     &[data-is-upcoming="true"] {

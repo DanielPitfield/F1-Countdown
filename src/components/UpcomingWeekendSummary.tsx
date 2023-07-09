@@ -51,6 +51,7 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
         </div>
 
         <Image
+          className={styles.trackImage}
           src={`/Images/tracks/${props.upcomingGrandPrixWeekend.Circuit.circuitId}.svg`}
           width={75}
           height={75}
