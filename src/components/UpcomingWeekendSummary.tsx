@@ -9,8 +9,15 @@ import {
 import isBefore from "date-fns/isBefore";
 import { isSameDay } from "date-fns";
 import isAfter from "date-fns/isAfter";
+import { CSSProperties } from "react";
+import BounceLoader from "react-spinners/BounceLoader";
 
 import styles from "../styles/UpcomingWeekendSummary.module.scss";
+
+const override: CSSProperties = {
+  display: "flex",
+  margin: "0 auto"
+};
 
 interface UpcomingWeekendSummaryProps {
   upcomingGrandPrixWeekend: GrandPrixWeekend | null | undefined;
@@ -31,7 +38,20 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
 
   // Hasn't fetched yet (loading)
   if (props.upcomingGrandPrixWeekend === undefined) {
-    return <div className={styles.wrapper}>Loading...</div>;
+    return (
+      <div className={styles.wrapper}>
+        <BounceLoader
+          color={"#888"}
+          loading={true}
+          cssOverride={override}
+          
+          size={100}
+          speedMultiplier={0.3}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+    );
   }
 
   // Couldn't find the next event
