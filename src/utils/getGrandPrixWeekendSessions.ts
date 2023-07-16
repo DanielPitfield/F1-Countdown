@@ -3,9 +3,7 @@ import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 export type WeekendSession = { name: string; date: Date | null };
 
 // Get the date object of a session (using both date and time)
-function getFullSessionDate(
-  session: { date: string; time: string } | undefined
-): Date | null {
+function getFullSessionDate(session: { date: string; time: string } | undefined): Date | null {
   if (!session) {
     return null;
   }
@@ -13,9 +11,7 @@ function getFullSessionDate(
   return new Date(`${session.date} ${session.time}`);
 }
 
-export function getGrandPrixWeekendSessions(
-  weekend: GrandPrixWeekend | undefined | null
-): WeekendSession[] {
+export function getGrandPrixWeekendSessions(weekend: GrandPrixWeekend | undefined | null): WeekendSession[] {
   if (!weekend) {
     return [];
   }

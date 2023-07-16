@@ -20,9 +20,7 @@ const TeamChampion = (props: TeamChampionProps) => {
         <TeamLink team={props.team} />
       </div>
 
-      <div className={styles.numChampionships}>
-        {props.championshipsWon.length}
-      </div>
+      <div className={styles.numChampionships}>{props.championshipsWon.length}</div>
 
       <div className={styles.winningYears}>
         {props.championshipsWon.map((championship, index) => [

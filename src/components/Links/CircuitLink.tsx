@@ -10,11 +10,7 @@ const CircuitLink = (props: CircuitLinkProps) => {
     return null;
   }
 
-  return (
-    <Link href={`/circuitProfiles/${props.circuit.circuitId}`}>
-      {props.circuit.circuitName}
-    </Link>
-  );
+  return <Link href={`/circuitProfiles/${props.circuit.circuitId}`}>{props.circuit.circuitName}</Link>;
 };
 
 export default CircuitLink;

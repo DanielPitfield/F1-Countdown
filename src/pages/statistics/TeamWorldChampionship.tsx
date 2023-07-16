@@ -4,8 +4,7 @@ import { TeamSeasonResult } from "../../server/trpc/router/team";
 import TeamChampion from "../../components/Statistics/TeamChampion";
 
 const TeamWorldChampionship: NextPage = () => {
-  const { data: history } =
-    trpc.statistics.getTeamWorldChampionshipHistory.useQuery();
+  const { data: history } = trpc.statistics.getTeamWorldChampionshipHistory.useQuery();
 
   if (!history) {
     return null;
@@ -13,21 +12,14 @@ const TeamWorldChampionship: NextPage = () => {
 
   // The constructorId of every team that has won a world championship
   const teamChampionIDs: string[] = Array.from(
-    new Set(
-      history.map(
-        (season) =>
-          season.teamStanding?.Constructor.constructorId ?? ""
-      )
-    )
+    new Set(history.map((season) => season.teamStanding?.Constructor.constructorId ?? ""))
   ).filter((id) => id !== "");
 
   // The championships each team has won
   const teamChampionshipMappings = teamChampionIDs
     .map((championID) => {
       const championshipsWon: TeamSeasonResult[] = history.filter(
-        (season) =>
-          season.teamStanding?.Constructor.constructorId ===
-          championID
+        (season) => season.teamStanding?.Constructor.constructorId === championID
       );
 
       return {

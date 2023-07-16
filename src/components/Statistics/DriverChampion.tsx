@@ -21,9 +21,7 @@ const DriverChampion = (props: DriverChampionProps) => {
         <DriverLink driver={props.driver} />
       </div>
 
-      <div className={styles.numChampionships}>
-        {props.championshipsWon.length}
-      </div>
+      <div className={styles.numChampionships}>{props.championshipsWon.length}</div>
 
       <div className={styles.winningYears}>
         {props.championshipsWon.map((championship, index) => [
@@ -40,10 +38,7 @@ const DriverChampion = (props: DriverChampionProps) => {
           */
           const team = championship.driverStanding?.Constructors[0];
 
-          return [
-            index > 0 && ", ",
-            <TeamLink key={`${team?.constructorId}-${index}`} team={team} />,
-          ];
+          return [index > 0 && ", ", <TeamLink key={`${team?.constructorId}-${index}`} team={team} />];
         })}
       </div>
     </div>

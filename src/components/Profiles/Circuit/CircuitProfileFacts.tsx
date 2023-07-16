@@ -20,15 +20,10 @@ const CircuitProfileFacts = (props: CircuitProfileFactsProps) => {
     <div>
       <div className={styles.facts}>
         <Fact label="First Grand Prix">
-          <GrandPrixLink
-            grandPrix={props.pastWinners?.firstYear}
-            showRaceName={false}
-          />
+          <GrandPrixLink grandPrix={props.pastWinners?.firstYear} showRaceName={false} />
         </Fact>
 
-        <Fact label="Number of Grand Prix">
-          {props.pastWinners?.totalNum ?? "0"}
-        </Fact>
+        <Fact label="Number of Grand Prix">{props.pastWinners?.totalNum ?? "0"}</Fact>
       </div>
     </div>
   );

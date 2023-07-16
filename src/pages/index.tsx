@@ -10,26 +10,20 @@ import { SocialMediaNames } from "../data/SocialMedia";
 import styles from "../styles/index.module.scss";
 
 const Home: NextPage = () => {
-  const { data: upcomingGrandPrixWeekend } =
-    trpc.home.getUpcomingGrandPrixWeekend.useQuery();
+  const { data: upcomingGrandPrixWeekend } = trpc.home.getUpcomingGrandPrixWeekend.useQuery();
 
   return (
     <>
       <Head>
         <title>F1 Dashboard</title>
-        <meta
-          name="description"
-          content="F1 Statistics, Schedule and Information"
-        />
+        <meta name="description" content="F1 Statistics, Schedule and Information" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <section className={styles.wrapper}>
         <aside className={styles.navigation}>
           <div className={styles.titleWrapper}>
-            <UpcomingWeekendSummary
-              upcomingGrandPrixWeekend={upcomingGrandPrixWeekend}
-            />
+            <UpcomingWeekendSummary upcomingGrandPrixWeekend={upcomingGrandPrixWeekend} />
             {upcomingGrandPrixWeekend !== undefined && (
               <ul className={styles.list}>
                 {SocialMediaNames.map((name) => (

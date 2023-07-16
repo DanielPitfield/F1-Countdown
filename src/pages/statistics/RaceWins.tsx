@@ -4,11 +4,9 @@ import RaceWinner from "../../components/Statistics/RaceWinner";
 import { Race } from "../../server/trpc/router/grandPrix";
 
 const RaceWins: NextPage = () => {
-  const { data: historyPart1 } =
-    trpc.statistics.getRaceWinnerHistoryPart1.useQuery();
+  const { data: historyPart1 } = trpc.statistics.getRaceWinnerHistoryPart1.useQuery();
 
-  const { data: historyPart2 } =
-    trpc.statistics.getRaceWinnerHistoryPart2.useQuery();
+  const { data: historyPart2 } = trpc.statistics.getRaceWinnerHistoryPart2.useQuery();
 
   if (!historyPart1 || !historyPart2) {
     return null;
@@ -16,9 +14,7 @@ const RaceWins: NextPage = () => {
 
   const history = historyPart1.concat(historyPart2);
 
-  const uniqueRaceWinners = Array.from(
-    new Set(history.map((race) => race.Results[0]?.Driver.driverId))
-  );
+  const uniqueRaceWinners = Array.from(new Set(history.map((race) => race.Results[0]?.Driver.driverId)));
 
   // Descending order (of number of races won)
   uniqueRaceWinners.sort((a, b) => {
@@ -31,9 +27,7 @@ const RaceWins: NextPage = () => {
   return (
     <div>
       {uniqueRaceWinners.map((raceWinnerID) => {
-        const racesWon: Race[] = history.filter(
-          (race) => race.Results[0]?.Driver.driverId === raceWinnerID
-        );
+        const racesWon: Race[] = history.filter((race) => race.Results[0]?.Driver.driverId === raceWinnerID);
 
         return <RaceWinner key={raceWinnerID} racesWon={racesWon} />;
       })}

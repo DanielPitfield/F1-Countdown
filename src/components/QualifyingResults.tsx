@@ -26,9 +26,7 @@ const QualifyingResults = (props: QualifyingResultsProps) => {
               {result.position}
               <DriverLink driver={result.Driver} />
               {props.showTeams && <TeamLink team={result.Constructor} />}
-              {props.showTimes && (
-                <span>{result.Q3 ?? result.Q2 ?? result.Q1 ?? ""}</span>
-              )}
+              {props.showTimes && <span>{result.Q3 ?? result.Q2 ?? result.Q1 ?? ""}</span>}
             </div>
           </div>
         );

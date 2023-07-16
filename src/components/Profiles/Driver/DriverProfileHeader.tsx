@@ -15,9 +15,7 @@ const DriverProfileHeader = (props: DriverProfileHeaderProps) => {
 
   const age =
     intervalToDuration({
-      start: description?.dateOfBirth
-        ? new Date(description?.dateOfBirth)
-        : new Date(),
+      start: description?.dateOfBirth ? new Date(description?.dateOfBirth) : new Date(),
       end: new Date(),
     }).years ?? 0;
 

@@ -11,9 +11,7 @@ import DriverProfileFacts from "../../components/Profiles/Driver/DriverProfileFa
 
 import styles from "../../styles/DriverProfile.module.scss";
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext<{ driver: string }>
-) {
+export async function getServerSideProps(context: GetServerSidePropsContext<{ driver: string }>) {
   // Helper function
   const ssg = createProxySSGHelpers({
     router: appRouter,
@@ -41,31 +39,18 @@ export async function getServerSideProps(
   };
 }
 
-const DriverProfile = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
-  const { data: championshipResults } =
-    trpc.driver.getChampionshipResults.useQuery({
-      driverID: props.driver,
-    });
+const DriverProfile = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const { data: championshipResults } = trpc.driver.getChampionshipResults.useQuery({
+    driverID: props.driver,
+  });
 
   return (
     <div className={styles.wrapper}>
-      <DriverProfileHeader
-        driverID={props.driver}
-      />
+      <DriverProfileHeader driverID={props.driver} />
 
       <div className={styles.innerWrapper}>
-        <Image
-          src={`/Images/drivers/${props.driver}.jpg`}
-          alt={props.driver}
-          height={640}
-          width={640}
-        />
-        <DriverProfileFacts
-          driverID={props.driver}
-          championshipResults={championshipResults}
-        />
+        <Image src={`/Images/drivers/${props.driver}.jpg`} alt={props.driver} height={640} width={640} />
+        <DriverProfileFacts driverID={props.driver} championshipResults={championshipResults} />
       </div>
     </div>
   );

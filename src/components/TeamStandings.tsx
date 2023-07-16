@@ -11,15 +11,12 @@ const TeamStandings = (props: TeamStandingsProps) => {
   if (!props.standings) {
     return null;
   }
-  
+
   return (
     <div>
       {props.standings?.map((standing) => {
         return (
-          <div
-            key={standing.Constructor.constructorId}
-            className={styles.wrapper}
-          >
+          <div key={standing.Constructor.constructorId} className={styles.wrapper}>
             <div>
               {standing.position}
               <TeamLink team={standing.Constructor} />

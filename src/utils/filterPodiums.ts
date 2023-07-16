@@ -5,10 +5,7 @@ import { Race } from "../server/trpc/router/grandPrix";
 export function filterPodiums(races: Race[]): Race[] {
   return races.filter((race: Race) => {
     const racePosition: number = parseInt(race.Results[0]?.position ?? "0");
-    
-    return (
-      racePosition >= PodiumPositions.FIRST &&
-      racePosition <= PodiumPositions.THIRD
-    );
+
+    return racePosition >= PodiumPositions.FIRST && racePosition <= PodiumPositions.THIRD;
   });
 }

@@ -2,10 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 import useUpcomingSessionCountdown from "../hooks/useUpcomingSessionCountdown";
-import {
-  getGrandPrixWeekendSessions,
-  WeekendSession,
-} from "../utils/getGrandPrixWeekendSessions";
+import { getGrandPrixWeekendSessions, WeekendSession } from "../utils/getGrandPrixWeekendSessions";
 import isBefore from "date-fns/isBefore";
 import { isSameDay } from "date-fns";
 import isAfter from "date-fns/isAfter";
@@ -16,7 +13,7 @@ import styles from "../styles/UpcomingWeekendSummary.module.scss";
 
 const override: CSSProperties = {
   display: "flex",
-  margin: "0 auto"
+  margin: "0 auto",
 };
 
 interface UpcomingWeekendSummaryProps {
@@ -25,9 +22,9 @@ interface UpcomingWeekendSummaryProps {
 
 const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
   // All the sessions of the current/upcoming grand prix weekend (which have a known date/time)
-  const sessions: WeekendSession[] = getGrandPrixWeekendSessions(
-    props.upcomingGrandPrixWeekend
-  ).filter((session) => session.date);
+  const sessions: WeekendSession[] = getGrandPrixWeekendSessions(props.upcomingGrandPrixWeekend).filter(
+    (session) => session.date
+  );
 
   // The first session which is in the future
   const upcomingSession: WeekendSession | undefined = sessions.find(
@@ -44,7 +41,6 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
           color={"#888"}
           loading={true}
           cssOverride={override}
-          
           size={100}
           speedMultiplier={0.3}
           aria-label="Loading Spinner"
@@ -63,9 +59,7 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
     <div className={styles.wrapper}>
       <div className={styles.circuitWrapper}>
         <div className={styles.circuitDetails}>
-          <h3 className={styles.raceName}>
-            {props.upcomingGrandPrixWeekend.raceName}
-          </h3>
+          <h3 className={styles.raceName}>{props.upcomingGrandPrixWeekend.raceName}</h3>
           <div>{props.upcomingGrandPrixWeekend.Circuit.circuitName}</div>
           <div>{`Round ${props.upcomingGrandPrixWeekend.round}`}</div>
         </div>
@@ -92,27 +86,20 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
                   timeStyle: "short",
                 })})`
               : // Both the date and time of the session
-                `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString(
-                  [],
-                  { timeStyle: "short" }
-                )})`;
+                `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString([], {
+                  timeStyle: "short",
+                })})`;
 
           return (
             <div
               className={styles.session}
               key={session.name}
               data-is-upcoming={isUpcomingSession}
-              data-is-finished={
-                session.date && isBefore(session.date, new Date())
-              }
+              data-is-finished={session.date && isBefore(session.date, new Date())}
             >
               <div>{session.name}</div>
               <div>{formattedDate}</div>
-              {isUpcomingSession && (
-                <div className={styles.countdown}>
-                  {remainingTime ?? "Loading..."}
-                </div>
-              )}
+              {isUpcomingSession && <div className={styles.countdown}>{remainingTime ?? "Loading..."}</div>}
             </div>
           );
         })}

@@ -3,9 +3,7 @@ import { getFormattedTimeUntil } from "../utils/getFormattedTimeUntil";
 import { WeekendSession } from "../utils/getGrandPrixWeekendSessions";
 import { hoursToMilliseconds, minutesToMilliseconds } from "date-fns";
 
-function useUpcomingSessionCountdown(
-  upcomingSession: WeekendSession | undefined
-) {
+function useUpcomingSessionCountdown(upcomingSession: WeekendSession | undefined) {
   // The formatted time until the next session
   const [remainingTime, setRemainingTime] = useState<string>("");
   const [countdownPollMs, SetCountdownPollMs] = useState<number>(0);
@@ -30,7 +28,7 @@ function useUpcomingSessionCountdown(
         SetCountdownPollMs(hoursToMilliseconds(1));
         return;
       }
-      
+
       // Otheriwse, update every second
       SetCountdownPollMs(1000);
     }, countdownPollMs);

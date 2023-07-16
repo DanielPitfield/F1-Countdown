@@ -36,11 +36,7 @@ const Podium = (props: PodiumProps) => {
           <div key={index} className={styles.step} data-position={index + 1}>
             <DriverLink driver={podiumStep?.Driver} />
             {props.showTeams && <TeamLink team={podiumStep?.Constructor} />}
-            {props.showTimes && (
-              <span className={styles.time}>
-                {podiumStep?.Time?.time ?? ""}
-              </span>
-            )}
+            {props.showTimes && <span className={styles.time}>{podiumStep?.Time?.time ?? ""}</span>}
           </div>
         );
       })}

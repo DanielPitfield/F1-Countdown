@@ -31,9 +31,7 @@ const Navbar = () => {
   But will the SubNav components re-render (and therefore re-fetch)? 
   (each time their main item is hovered over?)
   */
-  const [currentSubMenuName, setCurrentSubMenuName] = useState<string | null>(
-    null
-  );
+  const [currentSubMenuName, setCurrentSubMenuName] = useState<string | null>(null);
 
   return (
     <nav className={styles.wrapper}>

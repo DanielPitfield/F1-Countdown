@@ -14,9 +14,7 @@ import SeasonLink from "../../components/Links/SeasonLink";
 
 import styles from "../../styles/GrandPrixProfile.module.scss";
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext<{ grandPrix: string[] }>
-) {
+export async function getServerSideProps(context: GetServerSidePropsContext<{ grandPrix: string[] }>) {
   // Helper function
   const ssg = await createProxySSGHelpers({
     router: appRouter,
@@ -63,9 +61,7 @@ export async function getServerSideProps(
   };
 }
 
-const GrandPrixProfile = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
+const GrandPrixProfile = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: schedule } = trpc.grandPrix.getSchedule.useQuery({
     season: props.season,
     roundNumber: props.roundNumber,
@@ -81,18 +77,15 @@ const GrandPrixProfile = (
     roundNumber: props.roundNumber,
   });
 
-  const { data: driverStandings } =
-    trpc.grandPrix.getDriverStandingsAfter.useQuery({
-      season: props.season,
-      roundNumber: props.roundNumber,
-    });
+  const { data: driverStandings } = trpc.grandPrix.getDriverStandingsAfter.useQuery({
+    season: props.season,
+    roundNumber: props.roundNumber,
+  });
 
-  const { data: teamStandings } = trpc.grandPrix.getTeamStandingsAfter.useQuery(
-    {
-      season: props.season,
-      roundNumber: props.roundNumber,
-    }
-  );
+  const { data: teamStandings } = trpc.grandPrix.getTeamStandingsAfter.useQuery({
+    season: props.season,
+    roundNumber: props.roundNumber,
+  });
 
   return (
     <div className={styles.wrapper}>
@@ -111,18 +104,9 @@ const GrandPrixProfile = (
 
       <Podium race={race} showTeams={true} showTimes={true} />
 
-      <QualifyingResults
-        qualifying={qualifying}
-        showTeams={false}
-        showTimes={true}
-      />
+      <QualifyingResults qualifying={qualifying} showTeams={false} showTimes={true} />
 
-      <RaceResults
-        race={race}
-        showPositions={true}
-        showTeams={false}
-        showTimes={true}
-      />
+      <RaceResults race={race} showPositions={true} showTeams={false} showTimes={true} />
 
       <DriverStandings standings={driverStandings} />
       <TeamStandings standings={teamStandings} />

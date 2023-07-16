@@ -10,11 +10,7 @@ const TeamLink = (props: TeamLinkProps) => {
     return null;
   }
 
-  return (
-    <Link href={`/teamProfiles/${props.team.constructorId}`}>
-      {props.team.name}
-    </Link>
-  );
+  return <Link href={`/teamProfiles/${props.team.constructorId}`}>{props.team.name}</Link>;
 };
 
 export default TeamLink;

@@ -5,8 +5,7 @@ import Fact from "../../Fact";
 
 import styles from "../../../styles/TeamProfile.module.scss";
 
-type championshipResultsOutput =
-  AppRouterTypes["team"]["getChampionshipResults"]["output"];
+type championshipResultsOutput = AppRouterTypes["team"]["getChampionshipResults"]["output"];
 
 interface TeamProfileFactsProps {
   teamID: string;
@@ -45,12 +44,7 @@ const TeamProfileFacts = (props: TeamProfileFactsProps) => {
           <span>{props.championshipResults?.numChampionshipsWon ?? "0"}</span>
           <span>
             {props.championshipResults?.winningYears.map((championship) => {
-              return (
-                <SeasonLink
-                  key={championship.season}
-                  season={championship.season}
-                />
-              );
+              return <SeasonLink key={championship.season} season={championship.season} />;
             })}
           </span>
         </Fact>
@@ -67,16 +61,10 @@ const TeamProfileFacts = (props: TeamProfileFactsProps) => {
 
       <div className={styles.factsGroup}>
         <Fact label="First Pole">
-          <GrandPrixLink
-            grandPrix={polePositions?.firstPole}
-            showRaceName={true}
-          />
+          <GrandPrixLink grandPrix={polePositions?.firstPole} showRaceName={true} />
         </Fact>
         <Fact label="Last Pole">
-          <GrandPrixLink
-            grandPrix={polePositions?.lastPole}
-            showRaceName={true}
-          />
+          <GrandPrixLink grandPrix={polePositions?.lastPole} showRaceName={true} />
         </Fact>
       </div>
 

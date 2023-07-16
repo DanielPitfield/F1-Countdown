@@ -12,42 +12,38 @@ import { Circuit } from "./circuit";
 const caller = seasonRouter.createCaller({ prisma });
 
 export const homeRouter = router({
-  getUpcomingGrandPrixWeekend: publicProcedure.query(
-    async (): Promise<GrandPrixWeekend | null> => {
-      return (
-        getNextEventInYear(
-          // Using the current year can provide more up-to-date information
-          await caller.getSchedule({
-            seasonID: getCurrentYear().toString(),
-          })
-        ) ??
-        getNextEventInYear(
-          // Otherwise, try getting the next event using "current" field within request URL
-          await caller.getSchedule({
-            seasonID: "current",
-          })
-        )
-        /*
+  getUpcomingGrandPrixWeekend: publicProcedure.query(async (): Promise<GrandPrixWeekend | null> => {
+    return (
+      getNextEventInYear(
+        // Using the current year can provide more up-to-date information
+        await caller.getSchedule({
+          seasonID: getCurrentYear().toString(),
+        })
+      ) ??
+      getNextEventInYear(
+        // Otherwise, try getting the next event using "current" field within request URL
+        await caller.getSchedule({
+          seasonID: "current",
+        })
+      ) ??
+      /*
         Explicitly return null (and not undefined) 
         So that not finding an event can be differentiated from the fetch request/response not yet being complete
         */
-        ?? null
-      );
-    }
-  ),
+      null
+    );
+  }),
 
-  getCurrentSchedule: publicProcedure.query(
-    async (): Promise<GrandPrixWeekend[]> => {
-      return (
-        (await caller.getSchedule({
-          seasonID: getCurrentYear().toString(),
-        })) ??
-        (await caller.getSchedule({
-          seasonID: "current",
-        }))
-      );
-    }
-  ),
+  getCurrentSchedule: publicProcedure.query(async (): Promise<GrandPrixWeekend[]> => {
+    return (
+      (await caller.getSchedule({
+        seasonID: getCurrentYear().toString(),
+      })) ??
+      (await caller.getSchedule({
+        seasonID: "current",
+      }))
+    );
+  }),
 
   getCurrentDrivers: publicProcedure.query(async (): Promise<Driver[]> => {
     // Getting the drivers from the driver standings of the current year can provide more up-to-date information

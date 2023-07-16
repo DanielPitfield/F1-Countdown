@@ -10,9 +10,7 @@ import SeasonSchedule from "../../components/SeasonSchedule";
 
 import styles from "../../styles/Profile.module.scss";
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext<{ season: string }>
-) {
+export async function getServerSideProps(context: GetServerSidePropsContext<{ season: string }>) {
   // Helper function
   const ssg = await createProxySSGHelpers({
     router: appRouter,
@@ -36,9 +34,7 @@ export async function getServerSideProps(
   };
 }
 
-const SeasonProfile = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
+const SeasonProfile = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: schedule } = trpc.season.getSchedule.useQuery({
     seasonID: props.season,
   });

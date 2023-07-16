@@ -4,8 +4,7 @@ import { DriverSeasonResult } from "../../server/trpc/router/driver";
 import DriverChampion from "../../components/Statistics/DriverChampion";
 
 const DriverWorldChampionship: NextPage = () => {
-  const { data: history } =
-    trpc.statistics.getDriverWorldChampionshipHistory.useQuery();
+  const { data: history } = trpc.statistics.getDriverWorldChampionshipHistory.useQuery();
 
   if (!history) {
     return null;
@@ -13,9 +12,7 @@ const DriverWorldChampionship: NextPage = () => {
 
   // The driverId of every driver that has won a world championship
   const driverChampionIDs: string[] = Array.from(
-    new Set(
-      history.map((season) => season.driverStanding.Driver.driverId ?? "")
-    )
+    new Set(history.map((season) => season.driverStanding.Driver.driverId ?? ""))
   ).filter((id) => id !== "");
 
   // The championships each driver has won

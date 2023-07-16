@@ -12,9 +12,7 @@ import TeamProfileFacts from "../../components/Profiles/Team/TeamProfileFacts";
 
 import styles from "../../styles/TeamProfile.module.scss";
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext<{ team: string }>
-) {
+export async function getServerSideProps(context: GetServerSidePropsContext<{ team: string }>) {
   // Helper function
   const ssg = await createProxySSGHelpers({
     router: appRouter,
@@ -41,33 +39,22 @@ export async function getServerSideProps(
   };
 }
 
-const TeamProfile = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
+const TeamProfile = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: currentDrivers } = trpc.team.getCurrentDrivers.useQuery({
     teamID: props.team,
   });
 
-  const { data: championshipResults } =
-    trpc.team.getChampionshipResults.useQuery({
-      teamID: props.team,
-    });
+  const { data: championshipResults } = trpc.team.getChampionshipResults.useQuery({
+    teamID: props.team,
+  });
 
   return (
     <div className={styles.wrapper}>
       <TeamProfileHeader teamID={props.team} />
 
       <div className={styles.innerWrapper}>
-        <Image
-          src={`/Images/teams/${props.team}.jpg`}
-          alt={props.team}
-          height={640}
-          width={640}
-        />
-        <TeamProfileFacts
-          teamID={props.team}
-          championshipResults={championshipResults}
-        />
+        <Image src={`/Images/teams/${props.team}.jpg`} alt={props.team} height={640} width={640} />
+        <TeamProfileFacts teamID={props.team} championshipResults={championshipResults} />
       </div>
 
       <div className={styles.currentDrivers}>

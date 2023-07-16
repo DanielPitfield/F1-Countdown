@@ -14,9 +14,7 @@ import styles from "../../styles/CircuitProfile.module.scss";
 // For how many previous years should the results of races at this circuit be shown?
 const NUM_PAST_WINNERS = 5;
 
-export async function getServerSideProps(
-  context: GetServerSidePropsContext<{ circuit: string }>
-) {
+export async function getServerSideProps(context: GetServerSidePropsContext<{ circuit: string }>) {
   // Helper function
   const ssg = await createProxySSGHelpers({
     router: appRouter,
@@ -42,9 +40,7 @@ export async function getServerSideProps(
   };
 }
 
-const CircuitProfile = (
-  props: InferGetServerSidePropsType<typeof getServerSideProps>
-) => {
+const CircuitProfile = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: pastWinners } = trpc.circuit.getPastWinners.useQuery({
     circuitID: props.circuit,
     numPastWinners: NUM_PAST_WINNERS,
@@ -54,10 +50,7 @@ const CircuitProfile = (
     <div className={styles.wrapper}>
       <CircuitProfileHeader circuitID={props.circuit} />
 
-      <CircuitProfileFacts
-        circuitID={props.circuit}
-        pastWinners={pastWinners}
-      />
+      <CircuitProfileFacts circuitID={props.circuit} pastWinners={pastWinners} />
 
       <PreviousWinners previousRaces={pastWinners?.results} />
     </div>
