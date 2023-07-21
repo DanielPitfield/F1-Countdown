@@ -78,17 +78,39 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
           // Is the session the next upcoming session? (the session for which the countdown should be displayed for)
           const isUpcomingSession: boolean = session === upcomingSession;
 
-          const formattedDate =
+          const formattedDate = () => {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+
+            // If the session was yesterday
+            if (session.date && isSameDay(session.date, yesterday)) {
+              return `YESTERDAY (${session.date?.toLocaleTimeString([], {
+                timeStyle: "short",
+              })})`;
+            }
+
             // If the session is today
-            session.date && isSameDay(session.date, new Date())
-              ? // Don't show the full date string, show 'TODAY' instead
-                `TODAY (${session.date?.toLocaleTimeString([], {
-                  timeStyle: "short",
-                })})`
-              : // Both the date and time of the session
-                `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString([], {
-                  timeStyle: "short",
-                })})`;
+            if (session.date && isSameDay(session.date, new Date())) {
+              return `TODAY (${session.date?.toLocaleTimeString([], {
+                timeStyle: "short",
+              })})`;
+            }
+
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            // If the session is tomorrow
+            if (session.date && isSameDay(session.date, tomorrow)) {
+              return `TOMORROW (${session.date?.toLocaleTimeString([], {
+                timeStyle: "short",
+              })})`;
+            }
+
+            // Both the date and time of the session
+            return `${session.date?.toLocaleDateString()} (${session.date?.toLocaleTimeString([], {
+              timeStyle: "short",
+            })})`;
+          };
 
           return (
             <div
@@ -98,7 +120,7 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
               data-is-finished={session.date && isBefore(session.date, new Date())}
             >
               <div>{session.name}</div>
-              <div>{formattedDate}</div>
+              <div>{formattedDate()}</div>
               {isUpcomingSession && <div className={styles.countdown}>{remainingTime ?? "Loading..."}</div>}
             </div>
           );
