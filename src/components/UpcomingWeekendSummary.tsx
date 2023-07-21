@@ -4,7 +4,7 @@ import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 import useUpcomingSessionCountdown from "../hooks/useUpcomingSessionCountdown";
 import { getGrandPrixWeekendSessions, WeekendSession } from "../utils/getGrandPrixWeekendSessions";
 import isBefore from "date-fns/isBefore";
-import { isSameDay } from "date-fns";
+import { differenceInCalendarDays, format, isSameDay } from "date-fns";
 import isAfter from "date-fns/isAfter";
 import { CSSProperties } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -102,6 +102,18 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
             // If the session is tomorrow
             if (session.date && isSameDay(session.date, tomorrow)) {
               return `TOMORROW (${session.date?.toLocaleTimeString([], {
+                timeStyle: "short",
+              })})`;
+            }
+
+            // Not yesterday or tomorrow but is in the near future (next 4 days)
+            if (
+              session.date &&
+              isAfter(session.date, new Date()) &&
+              differenceInCalendarDays(session.date, new Date()) <= 4
+            ) {
+              // The day of the week (e.g SUNDAY) followed by the time of the session
+              return `${format(session.date, "EEEE").toUpperCase()} (${session.date?.toLocaleTimeString([], {
                 timeStyle: "short",
               })})`;
             }
