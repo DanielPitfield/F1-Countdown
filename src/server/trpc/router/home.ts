@@ -29,7 +29,7 @@ export const homeRouter = router({
       /*
         Explicitly return null (and not undefined) 
         So that not finding an event can be differentiated from the fetch request/response not yet being complete
-        */
+      */
       null
     );
   }),

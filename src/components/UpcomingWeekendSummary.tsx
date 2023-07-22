@@ -1,13 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
-import useUpcomingSessionCountdown from "../hooks/useUpcomingSessionCountdown";
+import useHighlightedSessionCountdown from "../hooks/useHighlightedSessionCountdown";
 import { getGrandPrixWeekendSessions, WeekendSession } from "../utils/getGrandPrixWeekendSessions";
-import isBefore from "date-fns/isBefore";
-import { differenceInCalendarDays, format, isSameDay } from "date-fns";
-import isAfter from "date-fns/isAfter";
+import { add, format, differenceInCalendarDays, isWithinInterval, isSameDay, isAfter } from "date-fns";
 import { CSSProperties } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
+import { sessionDurations } from "../data/sessionDurations";
 
 import styles from "../styles/UpcomingWeekendSummary.module.scss";
 
@@ -26,12 +25,30 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
     (session) => session.date
   );
 
+  // Is there a session which is currently taking place?
+  const ongoingSession: WeekendSession | undefined = sessions.find(
+    (session) =>
+      session.date &&
+      // Is the current date between when the session starts and when it ends?
+      isWithinInterval(new Date(), {
+        start: session.date,
+        // Add on the session duration to the date of when it started
+        end: add(session.date, {
+          minutes: sessionDurations.find((x) => x.name === session.name)?.minutes ?? 60,
+        }),
+      })
+  );
+
   // The first session which is in the future
   const upcomingSession: WeekendSession | undefined = sessions.find(
     (session) => session.date && isAfter(session.date, new Date())
   );
+
+  // Show any ongoing session as priority but then the upcoming session as a fallback value
+  const highlightedSession: WeekendSession | undefined = ongoingSession ?? upcomingSession;
+
   // How long until this next session?
-  const remainingTime = useUpcomingSessionCountdown(upcomingSession);
+  const remainingTime = useHighlightedSessionCountdown(highlightedSession);
 
   // Hasn't fetched yet (loading)
   if (props.upcomingGrandPrixWeekend === undefined) {
@@ -55,6 +72,11 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
     return <div className={styles.wrapper}>Offseason</div>;
   }
 
+  // Couldn't find the next session
+  if (!highlightedSession) {
+    return <div className={styles.wrapper}>No session found</div>;
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.circuitWrapper}>
@@ -75,8 +97,8 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
 
       <div>
         {sessions.map((session) => {
-          // Is the session the next upcoming session? (the session for which the countdown should be displayed for)
-          const isUpcomingSession: boolean = session === upcomingSession;
+          // Should the session be highlighted?
+          const isHighlightedSession: boolean = session === highlightedSession;
 
           const formattedDate = () => {
             const yesterday = new Date();
@@ -128,12 +150,21 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
             <div
               className={styles.session}
               key={session.name}
-              data-is-upcoming={isUpcomingSession}
-              data-is-finished={session.date && isBefore(session.date, new Date())}
+              data-is-highlighted={isHighlightedSession}
+              data-is-finished={
+                session.date &&
+                // Current date is after when the session ends (start + duration)
+                isAfter(
+                  new Date(),
+                  add(session.date, {
+                    minutes: sessionDurations.find((x) => x.name === session.name)?.minutes ?? 60,
+                  })
+                )
+              }
             >
               <div>{session.name}</div>
               <div>{formattedDate()}</div>
-              {isUpcomingSession && <div className={styles.countdown}>{remainingTime ?? "Loading..."}</div>}
+              {isHighlightedSession && <div className={styles.countdown}>{remainingTime ?? "Loading..."}</div>}
             </div>
           );
         })}

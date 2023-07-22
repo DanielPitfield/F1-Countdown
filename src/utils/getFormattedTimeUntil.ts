@@ -1,5 +1,4 @@
-import intervalToDuration from "date-fns/intervalToDuration";
-import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
+import { intervalToDuration, differenceInCalendarDays } from "date-fns";
 
 // Instead of displaying 6:9:23, make sure to display 06:09:23
 function zeroPad(timeUnit: number | undefined) {

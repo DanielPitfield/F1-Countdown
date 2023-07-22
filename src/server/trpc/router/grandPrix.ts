@@ -15,10 +15,12 @@ export type GrandPrixWeekend = {
   Circuit: Circuit;
   date: string;
   time: string;
-  FirstPractice?: { date: string; time: string };
-  SecondPractice?: { date: string; time: string };
+  FirstPractice: { date: string; time: string };
+  SecondPractice: { date: string; time: string };
+  // Some grand prix weekends will have a sprint race instead of a third practice session
+  Sprint?: { date: string; time: string };
   ThirdPractice?: { date: string; time: string };
-  Qualifying?: { date: string; time: string };
+  Qualifying: { date: string; time: string };
 };
 
 // The qualifying result for an individual driver
