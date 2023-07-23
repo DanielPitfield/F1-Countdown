@@ -3,7 +3,7 @@ import { prisma } from "../../db/client";
 import { seasonRouter } from "./season";
 import { GrandPrixWeekend } from "./grandPrix";
 import { getCurrentYear } from "../../../utils/getCurrentYear";
-import { getNextEventInYear } from "../../../utils/getNextEventInYear";
+import { getUpcomingEvent } from "../../../utils/getNextEventInYear";
 import { Driver } from "./driver";
 import { Team } from "./team";
 import { Circuit } from "./circuit";
@@ -14,13 +14,13 @@ const caller = seasonRouter.createCaller({ prisma });
 export const homeRouter = router({
   getUpcomingGrandPrixWeekend: publicProcedure.query(async (): Promise<GrandPrixWeekend | null> => {
     return (
-      getNextEventInYear(
+      getUpcomingEvent(
         // Using the current year can provide more up-to-date information
         await caller.getSchedule({
           seasonID: getCurrentYear().toString(),
         })
       ) ??
-      getNextEventInYear(
+      getUpcomingEvent(
         // Otherwise, try getting the next event using "current" field within request URL
         await caller.getSchedule({
           seasonID: "current",
