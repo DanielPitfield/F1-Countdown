@@ -128,11 +128,11 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
               })})`;
             }
 
-            // Not yesterday or tomorrow but is in the near future (next 4 days)
+            // Not yesterday or tomorrow but is in the near future (this week)
             if (
               session.date &&
               isAfter(session.date, new Date()) &&
-              differenceInCalendarDays(session.date, new Date()) <= 4
+              differenceInCalendarDays(session.date, new Date()) < 7
             ) {
               // The day of the week (e.g SUNDAY) followed by the time of the session
               return `${format(session.date, "EEEE").toUpperCase()} (${session.date?.toLocaleTimeString([], {
