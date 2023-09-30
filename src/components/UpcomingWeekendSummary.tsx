@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
 import useHighlightedSessionCountdown from "../hooks/useHighlightedSessionCountdown";
@@ -20,6 +20,8 @@ interface UpcomingWeekendSummaryProps {
 }
 
 const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
+  const [showTrackImage, setShowTrackImage] = useState<boolean>(true);
+
   // All the sessions of the current/upcoming grand prix weekend (which have a known date/time)
   const sessions: WeekendSession[] = getGrandPrixWeekendSessions(props.upcomingGrandPrixWeekend).filter(
     (session) => session.date
@@ -86,13 +88,16 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
           <div>{`Round ${props.upcomingGrandPrixWeekend.round}`}</div>
         </div>
 
-        <Image
-          className={styles.trackImage}
-          src={`/Images/tracks/${props.upcomingGrandPrixWeekend.Circuit.circuitId}.svg`}
-          width={75}
-          height={75}
-          alt={props.upcomingGrandPrixWeekend.Circuit.circuitName}
-        />
+        {showTrackImage && (
+          <Image
+            className={styles.trackImage}
+            src={`/Images/tracks/${props.upcomingGrandPrixWeekend.Circuit.circuitId}.svg`}
+            width={75}
+            height={75}
+            alt={props.upcomingGrandPrixWeekend.Circuit.circuitName}
+            onError={() => setShowTrackImage(false)}
+          />
+        )}
       </div>
 
       <div>
