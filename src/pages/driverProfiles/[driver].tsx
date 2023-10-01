@@ -28,7 +28,7 @@ const DriverProfile = (props: InferGetServerSidePropsType<typeof getServerSidePr
       <DriverProfileHeader driverID={props.driver} />
 
       <div className={styles.innerWrapper}>
-        <Image src={`/Images/drivers/${props.driver}.jpg`} alt={props.driver} height={640} width={640} />
+        <Image src={`/Images/drivers/${props.driver}.jpg`} alt={props.driver} priority height={640} width={640} />
         <DriverProfileFacts driverID={props.driver} championshipResults={championshipResults} />
       </div>
     </div>
