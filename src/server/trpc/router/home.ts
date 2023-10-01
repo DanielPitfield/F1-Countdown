@@ -1,5 +1,4 @@
 import { router, publicProcedure } from "../trpc";
-import { prisma } from "../../db/client";
 import { seasonRouter } from "./season";
 import { GrandPrixWeekend } from "./grandPrix";
 import { getCurrentYear } from "../../../utils/getCurrentYear";
@@ -9,7 +8,7 @@ import { Team } from "./team";
 import { Circuit } from "./circuit";
 
 // Create a caller to call queries from the seasonRouter directly from the server
-const caller = seasonRouter.createCaller({ prisma });
+const caller = seasonRouter.createCaller({});
 
 export const homeRouter = router({
   getUpcomingGrandPrixWeekend: publicProcedure.query(async (): Promise<GrandPrixWeekend | null> => {

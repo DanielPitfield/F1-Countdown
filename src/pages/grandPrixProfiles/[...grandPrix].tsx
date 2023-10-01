@@ -1,10 +1,6 @@
 import { trpc } from "../../utils/trpc";
 import CircuitLink from "../../components/Links/CircuitLink";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
-import { appRouter } from "../../server/trpc/router/_app";
-import superjson from "superjson";
-import { prisma } from "../../server/db/client";
 import Podium from "../../components/Podium";
 import DriverStandings from "../../components/DriverStandings";
 import TeamStandings from "../../components/TeamStandings";
@@ -15,13 +11,6 @@ import SeasonLink from "../../components/Links/SeasonLink";
 import styles from "../../styles/GrandPrixProfile.module.scss";
 
 export async function getServerSideProps(context: GetServerSidePropsContext<{ grandPrix: string[] }>) {
-  // Helper function
-  const ssg = await createProxySSGHelpers({
-    router: appRouter,
-    ctx: { prisma },
-    transformer: superjson,
-  });
-
   // The dynamic parameter of the route (catch all route so this will always be an array)
   const grandPrix = context.params?.grandPrix as string[];
   // Destructure the season and roundNumber segments of the route
@@ -30,31 +19,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext<{ gr
   const season = seasonParam ?? "";
   const roundNumber = roundNumberParam ?? "";
 
-  // Pre-fetching data (so that it is immediately available)
-  await ssg.grandPrix.getSchedule.prefetch({
-    season: season,
-    roundNumber: roundNumber,
-  });
-  await ssg.grandPrix.getQualifying.prefetch({
-    season: season,
-    roundNumber: roundNumber,
-  });
-  await ssg.grandPrix.getRace.prefetch({
-    season: season,
-    roundNumber: roundNumber,
-  });
-  await ssg.grandPrix.getDriverStandingsAfter.prefetch({
-    season: season,
-    roundNumber: roundNumber,
-  });
-  await ssg.grandPrix.getTeamStandingsAfter.prefetch({
-    season: season,
-    roundNumber: roundNumber,
-  });
-
   return {
     props: {
-      trpcState: ssg.dehydrate(),
       season: season,
       roundNumber: roundNumber,
     },

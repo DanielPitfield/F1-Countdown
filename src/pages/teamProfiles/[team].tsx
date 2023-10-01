@@ -2,10 +2,6 @@ import { trpc } from "../../utils/trpc";
 import Image from "next/image";
 import DriverLink from "../../components/Links/DriverLink";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import { createProxySSGHelpers } from "@trpc/react-query/ssg";
-import { appRouter } from "../../server/trpc/router/_app";
-import superjson from "superjson";
-import { prisma } from "../../server/db/client";
 
 import TeamProfileHeader from "../../components/Profiles/Team/TeamProfileHeader";
 import TeamProfileFacts from "../../components/Profiles/Team/TeamProfileFacts";
@@ -13,27 +9,11 @@ import TeamProfileFacts from "../../components/Profiles/Team/TeamProfileFacts";
 import styles from "../../styles/TeamProfile.module.scss";
 
 export async function getServerSideProps(context: GetServerSidePropsContext<{ team: string }>) {
-  // Helper function
-  const ssg = await createProxySSGHelpers({
-    router: appRouter,
-    ctx: { prisma },
-    transformer: superjson,
-  });
-
   // The dynamic parameter of the route
   const team = context.params?.team as string;
 
-  // Pre-fetching data (so that it is immediately available)
-  await ssg.team.getInfo.prefetch({ teamID: team });
-  await ssg.team.getCurrentDrivers.prefetch({ teamID: team });
-  await ssg.team.getPolePositions.prefetch({ teamID: team });
-  await ssg.team.getRaces.prefetch({ teamID: team });
-  await ssg.team.getNumFastestLaps.prefetch({ teamID: team });
-  await ssg.team.getChampionshipResults.prefetch({ teamID: team });
-
   return {
     props: {
-      trpcState: ssg.dehydrate(),
       team,
     },
   };
