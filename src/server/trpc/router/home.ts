@@ -2,7 +2,7 @@ import { router, publicProcedure } from "../trpc";
 import { seasonRouter } from "./season";
 import { GrandPrixWeekend } from "./grandPrix";
 import { getCurrentYear } from "../../../utils/getCurrentYear";
-import { getUpcomingEvent } from "../../../utils/getNextEventInYear";
+import { getUpcomingEvent } from "../../../utils/getUpcomingEvent";
 import { Driver } from "./driver";
 import { Team } from "./team";
 import { Circuit } from "./circuit";

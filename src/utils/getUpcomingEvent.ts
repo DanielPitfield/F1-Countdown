@@ -4,7 +4,7 @@ import { WeekendSession, getGrandPrixWeekendSessions } from "./getGrandPrixWeeke
 import { sessionDurations } from "../data/sessionDurations";
 
 export function getUpcomingEvent(schedule: GrandPrixWeekend[]): GrandPrixWeekend | undefined {
-  // The first event within the entire schedule
+  // The first upcoming event within the entire schedule
   return schedule.find((grandPrixWeekend) => {
     const sessions: WeekendSession[] = getGrandPrixWeekendSessions(grandPrixWeekend);
 

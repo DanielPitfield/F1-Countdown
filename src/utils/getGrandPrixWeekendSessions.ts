@@ -26,6 +26,16 @@ export function getGrandPrixWeekendSessions(weekend: GrandPrixWeekend | undefine
     return [];
   }
 
+  // The day of the race is known but the specific times for the sessions have not yet been decided (normally this happens during offseason for the upcoming season)
+  if (!weekend.FirstPractice && weekend.date) {
+    return [
+      {
+        name: "Race",
+        date: new Date(weekend.date),
+      },
+    ];
+  }
+
   // Sprint weekend
   if (weekend.Sprint) {
     // The sprint shootout date is put under SecondPractice and is +30 minutes off
