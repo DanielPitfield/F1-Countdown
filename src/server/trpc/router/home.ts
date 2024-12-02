@@ -1,4 +1,3 @@
-import { router, publicProcedure } from "../trpc";
 import { seasonRouter } from "./season";
 import { GrandPrixWeekend } from "./grandPrix";
 import { getCurrentYear } from "../../../utils/getCurrentYear";

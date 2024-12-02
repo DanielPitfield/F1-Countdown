@@ -1,4 +1,3 @@
-import { trpc } from "../../utils/trpc";
 import Image from "next/image";
 import DriverLink from "../../components/Links/DriverLink";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";

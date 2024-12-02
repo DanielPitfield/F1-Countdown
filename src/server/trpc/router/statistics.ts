@@ -1,25 +1,7 @@
-import { router, publicProcedure } from "../trpc";
 import { MAX_LIMIT } from "../../../data/limits";
 import { Driver, DriverSeasonResult, DriverSeasonResultResponse } from "./driver";
 import { Team, TeamSeasonResult, TeamSeasonResultResponse } from "./team";
 import { Race } from "./grandPrix";
-
-export type DriverStanding = {
-  position: string;
-  positionText: string;
-  points: string;
-  wins: string;
-  Driver: Driver;
-  Constructors: Team[];
-};
-
-export type TeamStanding = {
-  position: string;
-  positionText: string;
-  points: string;
-  wins: string;
-  Constructor: Team;
-};
 
 // The historical information of every driver that has won the Driver's World Championship (since 1950)
 export const statisticsRouter = router({

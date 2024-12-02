@@ -1,19 +1,6 @@
-import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import { MAX_LIMIT } from "../../../data/limits";
 import { Race } from "./grandPrix";
-
-export type Circuit = {
-  circuitId: string;
-  url: string;
-  circuitName: string;
-  Location: {
-    lat: string;
-    long: string;
-    locality: string;
-    country: string;
-  };
-};
 
 export const circuitRouter = router({
   getInfo: publicProcedure
