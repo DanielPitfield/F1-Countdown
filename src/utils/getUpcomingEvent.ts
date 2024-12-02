@@ -1,6 +1,6 @@
 import { add, isAfter } from "date-fns";
-import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
-import { WeekendSession, getGrandPrixWeekendSessions } from "./getGrandPrixWeekendSessions";
+import { GrandPrixWeekend, WeekendSession } from "./types/GrandPrix";
+import { getGrandPrixWeekendSessions } from "./getGrandPrixWeekendSessions";
 import { sessionDurations } from "../data/sessionDurations";
 
 export function getUpcomingEvent(schedule: GrandPrixWeekend[]): GrandPrixWeekend | undefined {

@@ -1,7 +1,6 @@
-import { DriverSeasonResult } from "../server/trpc/router/driver";
+import { DriverSeasonResult } from "./types/Driver";
 
 // TODO: Generic so this can be applied for teams?
-
 export function getTotalNumChampionshipPoints(careerResults: DriverSeasonResult[] | undefined): number {
   if (!careerResults) {
     return 0;
