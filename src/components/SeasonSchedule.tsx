@@ -1,4 +1,4 @@
-import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
+import type { GrandPrixWeekend } from "../utils/types/GrandPrix";
 
 interface SeasonScheduleProps {
   schedule: GrandPrixWeekend[] | undefined;

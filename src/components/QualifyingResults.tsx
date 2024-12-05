@@ -1,8 +1,8 @@
-import { Qualifying } from "../server/trpc/router/grandPrix";
+import styles from "../styles/Statistic.module.scss";
+
+import type { Qualifying } from "../utils/types/GrandPrix";
 import DriverLink from "./Links/DriverLink";
 import TeamLink from "./Links/TeamLink";
-
-import styles from "../styles/Statistic.module.scss";
 
 interface QualifyingResultsProps {
   qualifying: Qualifying | undefined;

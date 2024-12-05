@@ -1,8 +1,8 @@
+import styles from "../../../styles/DriverProfile.module.scss";
+
 import { trpc } from "../../../utils/trpc";
 import { getDriverName } from "../../../utils/getDriverName";
 import intervalToDuration from "date-fns/intervalToDuration";
-
-import styles from "../../../styles/DriverProfile.module.scss";
 
 interface DriverProfileHeaderProps {
   driverID: string;

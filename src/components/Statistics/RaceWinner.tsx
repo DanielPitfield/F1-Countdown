@@ -1,7 +1,7 @@
-import { Race } from "../../server/trpc/router/grandPrix";
-import DriverLink from "../Links/DriverLink";
-
 import styles from "../../styles/Statistic.module.scss";
+
+import type { Race } from "../../utils/types/GrandPrix";
+import DriverLink from "../Links/DriverLink";
 
 interface RaceWinnerProps {
   racesWon: Race[];

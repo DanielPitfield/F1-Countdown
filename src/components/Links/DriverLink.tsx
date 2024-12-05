@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Driver } from "../../server/trpc/router/driver";
+import type { Driver } from "../../utils/types/Driver";
 import { getDriverName } from "../../utils/getDriverName";
 
 interface DriverLinkProps {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Circuit } from "../../server/trpc/router/circuit";
+import type { Circuit } from "../../utils/types/Circuit";
 
 interface CircuitLinkProps {
   circuit: Circuit | undefined;

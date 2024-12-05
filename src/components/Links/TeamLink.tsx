@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Team } from "../../server/trpc/router/team";
+import type { Team } from "../../utils/types/Team";
 
 interface TeamLinkProps {
   team: Team | undefined;

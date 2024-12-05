@@ -1,8 +1,8 @@
-import TeamLink from "../Links/TeamLink";
-import { Team, TeamSeasonResult } from "../../server/trpc/router/team";
-import SeasonLink from "../Links/SeasonLink";
-
 import styles from "../../styles/Statistic.module.scss";
+
+import type { Team, TeamSeasonResult } from "../../utils/types/Team";
+import TeamLink from "../Links/TeamLink";
+import SeasonLink from "../Links/SeasonLink";
 
 interface TeamChampionProps {
   team: Team | undefined;

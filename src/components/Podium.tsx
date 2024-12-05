@@ -1,8 +1,8 @@
-import React from "react";
-import { DriverRaceResult, Race } from "../server/trpc/router/grandPrix";
+import styles from "../styles/Podium.module.scss";
+
+import type { Race, DriverRaceResult } from "../utils/types/GrandPrix";
 import DriverLink from "./Links/DriverLink";
 import TeamLink from "./Links/TeamLink";
-import styles from "../styles/Podium.module.scss";
 
 interface PodiumProps {
   race: Race | undefined;

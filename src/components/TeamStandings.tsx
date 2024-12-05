@@ -1,7 +1,7 @@
-import { TeamStanding } from "../server/trpc/router/statistics";
-import TeamLink from "./Links/TeamLink";
-
 import styles from "../styles/Statistic.module.scss";
+
+import type { TeamStanding } from "../utils/types/Statistics";
+import TeamLink from "./Links/TeamLink";
 
 interface TeamStandingsProps {
   standings: TeamStanding[] | undefined;

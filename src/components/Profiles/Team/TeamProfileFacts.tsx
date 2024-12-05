@@ -1,9 +1,9 @@
+import styles from "../../../styles/TeamProfile.module.scss";
+
 import { AppRouterTypes, trpc } from "../../../utils/trpc";
 import SeasonLink from "../../Links/SeasonLink";
 import GrandPrixLink from "../../Links/GrandPrixLink";
 import Fact from "../../Fact";
-
-import styles from "../../../styles/TeamProfile.module.scss";
 
 type championshipResultsOutput = AppRouterTypes["team"]["getChampionshipResults"]["output"];
 

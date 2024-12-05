@@ -1,10 +1,10 @@
+import styles from "../../../styles/DriverProfile.module.scss";
+
 import { AppRouterTypes, trpc } from "../../../utils/trpc";
 import SeasonLink from "../../Links/SeasonLink";
 import GrandPrixLink from "../../Links/GrandPrixLink";
 import TeamLink from "../../Links/TeamLink";
 import Fact from "../../Fact";
-
-import styles from "../../../styles/DriverProfile.module.scss";
 
 type championshipResultsOutput = AppRouterTypes["driver"]["getChampionshipResults"]["output"];
 

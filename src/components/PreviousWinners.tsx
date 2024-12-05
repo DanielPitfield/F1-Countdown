@@ -1,4 +1,4 @@
-import { Race } from "../server/trpc/router/grandPrix";
+import type { Race } from "../utils/types/GrandPrix";
 import DriverLink from "./Links/DriverLink";
 import GrandPrixLink from "./Links/GrandPrixLink";
 

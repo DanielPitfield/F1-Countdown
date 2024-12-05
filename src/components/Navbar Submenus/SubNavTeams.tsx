@@ -1,8 +1,7 @@
-import React from "react";
+import styles from "../../styles/SubNav.module.scss";
+
 import { trpc } from "../../utils/trpc";
 import TeamLink from "../Links/TeamLink";
-
-import styles from "../../styles/SubNav.module.scss";
 
 const SubNavTeams = () => {
   const { data: currentTeams } = trpc.home.getCurrentTeams.useQuery();

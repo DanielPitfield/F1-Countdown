@@ -1,6 +1,6 @@
-import { trpc } from "../../../utils/trpc";
-
 import styles from "../../../styles/TeamProfile.module.scss";
+
+import { trpc } from "../../../utils/trpc";
 
 interface TeamProfileHeaderProps {
   teamID: string;

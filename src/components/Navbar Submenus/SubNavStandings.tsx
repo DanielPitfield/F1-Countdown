@@ -1,8 +1,7 @@
-import Link from "next/link";
-import React from "react";
-import { NavbarItem } from "../Navbar";
-
 import styles from "../../styles/SubNav.module.scss";
+
+import Link from "next/link";
+import { NavbarItem } from "../Navbar";
 
 const items: NavbarItem[] = [
   {

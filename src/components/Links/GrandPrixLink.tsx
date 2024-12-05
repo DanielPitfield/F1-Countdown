@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GrandPrixWeekend, Race } from "../../server/trpc/router/grandPrix";
+import type { GrandPrixWeekend, Race } from "../../utils/types/GrandPrix";
 
 interface GrandPrixLinkProps {
   grandPrix: GrandPrixWeekend | Race | undefined;

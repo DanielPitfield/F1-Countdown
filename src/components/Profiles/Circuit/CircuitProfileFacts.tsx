@@ -1,8 +1,8 @@
-import { Race } from "../../../server/trpc/router/grandPrix";
+import styles from "../../../styles/CircuitProfile.module.scss";
+
+import type { Race } from "../../../utils/types/GrandPrix";
 import Fact from "../../Fact";
 import GrandPrixLink from "../../Links/GrandPrixLink";
-
-import styles from "../../../styles/CircuitProfile.module.scss";
 
 interface CircuitProfileFactsProps {
   circuitID: string;

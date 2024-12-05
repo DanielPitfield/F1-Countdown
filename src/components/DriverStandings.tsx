@@ -1,8 +1,8 @@
-import { DriverStanding } from "../server/trpc/router/statistics";
+import styles from "../styles/Statistic.module.scss";
+
+import type { DriverStanding } from "../utils/types/Statistics";
 import DriverLink from "./Links/DriverLink";
 import TeamLink from "./Links/TeamLink";
-
-import styles from "../styles/Statistic.module.scss";
 
 interface DriverStandingsProps {
   standings: DriverStanding[] | undefined;

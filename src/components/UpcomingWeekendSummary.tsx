@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import styles from "../styles/UpcomingWeekendSummary.module.scss";
+
+import type { GrandPrixWeekend, WeekendSession } from "../utils/types/GrandPrix";
 import Image from "next/image";
-import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
+import BounceLoader from "react-spinners/BounceLoader";
 import useHighlightedSessionCountdown from "../hooks/useHighlightedSessionCountdown";
-import { getGrandPrixWeekendSessions, WeekendSession } from "../utils/getGrandPrixWeekendSessions";
+import { useState } from "react";
+import { getGrandPrixWeekendSessions } from "../utils/getGrandPrixWeekendSessions";
 import { add, format, differenceInCalendarDays, isWithinInterval, isSameDay, isAfter } from "date-fns";
 import { CSSProperties } from "react";
-import BounceLoader from "react-spinners/BounceLoader";
-import { sessionDurations } from "../data/sessionDurations";
 
-import styles from "../styles/UpcomingWeekendSummary.module.scss";
+import { sessionDurations } from "../data/sessionDurations";
 
 const override: CSSProperties = {
   display: "flex",
