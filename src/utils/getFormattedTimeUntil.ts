@@ -11,11 +11,15 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
   }
 
   const now = new Date();
-  const daysDifference = differenceInCalendarDays(endDate, now);
+
+  // How long between now and the specified end date (detailed Duration object)?
   const duration = intervalToDuration({
     start: now,
     end: endDate,
   });
+
+  // How many days between now and the specified end date?
+  const daysDifference = differenceInCalendarDays(endDate, now);
 
   // More than a week (only show days)
   if (daysDifference > 7) {
@@ -23,44 +27,43 @@ export function getFormattedTimeUntil(endDate: Date | null): string {
   }
 
   // More than a day (only show days and hours)
-  if (duration.days !== undefined && duration.days >= 1) {
+  if (duration.days) {
     return [
-      duration.days !== undefined ? `${duration.days} day${duration.days > 1 ? "s" : ""}` : "",
-      duration.hours !== undefined && duration.hours >= 1
-        ? `${duration.hours} hour${duration.hours > 1 ? "s" : ""}`
-        : "",
+      `${duration.days} day${duration.days > 1 ? "s" : ""}`,
+      duration.hours ? `${duration.hours} hour${duration.hours > 1 ? "s" : ""}` : "",
     ]
       .filter((part) => part)
       .join(" ");
   }
 
-  // Less than a day (only show hours and minutes)
-  if (duration.days !== undefined && duration.days <= 0 && duration.hours !== undefined && duration.hours >= 1) {
+  // More than an hour (only show hours and minutes)
+  if (duration.hours) {
     return [
-      duration.hours !== undefined ? `${duration.hours} hour${duration.hours > 1 ? "s" : ""}` : "",
-      duration.minutes !== undefined && duration.minutes >= 1
-        ? `${duration.minutes} minute${duration.minutes > 1 ? "s" : ""}`
-        : "",
+      `${duration.hours} hour${duration.hours > 1 ? "s" : ""}`,
+      duration.minutes ? `${duration.minutes} minute${duration.minutes > 1 ? "s" : ""}` : "",
     ]
       .filter((part) => part)
       .join(" ");
   }
 
-  // Less than an hour (only show minutes and seconds)
-  if (duration.hours !== undefined && duration.hours < 1 && duration.minutes !== undefined && duration.minutes >= 1) {
+  // More than a minute (only show minutes and seconds)
+  if (duration.minutes) {
     return [
-      duration.minutes !== undefined ? `${duration.minutes} minute${duration.minutes > 1 ? "s" : ""}` : "",
-      duration.seconds !== undefined && duration.seconds >= 1
-        ? `${zeroPad(duration.seconds)} second${duration.seconds > 1 ? "s" : ""}`
-        : "",
+      `${duration.minutes} minute${duration.minutes > 1 ? "s" : ""}`,
+      duration.seconds ? `${zeroPad(duration.seconds)} second${duration.seconds > 1 ? "s" : ""}` : "",
     ]
       .filter((part) => part)
       .join(" ");
   }
 
-  // Less than a minute (show seconds in uppercase)
-  if (duration.minutes !== undefined && duration.minutes < 1) {
-    return duration.seconds !== undefined ? `${duration.seconds}`.toUpperCase() : "Starting...";
+  // More than a second (only show seconds)
+  if (duration.seconds) {
+    return `${duration.seconds}`.toUpperCase();
+  }
+
+  // Not even 1 or more seconds, so is likely starting or has started now
+  if (duration.seconds !== undefined) {
+    return "Starting...";
   }
 
   // Otherwise, a concatenated string of the parts of the duration which are not undefined
