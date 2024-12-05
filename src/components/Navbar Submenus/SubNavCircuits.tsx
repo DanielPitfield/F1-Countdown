@@ -1,14 +1,10 @@
 import styles from "../../styles/SubNav.module.scss";
 
-import { trpc } from "../../utils/trpc";
 import CircuitLink from "../Links/CircuitLink";
+import { getCurrentCircuits } from "../../utils/serverActions/home/getCurrentCircuits";
 
-const SubNavCircuits = () => {
-  const { data: currentCircuits } = trpc.home.getCurrentCircuits.useQuery();
-
-  if (!currentCircuits) {
-    return null;
-  }
+export default async function SubNavCircuits() {
+  const currentCircuits = await getCurrentCircuits();
 
   return (
     <ul className={styles.menu}>
@@ -21,6 +17,4 @@ const SubNavCircuits = () => {
       })}
     </ul>
   );
-};
-
-export default SubNavCircuits;
+}

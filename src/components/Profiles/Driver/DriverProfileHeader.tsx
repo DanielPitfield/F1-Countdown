@@ -1,17 +1,15 @@
 import styles from "../../../styles/DriverProfile.module.scss";
 
-import { trpc } from "../../../utils/trpc";
-import { getDriverName } from "../../../utils/getDriverName";
 import intervalToDuration from "date-fns/intervalToDuration";
+import { getDriverName } from "../../../utils/getDriverName";
+import { getDriverDescription } from "../../../utils/serverActions/driver/getDriverDescription";
 
 interface DriverProfileHeaderProps {
   driverID: string;
 }
 
-const DriverProfileHeader = (props: DriverProfileHeaderProps) => {
-  const { data: description } = trpc.driver.getDescription.useQuery({
-    driverID: props.driverID,
-  });
+export default async function DriverProfileHeader(props: DriverProfileHeaderProps) {
+  const description = await getDriverDescription({ driverID: props.driverID });
 
   const age =
     intervalToDuration({
@@ -26,6 +24,4 @@ const DriverProfileHeader = (props: DriverProfileHeaderProps) => {
       <div>{`${description?.dateOfBirth} (${age} years)`}</div>
     </div>
   );
-};
-
-export default DriverProfileHeader;
+}

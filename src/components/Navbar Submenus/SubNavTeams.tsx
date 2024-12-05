@@ -1,14 +1,10 @@
 import styles from "../../styles/SubNav.module.scss";
 
-import { trpc } from "../../utils/trpc";
 import TeamLink from "../Links/TeamLink";
+import { getCurrentTeams } from "../../utils/serverActions/home/getCurrentTeams";
 
-const SubNavTeams = () => {
-  const { data: currentTeams } = trpc.home.getCurrentTeams.useQuery();
-
-  if (!currentTeams) {
-    return null;
-  }
+export default async function SubNavTeams() {
+  const currentTeams = await getCurrentTeams();
 
   return (
     <ul className={styles.menu}>
@@ -21,6 +17,4 @@ const SubNavTeams = () => {
       })}
     </ul>
   );
-};
-
-export default SubNavTeams;
+}

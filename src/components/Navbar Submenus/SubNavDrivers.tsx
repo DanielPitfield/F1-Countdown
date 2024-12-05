@@ -1,14 +1,10 @@
 import styles from "../../styles/SubNav.module.scss";
 
-import { trpc } from "../../utils/trpc";
 import DriverLink from "../Links/DriverLink";
+import { getCurrentDrivers } from "../../utils/serverActions/home/getCurrentDrivers";
 
-const SubNavDrivers = () => {
-  const { data: currentDrivers } = trpc.home.getCurrentDrivers.useQuery();
-
-  if (!currentDrivers) {
-    return null;
-  }
+export default async function SubNavDrivers() {
+  const currentDrivers = await getCurrentDrivers();
 
   return (
     <ul className={styles.menu}>
@@ -21,6 +17,4 @@ const SubNavDrivers = () => {
       })}
     </ul>
   );
-};
-
-export default SubNavDrivers;
+}
