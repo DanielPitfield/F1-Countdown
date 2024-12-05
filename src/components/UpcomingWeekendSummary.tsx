@@ -11,7 +11,7 @@ import { add, format, differenceInCalendarDays, isWithinInterval, isSameDay, isA
 import { sessionDurations } from "../data/sessionDurations";
 
 interface UpcomingWeekendSummaryProps {
-  upcomingGrandPrixWeekend: GrandPrixWeekend | null | undefined;
+  upcomingGrandPrixWeekend: GrandPrixWeekend | null;
 }
 
 const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
@@ -46,11 +46,6 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
 
   // How long until this next session?
   const remainingTime = useHighlightedSessionCountdown(highlightedSession);
-
-  // Hasn't fetched yet (loading)
-  if (props.upcomingGrandPrixWeekend === undefined) {
-    return <div className={styles.wrapper}>Loading...</div>;
-  }
 
   // Couldn't find the next event
   if (props.upcomingGrandPrixWeekend === null) {

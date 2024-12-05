@@ -23,13 +23,12 @@ export default async function Page() {
         <aside className={styles.navigation}>
           <div className={styles.titleWrapper}>
             <UpcomingWeekendSummary upcomingGrandPrixWeekend={upcomingGrandPrixWeekend} />
-            {upcomingGrandPrixWeekend !== undefined && (
-              <ul className={styles.list}>
-                {SocialMediaNames.map((name) => (
-                  <SocialMediaButton key={name} name={name} />
-                ))}
-              </ul>
-            )}
+
+            <ul className={styles.list}>
+              {SocialMediaNames.map((name) => (
+                <SocialMediaButton key={name} name={name} />
+              ))}
+            </ul>
           </div>
         </aside>
 
