@@ -6,11 +6,11 @@ import { NavbarItem } from "../Navbar";
 const items: NavbarItem[] = [
   {
     name: "Driver Standings",
-    path: "/standings/CurrentDriverStandings",
+    path: "/standings/drivers",
   },
   {
     name: "Constructor Standings",
-    path: "/standings/CurrentTeamStandings",
+    path: "/standings/constructors",
   },
 ];
 
