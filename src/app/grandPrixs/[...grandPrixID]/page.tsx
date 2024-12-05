@@ -1,4 +1,4 @@
-import styles from "../../styles/GrandPrixProfile.module.scss";
+import styles from "../../../styles/GrandPrixProfile.module.scss";
 
 import CircuitLink from "../../../components/Links/CircuitLink";
 import Podium from "../../../components/Podium";

@@ -1,4 +1,4 @@
-import styles from "../../styles/Profile.module.scss";
+import styles from "../../../styles/Profile.module.scss";
 
 import DriverStandings from "../../../components/DriverStandings";
 import TeamStandings from "../../../components/TeamStandings";

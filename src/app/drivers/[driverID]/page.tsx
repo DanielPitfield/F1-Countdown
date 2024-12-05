@@ -1,4 +1,4 @@
-import styles from "../../styles/DriverProfile.module.scss";
+import styles from "../../../styles/DriverProfile.module.scss";
 
 import Image from "next/image";
 import DriverProfileHeader from "../../../components/Profiles/Driver/DriverProfileHeader";

@@ -1,4 +1,4 @@
-import styles from "../../styles/CircuitProfile.module.scss";
+import styles from "../../../styles/CircuitProfile.module.scss";
 
 import CircuitProfileHeader from "../../../components/Profiles/Circuit/CircuitProfileHeader";
 import CircuitProfileFacts from "../../../components/Profiles/Circuit/CircuitProfileFacts";

@@ -1,4 +1,4 @@
-import styles from "../../styles/TeamProfile.module.scss";
+import styles from "../../../styles/TeamProfile.module.scss";
 
 import Image from "next/image";
 import DriverLink from "../../../components/Links/DriverLink";
