@@ -1,6 +1,7 @@
 "use server";
 
 import { BASE_API_URL, MAX_LIMIT } from "../../../data/CONSTANTS";
+import { getCurrentYear } from "../../getCurrentYear";
 import { getTotalNumChampionshipPoints } from "../../getTotalNumChampionshipPoints";
 import type { DriverSeasonResult, DriverSeasonResultResponse } from "../../types/Driver";
 
@@ -11,7 +12,18 @@ export async function getDriverChampionshipResults(config: { driverID: string })
   winningYears: DriverSeasonResult[];
   allYears: DriverSeasonResult[];
 }> {
-  const API_URL = `${BASE_API_URL}/drivers/${config.driverID}/driverStandings.json?limit=${MAX_LIMIT}`;
+  /*
+    TODO: Driver Championship result history
+
+    With the old Ergast API, all of the driver's season results could be determined with one request
+    But now with Jolpica F1 API, the request must specify a season year!
+
+    https://github.com/jolpica/jolpica-f1/blob/main/docs/ergast_differences.md#standings
+    https://github.com/jolpica/jolpica-f1/issues/29
+  */
+  const API_URL = `${BASE_API_URL}/${getCurrentYear()}/drivers/${
+    config.driverID
+  }/driverStandings.json?limit=${MAX_LIMIT}`;
 
   const response = await fetch(API_URL);
   const data = await response.json();
