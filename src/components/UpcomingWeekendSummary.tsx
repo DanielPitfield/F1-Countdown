@@ -8,14 +8,7 @@ import useHighlightedSessionCountdown from "../hooks/useHighlightedSessionCountd
 import { useState } from "react";
 import { getGrandPrixWeekendSessions } from "../utils/getGrandPrixWeekendSessions";
 import { add, format, differenceInCalendarDays, isWithinInterval, isSameDay, isAfter } from "date-fns";
-import { CSSProperties } from "react";
-
 import { sessionDurations } from "../data/sessionDurations";
-
-const override: CSSProperties = {
-  display: "flex",
-  margin: "0 auto",
-};
 
 interface UpcomingWeekendSummaryProps {
   upcomingGrandPrixWeekend: GrandPrixWeekend | null | undefined;
