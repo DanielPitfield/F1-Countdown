@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 
 import { Team } from "../../types/Team";
 

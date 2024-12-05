@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 import { DriverStanding } from "../../types/Statistics";
 
 export async function getSeasonDriverStandings(config: { seasonID: string }): Promise<DriverStanding[]> {

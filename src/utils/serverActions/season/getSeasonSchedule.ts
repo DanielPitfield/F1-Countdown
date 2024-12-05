@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 import { GrandPrixWeekend } from "../../types/GrandPrix";
 
 // NOTE: When the seasonID "current" is used, the data may have incorrect dates

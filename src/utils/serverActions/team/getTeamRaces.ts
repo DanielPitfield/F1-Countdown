@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 import { filterPodiums } from "../../filterPodiums";
 import { Race } from "../../types/GrandPrix";
 

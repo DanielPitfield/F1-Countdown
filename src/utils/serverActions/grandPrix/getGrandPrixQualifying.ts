@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 import { Qualifying } from "../../types/GrandPrix";
 
 export async function getGrandPrixQualifying(config: { season: string; roundNumber: string }): Promise<Qualifying> {

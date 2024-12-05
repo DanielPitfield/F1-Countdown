@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 import { Driver } from "../../types/Driver";
 
 export async function getTeamAllDrivers(config: { teamID: string }): Promise<Driver[]> {

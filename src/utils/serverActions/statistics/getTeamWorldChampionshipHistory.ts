@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 import { TeamSeasonResult, TeamSeasonResultResponse } from "../../types/Team";
 
 // The historical information of every constructor that has won the Constructor's World Championship (since 1958)

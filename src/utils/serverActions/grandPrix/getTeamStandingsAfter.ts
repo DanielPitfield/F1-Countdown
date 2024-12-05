@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 import { TeamStanding } from "../../types/Statistics";
 
 export async function getTeamStandingsAfter(config: { season: string; roundNumber: string }): Promise<TeamStanding[]> {

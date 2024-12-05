@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 import { DriverSeasonResult, DriverSeasonResultResponse } from "../../types/Driver";
 
 // The historical information of every driver that has won the Driver's World Championship (since 1950)

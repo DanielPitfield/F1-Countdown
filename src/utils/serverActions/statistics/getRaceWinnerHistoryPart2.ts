@@ -1,6 +1,6 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/limits";
+import { MAX_LIMIT } from "../../../data/CONSTANTS";
 import { Race } from "../../types/GrandPrix";
 
 // The remaining historical information of races won (after the max limit of 1000)
