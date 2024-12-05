@@ -1,8 +1,8 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/CONSTANTS";
+import { BASE_API_URL, MAX_LIMIT } from "../../../data/CONSTANTS";
 import { getTotalNumChampionshipPoints } from "../../getTotalNumChampionshipPoints";
-import { DriverSeasonResult, DriverSeasonResultResponse } from "../../types/Driver";
+import type { DriverSeasonResult, DriverSeasonResultResponse } from "../../types/Driver";
 
 export async function getDriverChampionshipResults(config: { driverID: string }): Promise<{
   numChampionshipsWon: number;
@@ -11,7 +11,7 @@ export async function getDriverChampionshipResults(config: { driverID: string })
   winningYears: DriverSeasonResult[];
   allYears: DriverSeasonResult[];
 }> {
-  const API_URL = `https://ergast.com/api/f1/drivers/${config.driverID}/driverStandings.json?limit=${MAX_LIMIT}`;
+  const API_URL = `${BASE_API_URL}/drivers/${config.driverID}/driverStandings.json?limit=${MAX_LIMIT}`;
 
   const response = await fetch(API_URL);
   const data = await response.json();

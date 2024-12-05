@@ -1,11 +1,11 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/CONSTANTS";
-import { TeamSeasonResult, TeamSeasonResultResponse } from "../../types/Team";
+import { BASE_API_URL, MAX_LIMIT } from "../../../data/CONSTANTS";
+import type { TeamSeasonResult, TeamSeasonResultResponse } from "../../types/Team";
 
 // The historical information of every constructor that has won the Constructor's World Championship (since 1958)
 export async function getTeamWorldChampionshipHistory(): Promise<TeamSeasonResult[]> {
-  const API_URL = `http://ergast.com/api/f1/constructorStandings/1.json?limit=${MAX_LIMIT}`;
+  const API_URL = `${BASE_API_URL}/constructorStandings/1.json?limit=${MAX_LIMIT}`;
 
   const response = await fetch(API_URL);
   const data = await response.json();

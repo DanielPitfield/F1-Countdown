@@ -1,8 +1,9 @@
 "use server";
 
+import { BASE_API_URL } from "../../../data/CONSTANTS";
 import { getCurrentYear } from "../../getCurrentYear";
-import { Driver } from "../../types/Driver";
 import { getSeasonDriverStandings } from "../season/getSeasonDriverStandings";
+import type { Driver } from "../../types/Driver";
 
 export async function getCurrentDrivers(): Promise<Driver[]> {
   // Getting the drivers from the driver standings of the current year can provide more up-to-date information
@@ -17,7 +18,7 @@ export async function getCurrentDrivers(): Promise<Driver[]> {
   }
 
   // Otherwise, try getting the current drivers using "current" field within request URL
-  const API_URL = `http://ergast.com/api/f1/current/drivers.json`;
+  const API_URL = `${BASE_API_URL}/current/drivers.json`;
 
   const response = await fetch(API_URL);
   const data = await response.json();

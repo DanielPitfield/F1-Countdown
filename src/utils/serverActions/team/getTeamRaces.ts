@@ -1,8 +1,8 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/CONSTANTS";
+import { BASE_API_URL, MAX_LIMIT } from "../../../data/CONSTANTS";
 import { filterPodiums } from "../../filterPodiums";
-import { Race } from "../../types/GrandPrix";
+import type { Race } from "../../types/GrandPrix";
 
 export async function getTeamRaces(config: { teamID: string }): Promise<{
   numRacesEntered: number;
@@ -13,7 +13,7 @@ export async function getTeamRaces(config: { teamID: string }): Promise<{
   firstWin: Race | undefined;
   lastWin: Race | undefined;
 }> {
-  const API_URL = `https://ergast.com/api/f1/constructors/${config.teamID}/results.json?limit=${MAX_LIMIT}`;
+  const API_URL = `${BASE_API_URL}/constructors/${config.teamID}/results.json?limit=${MAX_LIMIT}`;
 
   const response = await fetch(API_URL);
   const data = await response.json();

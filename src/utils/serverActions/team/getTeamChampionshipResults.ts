@@ -1,7 +1,7 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/CONSTANTS";
-import { TeamSeasonResult, TeamSeasonResultResponse } from "../../types/Team";
+import { BASE_API_URL, MAX_LIMIT } from "../../../data/CONSTANTS";
+import type { TeamSeasonResult, TeamSeasonResultResponse } from "../../types/Team";
 
 export async function getTeamChampionshipResults(config: { teamID: string }): Promise<{
   numChampionshipsWon: number;
@@ -9,7 +9,7 @@ export async function getTeamChampionshipResults(config: { teamID: string }): Pr
   winningYears: TeamSeasonResult[];
   allYears: TeamSeasonResult[];
 }> {
-  const API_URL = `https://ergast.com/api/f1/constructors/${config.teamID}/constructorStandings.json?limit=${MAX_LIMIT}`;
+  const API_URL = `${BASE_API_URL}/constructors/${config.teamID}/constructorStandings.json?limit=${MAX_LIMIT}`;
 
   const response = await fetch(API_URL);
   const data = await response.json();

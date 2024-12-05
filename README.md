@@ -37,3 +37,4 @@ The main landing page shows information regarding the upcoming F1 Grand Prix wee
 ## Acknowledgments
 
 [Ergast F1 API](http://ergast.com/mrd/)
+[Jolpica F1](https://github.com/jolpica/jolpica-f1)

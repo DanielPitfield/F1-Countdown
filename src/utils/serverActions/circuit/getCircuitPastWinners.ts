@@ -1,14 +1,14 @@
 "use server";
 
-import { MAX_LIMIT } from "../../../data/CONSTANTS";
-import { Race } from "../../types/GrandPrix";
+import { BASE_API_URL, MAX_LIMIT } from "../../../data/CONSTANTS";
+import type { Race } from "../../types/GrandPrix";
 
 export async function getCircuitPastWinners(config: { circuitID: string; numPastWinners: number }): Promise<{
   results: Race[];
   firstYear: Race;
   totalNum: number;
 }> {
-  const API_URL = `https://ergast.com/api/f1/circuits/${config.circuitID}/results/1.json?limit=${MAX_LIMIT}`;
+  const API_URL = `${BASE_API_URL}/circuits/${config.circuitID}/results/1.json?limit=${MAX_LIMIT}`;
 
   const response = await fetch(API_URL);
   const data = await response.json();
