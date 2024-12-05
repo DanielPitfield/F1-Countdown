@@ -9,13 +9,13 @@ import { getCircuitPastWinners } from "../../../utils/serverActions/circuit/getC
 const NUM_PAST_WINNERS = 5;
 
 interface PageProps {
-  params: {
+  params: Promise<{
     circuitID: string;
-  };
+  }>;
 }
 
 export default async function Page(props: PageProps) {
-  const circuitID = props.params.circuitID;
+  const circuitID = (await props.params).circuitID;
 
   const pastWinners = await getCircuitPastWinners({
     circuitID,

@@ -7,13 +7,13 @@ import TeamProfileFacts from "../../../components/Profiles/Team/TeamProfileFacts
 import { getTeamCurrentDrivers } from "../../../utils/serverActions/team/getTeamCurrentDrivers";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     teamID: string;
-  };
+  }>;
 }
 
 export default async function Page(props: PageProps) {
-  const teamID = props.params.teamID;
+  const teamID = (await props.params).teamID;
 
   const currentDrivers = await getTeamCurrentDrivers({ teamID });
 

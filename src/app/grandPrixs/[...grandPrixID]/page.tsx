@@ -14,14 +14,14 @@ import { getDriverStandingsAfter } from "../../../utils/serverActions/grandPrix/
 import { getTeamStandingsAfter } from "../../../utils/serverActions/grandPrix/getTeamStandingsAfter";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     // The dynamic parameter of the route (catch all route so this will always be an array)
     grandPrix: string[];
-  };
+  }>;
 }
 
 export default async function Page(props: PageProps) {
-  const [seasonParam, roundNumberParam] = props.params.grandPrix;
+  const [seasonParam, roundNumberParam] = (await props.params).grandPrix;
 
   const config = {
     season: seasonParam ?? "",

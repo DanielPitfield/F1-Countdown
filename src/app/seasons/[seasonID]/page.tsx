@@ -8,13 +8,13 @@ import { getSeasonDriverStandings } from "../../../utils/serverActions/season/ge
 import { getSeasonTeamStandings } from "../../../utils/serverActions/season/getSeasonTeamStandings";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     seasonID: string;
-  };
+  }>;
 }
 
 export default async function Page(props: PageProps) {
-  const seasonID = props.params.seasonID;
+  const seasonID = (await props.params).seasonID;
 
   const [schedule, driverStandings, teamStandings] = await Promise.all([
     getSeasonSchedule({ seasonID }),

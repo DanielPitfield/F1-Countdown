@@ -5,13 +5,13 @@ import DriverProfileHeader from "../../../components/Profiles/Driver/DriverProfi
 import DriverProfileFacts from "../../../components/Profiles/Driver/DriverProfileFacts";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     driverID: string;
-  };
+  }>;
 }
 
-export default function Page(props: PageProps) {
-  const driverID = props.params.driverID;
+export default async function Page(props: PageProps) {
+  const driverID = (await props.params).driverID;
 
   return (
     <div className={styles.wrapper}>
