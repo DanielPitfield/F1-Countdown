@@ -27,19 +27,14 @@ interface NavbarProps {
 }
 
 const Navbar = (props: NavbarProps) => {
-  /* TODO: Navbar sub-navigation rendering
-  Bad enough that navigation bar sub-content is fetching data...
-  But will the SubNav components re-render (and therefore re-fetch)? 
-  (each time their main item is hovered over?)
-  */
   const items: NavbarItem[] = [
-    { name: "Schedule", path: "/Schedule" },
+    // { name: "Schedule", path: "/Schedule" },
     { name: "Standings", path: "/Standings", subItem: <SubNavStandings /> },
     { name: "Drivers", path: "/Drivers", subItem: <SubNavDrivers currentDrivers={props.currentDrivers} /> },
     { name: "Teams", path: "/Teams", subItem: <SubNavTeams currentTeams={props.currentTeams} /> },
     { name: "Circuits", path: "/Circuits", subItem: <SubNavCircuits currentCircuits={props.currentCircuits} /> },
-    { name: "Seasons", path: "/Seasons" },
-    { name: "Grand Prixs", path: "/GrandPrixs" },
+    // { name: "Seasons", path: "/Seasons" },
+    // { name: "Grand Prixs", path: "/GrandPrixs" },
     { name: "Statistics", path: "/Statistics", subItem: <SubNavStatistics /> },
   ];
 
@@ -59,7 +54,7 @@ const Navbar = (props: NavbarProps) => {
             onMouseEnter={() => setCurrentSubMenuName(item.name)}
             onMouseLeave={() => setCurrentSubMenuName(null)}
           >
-            <Link href={item.path}>{item.name}</Link>
+            <div>{item.name}</div>
             {currentSubMenuName === item.name && item.subItem}
           </li>
         ))}

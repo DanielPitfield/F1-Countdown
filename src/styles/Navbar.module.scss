@@ -27,18 +27,26 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0 0.5em;
       border-radius: 3px;
 
-      & > a {
+      // Regardless of whether the navbar item is a link or not
+      & > a,
+      div {
+        display: flex;
+        flex-grow: 1;
+        padding: 1em 1.5em;
         color: inherit;
         text-decoration: none;
-        padding: 1em;
       }
 
       &:hover {
+        cursor: default;
         background-color: #2394b1;
-        cursor: pointer;
+
+        // Only change cursor style, if a link
+        & > a {
+          cursor: pointer;
+        }
       }
     }
   }
