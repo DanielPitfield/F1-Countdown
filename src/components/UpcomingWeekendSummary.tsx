@@ -4,7 +4,6 @@ import styles from "../styles/UpcomingWeekendSummary.module.scss";
 
 import type { GrandPrixWeekend, WeekendSession } from "../utils/types/GrandPrix";
 import Image from "next/image";
-import BounceLoader from "react-spinners/BounceLoader";
 import useHighlightedSessionCountdown from "../hooks/useHighlightedSessionCountdown";
 import { useState } from "react";
 import { getGrandPrixWeekendSessions } from "../utils/getGrandPrixWeekendSessions";
@@ -57,19 +56,7 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
 
   // Hasn't fetched yet (loading)
   if (props.upcomingGrandPrixWeekend === undefined) {
-    return (
-      <div className={styles.wrapper}>
-        <BounceLoader
-          color={"#888"}
-          loading={true}
-          cssOverride={override}
-          size={100}
-          speedMultiplier={0.3}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
-      </div>
-    );
+    return <div className={styles.wrapper}>Loading...</div>;
   }
 
   // Couldn't find the next event
