@@ -5,7 +5,6 @@ import DriverLink from "../../../components/Links/DriverLink";
 import TeamProfileHeader from "../../../components/Profiles/Team/TeamProfileHeader";
 import TeamProfileFacts from "../../../components/Profiles/Team/TeamProfileFacts";
 import { getTeamCurrentDrivers } from "../../../utils/serverActions/team/getTeamCurrentDrivers";
-import { getTeamChampionshipResults } from "../../../utils/serverActions/team/getTeamChampionshipResults";
 
 interface PageProps {
   params: {
@@ -16,10 +15,7 @@ interface PageProps {
 export default async function Page(props: PageProps) {
   const teamID = props.params.teamID;
 
-  const [currentDrivers, championshipResults] = await Promise.all([
-    getTeamCurrentDrivers({ teamID }),
-    getTeamChampionshipResults({ teamID }),
-  ]);
+  const currentDrivers = await getTeamCurrentDrivers({ teamID });
 
   return (
     <div className={styles.wrapper}>
@@ -27,7 +23,7 @@ export default async function Page(props: PageProps) {
 
       <div className={styles.innerWrapper}>
         <Image src={`/Images/teams/${teamID}.jpg`} alt={teamID} height={640} width={640} />
-        <TeamProfileFacts teamID={teamID} championshipResults={championshipResults} />
+        <TeamProfileFacts teamID={teamID} />
       </div>
 
       <div className={styles.currentDrivers}>
