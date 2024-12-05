@@ -1,6 +1,6 @@
 import styles from "../../../styles/DriverProfile.module.scss";
 
-import intervalToDuration from "date-fns/intervalToDuration";
+import { intervalToDuration } from "date-fns";
 import { getDriverName } from "../../../utils/getDriverName";
 import { getDriverDescription } from "../../../utils/serverActions/driver/getDriverDescription";
 
