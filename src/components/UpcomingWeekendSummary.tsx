@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "../styles/UpcomingWeekendSummary.module.scss";
 
 import type { GrandPrixWeekend, WeekendSession } from "../utils/types/GrandPrix";
