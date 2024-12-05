@@ -1,12 +1,12 @@
 import { trpc } from "../../utils/trpc";
-import CircuitLink from "../../components/Links/CircuitLink";
+import CircuitLink from "../../../components/Links/CircuitLink";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-import Podium from "../../components/Podium";
-import DriverStandings from "../../components/DriverStandings";
-import TeamStandings from "../../components/TeamStandings";
-import QualifyingResults from "../../components/QualifyingResults";
-import RaceResults from "../../components/RaceResults";
-import SeasonLink from "../../components/Links/SeasonLink";
+import Podium from "../../../components/Podium";
+import DriverStandings from "../../../components/DriverStandings";
+import TeamStandings from "../../../components/TeamStandings";
+import QualifyingResults from "../../../components/QualifyingResults";
+import RaceResults from "../../../components/RaceResults";
+import SeasonLink from "../../../components/Links/SeasonLink";
 
 import styles from "../../styles/GrandPrixProfile.module.scss";
 

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
-import TeamStandings from "../../components/TeamStandings";
+import TeamStandings from "../../../components/TeamStandings";
 
 const CurrentStandings: NextPage = () => {
   const { data: teamStandings } = trpc.season.getTeamStandings.useQuery({

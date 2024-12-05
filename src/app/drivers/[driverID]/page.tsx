@@ -2,8 +2,8 @@ import { trpc } from "../../utils/trpc";
 import Image from "next/image";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 
-import DriverProfileHeader from "../../components/Profiles/Driver/DriverProfileHeader";
-import DriverProfileFacts from "../../components/Profiles/Driver/DriverProfileFacts";
+import DriverProfileHeader from "../../../components/Profiles/Driver/DriverProfileHeader";
+import DriverProfileFacts from "../../../components/Profiles/Driver/DriverProfileFacts";
 
 import styles from "../../styles/DriverProfile.module.scss";
 

@@ -1,9 +1,9 @@
 import Image from "next/image";
-import DriverLink from "../../components/Links/DriverLink";
+import DriverLink from "../../../components/Links/DriverLink";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 
-import TeamProfileHeader from "../../components/Profiles/Team/TeamProfileHeader";
-import TeamProfileFacts from "../../components/Profiles/Team/TeamProfileFacts";
+import TeamProfileHeader from "../../../components/Profiles/Team/TeamProfileHeader";
+import TeamProfileFacts from "../../../components/Profiles/Team/TeamProfileFacts";
 
 import styles from "../../styles/TeamProfile.module.scss";
 

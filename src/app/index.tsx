@@ -1,3 +1,5 @@
+import styles from "../styles/index.module.scss";
+
 import type { NextPage } from "next";
 import { trpc } from "../utils/trpc";
 import Head from "next/head";
@@ -6,8 +8,6 @@ import BannerImage from "../../public/Images/Banner.png";
 import UpcomingWeekendSummary from "../components/UpcomingWeekendSummary";
 import SocialMediaButton from "../components/SocialMediaButton";
 import { SocialMediaNames } from "../data/SocialMedia";
-
-import styles from "../styles/index.module.scss";
 
 const Home: NextPage = () => {
   const { data: upcomingGrandPrixWeekend } = trpc.home.getUpcomingGrandPrixWeekend.useQuery();

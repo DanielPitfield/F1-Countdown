@@ -1,9 +1,9 @@
 import { trpc } from "../../utils/trpc";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
 
-import CircuitProfileHeader from "../../components/Profiles/Circuit/CircuitProfileHeader";
-import CircuitProfileFacts from "../../components/Profiles/Circuit/CircuitProfileFacts";
-import PreviousWinners from "../../components/PreviousWinners";
+import CircuitProfileHeader from "../../../components/Profiles/Circuit/CircuitProfileHeader";
+import CircuitProfileFacts from "../../../components/Profiles/Circuit/CircuitProfileFacts";
+import PreviousWinners from "../../../components/PreviousWinners";
 
 import styles from "../../styles/CircuitProfile.module.scss";
 

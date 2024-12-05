@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
 import { DriverSeasonResult } from "../../server/trpc/router/driver";
-import DriverChampion from "../../components/Statistics/DriverChampion";
+import DriverChampion from "../../../components/Statistics/DriverChampion";
 
 const DriverWorldChampionship: NextPage = () => {
   const { data: history } = trpc.statistics.getDriverWorldChampionshipHistory.useQuery();

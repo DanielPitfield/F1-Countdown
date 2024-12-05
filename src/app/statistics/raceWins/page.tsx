@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { trpc } from "../../utils/trpc";
-import RaceWinner from "../../components/Statistics/RaceWinner";
+import RaceWinner from "../../../components/Statistics/RaceWinner";
 import { Race } from "../../server/trpc/router/grandPrix";
 
 const RaceWins: NextPage = () => {
