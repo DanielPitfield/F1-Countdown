@@ -64,38 +64,38 @@ export default async function DriverProfileFacts(props: DriverProfileFactsProps)
         </Fact>
       </div>
 
-      <div className={styles.factsGroup}>
-        <Fact label="First Race">
+      <div style={{ marginTop: "2em" }} className={styles.factsGroup}>
+        <Fact style={{ minWidth: "32em" }} label="First Race">
           <GrandPrixLink grandPrix={races?.firstRace} showRaceName={true} />
         </Fact>
 
-        <Fact label="Last Race">
+        <Fact style={{ minWidth: "32em" }} label="Last Race">
           <GrandPrixLink grandPrix={races?.lastRace} showRaceName={true} />
         </Fact>
       </div>
 
       <div className={styles.factsGroup}>
-        <Fact label="First Win">
+        <Fact style={{ minWidth: "32em" }} label="First Win">
           <GrandPrixLink grandPrix={races?.firstWin} showRaceName={true} />
         </Fact>
 
-        <Fact label="Last Win">
+        <Fact style={{ minWidth: "32em" }} label="Last Win">
           <GrandPrixLink grandPrix={races?.lastWin} showRaceName={true} />
         </Fact>
       </div>
 
       <div className={styles.factsGroup}>
-        <Fact label="First Pole">
+        <Fact style={{ minWidth: "32em" }} label="First Pole">
           <GrandPrixLink grandPrix={polePositions?.firstPole} showRaceName={true} />
         </Fact>
 
-        <Fact label="Last Pole">
+        <Fact style={{ minWidth: "32em" }} label="Last Pole">
           <GrandPrixLink grandPrix={polePositions?.lastPole} showRaceName={true} />
         </Fact>
       </div>
 
       <div className={styles.factsGroup}>
-        <Fact label="Teams Driven for">
+        <Fact style={{ minWidth: "32em" }} label="Teams Driven for">
           {teamsDrivenFor?.map((team, index) => [
             // Seperate the team links with commas
             index > 0 && ", ",
