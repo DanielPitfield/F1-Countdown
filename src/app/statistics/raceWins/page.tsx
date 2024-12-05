@@ -1,19 +1,12 @@
-import type { NextPage } from "next";
-import { trpc } from "../../utils/trpc";
 import RaceWinner from "../../../components/Statistics/RaceWinner";
-import { Race } from "../../server/trpc/router/grandPrix";
+import { getRaceWinnerHistoryPart1 } from "../../../utils/serverActions/statistics/getRaceWinnerHistoryPart1";
+import { getRaceWinnerHistoryPart2 } from "../../../utils/serverActions/statistics/getRaceWinnerHistoryPart2";
+import type { Race } from "../../../utils/types/GrandPrix";
 
-const RaceWins: NextPage = () => {
-  const { data: historyPart1 } = trpc.statistics.getRaceWinnerHistoryPart1.useQuery();
-
-  const { data: historyPart2 } = trpc.statistics.getRaceWinnerHistoryPart2.useQuery();
-
-  if (!historyPart1 || !historyPart2) {
-    return null;
-  }
+export default async function Page() {
+  const [historyPart1, historyPart2] = await Promise.all([getRaceWinnerHistoryPart1(), getRaceWinnerHistoryPart2()]);
 
   const history = historyPart1.concat(historyPart2);
-
   const uniqueRaceWinners = Array.from(new Set(history.map((race) => race.Results[0]?.Driver.driverId)));
 
   // Descending order (of number of races won)
@@ -28,11 +21,8 @@ const RaceWins: NextPage = () => {
     <div>
       {uniqueRaceWinners.map((raceWinnerID) => {
         const racesWon: Race[] = history.filter((race) => race.Results[0]?.Driver.driverId === raceWinnerID);
-
         return <RaceWinner key={raceWinnerID} racesWon={racesWon} />;
       })}
     </div>
   );
-};
-
-export default RaceWins;
+}

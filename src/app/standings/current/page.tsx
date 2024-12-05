@@ -1,18 +1,15 @@
-import type { NextPage } from "next";
-import { trpc } from "../../utils/trpc";
 import SeasonLink from "../../../components/Links/SeasonLink";
 import DriverStandings from "../../../components/DriverStandings";
 import TeamStandings from "../../../components/TeamStandings";
 import { getCurrentYear } from "../../../utils/getCurrentYear";
+import { getSeasonDriverStandings } from "../../../utils/serverActions/season/getSeasonDriverStandings";
+import { getSeasonTeamStandings } from "../../../utils/serverActions/season/getSeasonTeamStandings";
 
-const CurrentStandings: NextPage = () => {
-  const { data: driverStandings } = trpc.season.getDriverStandings.useQuery({
-    seasonID: "current",
-  });
-
-  const { data: teamStandings } = trpc.season.getTeamStandings.useQuery({
-    seasonID: "current",
-  });
+export default async function Page() {
+  const [driverStandings, teamStandings] = await Promise.all([
+    getSeasonDriverStandings({ seasonID: "current" }),
+    getSeasonTeamStandings({ seasonID: "current" }),
+  ]);
 
   return (
     <>
@@ -23,6 +20,4 @@ const CurrentStandings: NextPage = () => {
       <TeamStandings standings={teamStandings} />
     </>
   );
-};
-
-export default CurrentStandings;
+}

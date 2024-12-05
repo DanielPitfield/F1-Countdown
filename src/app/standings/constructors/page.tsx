@@ -1,11 +1,8 @@
-import type { NextPage } from "next";
-import { trpc } from "../../utils/trpc";
 import TeamStandings from "../../../components/TeamStandings";
+import { getSeasonTeamStandings } from "../../../utils/serverActions/season/getSeasonTeamStandings";
 
-const CurrentStandings: NextPage = () => {
-  const { data: teamStandings } = trpc.season.getTeamStandings.useQuery({
-    seasonID: "current",
-  });
+export default async function Page() {
+  const teamStandings = await getSeasonTeamStandings({ seasonID: "current" });
 
   return (
     <>
@@ -13,6 +10,4 @@ const CurrentStandings: NextPage = () => {
       <TeamStandings standings={teamStandings} />
     </>
   );
-};
-
-export default CurrentStandings;
+}

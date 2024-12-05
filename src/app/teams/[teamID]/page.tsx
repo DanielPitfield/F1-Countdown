@@ -1,43 +1,38 @@
-import Image from "next/image";
-import DriverLink from "../../../components/Links/DriverLink";
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-
-import TeamProfileHeader from "../../../components/Profiles/Team/TeamProfileHeader";
-import TeamProfileFacts from "../../../components/Profiles/Team/TeamProfileFacts";
-
 import styles from "../../styles/TeamProfile.module.scss";
 
-export async function getServerSideProps(context: GetServerSidePropsContext<{ team: string }>) {
-  // The dynamic parameter of the route
-  const team = context.params?.team as string;
+import Image from "next/image";
+import DriverLink from "../../../components/Links/DriverLink";
+import TeamProfileHeader from "../../../components/Profiles/Team/TeamProfileHeader";
+import TeamProfileFacts from "../../../components/Profiles/Team/TeamProfileFacts";
+import { getTeamCurrentDrivers } from "../../../utils/serverActions/team/getTeamCurrentDrivers";
+import { getTeamChampionshipResults } from "../../../utils/serverActions/team/getTeamChampionshipResults";
 
-  return {
-    props: {
-      team,
-    },
+interface PageProps {
+  params: {
+    teamID: string;
   };
 }
 
-const TeamProfile = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: currentDrivers } = trpc.team.getCurrentDrivers.useQuery({
-    teamID: props.team,
-  });
+export default async function Page(props: PageProps) {
+  const teamID = props.params.teamID;
 
-  const { data: championshipResults } = trpc.team.getChampionshipResults.useQuery({
-    teamID: props.team,
-  });
+  const [currentDrivers, championshipResults] = await Promise.all([
+    getTeamCurrentDrivers({ teamID }),
+    getTeamChampionshipResults({ teamID }),
+  ]);
 
   return (
     <div className={styles.wrapper}>
-      <TeamProfileHeader teamID={props.team} />
+      <TeamProfileHeader teamID={teamID} />
 
       <div className={styles.innerWrapper}>
-        <Image src={`/Images/teams/${props.team}.jpg`} alt={props.team} height={640} width={640} />
-        <TeamProfileFacts teamID={props.team} championshipResults={championshipResults} />
+        <Image src={`/Images/teams/${teamID}.jpg`} alt={teamID} height={640} width={640} />
+        <TeamProfileFacts teamID={teamID} championshipResults={championshipResults} />
       </div>
 
       <div className={styles.currentDrivers}>
         <strong>Current Drivers</strong>
+
         {currentDrivers?.map((driver) => {
           return (
             <div key={driver.driverId}>
@@ -48,6 +43,4 @@ const TeamProfile = (props: InferGetServerSidePropsType<typeof getServerSideProp
       </div>
     </div>
   );
-};
-
-export default TeamProfile;
+}

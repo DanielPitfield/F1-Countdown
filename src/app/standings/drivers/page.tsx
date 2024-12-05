@@ -1,11 +1,8 @@
-import type { NextPage } from "next";
-import { trpc } from "../../utils/trpc";
 import DriverStandings from "../../../components/DriverStandings";
+import { getSeasonDriverStandings } from "../../../utils/serverActions/season/getSeasonDriverStandings";
 
-const CurrentStandings: NextPage = () => {
-  const { data: driverStandings } = trpc.season.getDriverStandings.useQuery({
-    seasonID: "current",
-  });
+export default async function Page() {
+  const driverStandings = await getSeasonDriverStandings({ seasonID: "current" });
 
   return (
     <>
@@ -13,6 +10,4 @@ const CurrentStandings: NextPage = () => {
       <DriverStandings standings={driverStandings} />
     </>
   );
-};
-
-export default CurrentStandings;
+}

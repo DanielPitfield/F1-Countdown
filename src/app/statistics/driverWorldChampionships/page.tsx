@@ -1,14 +1,9 @@
-import type { NextPage } from "next";
-import { trpc } from "../../utils/trpc";
-import { DriverSeasonResult } from "../../server/trpc/router/driver";
 import DriverChampion from "../../../components/Statistics/DriverChampion";
+import { getDriverWorldChampionshipHistory } from "../../../utils/serverActions/statistics/getDriverWorldChampionshipHistory";
+import type { DriverSeasonResult } from "../../../utils/types/Driver";
 
-const DriverWorldChampionship: NextPage = () => {
-  const { data: history } = trpc.statistics.getDriverWorldChampionshipHistory.useQuery();
-
-  if (!history) {
-    return null;
-  }
+export default async function Page() {
+  const history = await getDriverWorldChampionshipHistory();
 
   // The driverId of every driver that has won a world championship
   const driverChampionIDs: string[] = Array.from(
@@ -45,6 +40,4 @@ const DriverWorldChampionship: NextPage = () => {
       })}
     </div>
   );
-};
-
-export default DriverWorldChampionship;
+}

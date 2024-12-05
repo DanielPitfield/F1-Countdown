@@ -1,34 +1,26 @@
-import { trpc } from "../../utils/trpc";
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import styles from "../../styles/Profile.module.scss";
+
 import DriverStandings from "../../../components/DriverStandings";
 import TeamStandings from "../../../components/TeamStandings";
 import SeasonSchedule from "../../../components/SeasonSchedule";
+import { getSeasonSchedule } from "../../../utils/serverActions/season/getSeasonSchedule";
+import { getSeasonDriverStandings } from "../../../utils/serverActions/season/getSeasonDriverStandings";
+import { getSeasonTeamStandings } from "../../../utils/serverActions/season/getSeasonTeamStandings";
 
-import styles from "../../styles/Profile.module.scss";
-
-export async function getServerSideProps(context: GetServerSidePropsContext<{ season: string }>) {
-  // The dynamic parameter of the route
-  const season = context.params?.season as string;
-
-  return {
-    props: {
-      season,
-    },
+interface PageProps {
+  params: {
+    seasonID: string;
   };
 }
 
-const SeasonProfile = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: schedule } = trpc.season.getSchedule.useQuery({
-    seasonID: props.season,
-  });
+export default async function Page(props: PageProps) {
+  const seasonID = props.params.seasonID;
 
-  const { data: driverStandings } = trpc.season.getDriverStandings.useQuery({
-    seasonID: props.season,
-  });
-
-  const { data: teamStandings } = trpc.season.getTeamStandings.useQuery({
-    seasonID: props.season,
-  });
+  const [schedule, driverStandings, teamStandings] = await Promise.all([
+    getSeasonSchedule({ seasonID }),
+    getSeasonDriverStandings({ seasonID }),
+    getSeasonTeamStandings({ seasonID }),
+  ]);
 
   return (
     <div className={styles.wrapper}>
@@ -37,6 +29,4 @@ const SeasonProfile = (props: InferGetServerSidePropsType<typeof getServerSidePr
       <TeamStandings standings={teamStandings} />
     </div>
   );
-};
-
-export default SeasonProfile;
+}

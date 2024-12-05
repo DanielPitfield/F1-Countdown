@@ -1,16 +1,15 @@
 import styles from "../styles/index.module.scss";
 
-import type { NextPage } from "next";
-import { trpc } from "../utils/trpc";
 import Head from "next/head";
 import Image from "next/image";
 import BannerImage from "../../public/Images/Banner.png";
 import UpcomingWeekendSummary from "../components/UpcomingWeekendSummary";
 import SocialMediaButton from "../components/SocialMediaButton";
 import { SocialMediaNames } from "../data/SocialMedia";
+import { getUpcomingGrandPrixWeekend } from "../utils/serverActions/home/getUpcomingGrandPrixWeekend";
 
-const Home: NextPage = () => {
-  const { data: upcomingGrandPrixWeekend } = trpc.home.getUpcomingGrandPrixWeekend.useQuery();
+export default async function Page() {
+  const upcomingGrandPrixWeekend = await getUpcomingGrandPrixWeekend();
 
   return (
     <>
@@ -40,6 +39,4 @@ const Home: NextPage = () => {
       </section>
     </>
   );
-};
-
-export default Home;
+}

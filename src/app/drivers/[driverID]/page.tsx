@@ -1,38 +1,31 @@
-import { trpc } from "../../utils/trpc";
-import Image from "next/image";
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
-
-import DriverProfileHeader from "../../../components/Profiles/Driver/DriverProfileHeader";
-import DriverProfileFacts from "../../../components/Profiles/Driver/DriverProfileFacts";
-
 import styles from "../../styles/DriverProfile.module.scss";
 
-export async function getServerSideProps(context: GetServerSidePropsContext<{ driver: string }>) {
-  // The dynamic parameter of the route
-  const driver = context.params?.driver as string;
+import Image from "next/image";
+import DriverProfileHeader from "../../../components/Profiles/Driver/DriverProfileHeader";
+import DriverProfileFacts from "../../../components/Profiles/Driver/DriverProfileFacts";
+import { getDriverChampionshipResults } from "../../../utils/serverActions/driver/getDriverChampionshipResults.ts";
 
-  return {
-    props: {
-      driver,
-    },
+interface PageProps {
+  params: {
+    driverID: string;
   };
 }
 
-const DriverProfile = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: championshipResults } = trpc.driver.getChampionshipResults.useQuery({
-    driverID: props.driver,
+export default async function Page(props: PageProps) {
+  const driverID = props.params.driverID;
+
+  const championshipResults = await getDriverChampionshipResults({
+    driverID,
   });
 
   return (
     <div className={styles.wrapper}>
-      <DriverProfileHeader driverID={props.driver} />
+      <DriverProfileHeader driverID={driverID} />
 
       <div className={styles.innerWrapper}>
-        <Image src={`/Images/drivers/${props.driver}.jpg`} alt={props.driver} priority height={640} width={640} />
-        <DriverProfileFacts driverID={props.driver} championshipResults={championshipResults} />
+        <Image src={`/Images/drivers/${driverID}.jpg`} alt={driverID} priority height={640} width={640} />
+        <DriverProfileFacts driverID={driverID} championshipResults={championshipResults} />
       </div>
     </div>
   );
-};
-
-export default DriverProfile;
+}

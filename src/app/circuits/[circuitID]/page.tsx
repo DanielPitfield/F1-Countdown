@@ -1,41 +1,32 @@
-import { trpc } from "../../utils/trpc";
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
+import styles from "../../styles/CircuitProfile.module.scss";
 
 import CircuitProfileHeader from "../../../components/Profiles/Circuit/CircuitProfileHeader";
 import CircuitProfileFacts from "../../../components/Profiles/Circuit/CircuitProfileFacts";
 import PreviousWinners from "../../../components/PreviousWinners";
-
-import styles from "../../styles/CircuitProfile.module.scss";
+import { getCircuitPastWinners } from "../../../utils/serverActions/circuit/getCircuitPastWinners";
 
 // For how many previous years should the results of races at this circuit be shown?
 const NUM_PAST_WINNERS = 5;
 
-export async function getServerSideProps(context: GetServerSidePropsContext<{ circuit: string }>) {
-  // The dynamic parameter of the route
-  const circuit = context.params?.circuit as string;
-
-  return {
-    props: {
-      circuit,
-    },
+interface PageProps {
+  params: {
+    circuitID: string;
   };
 }
 
-const CircuitProfile = (props: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: pastWinners } = trpc.circuit.getPastWinners.useQuery({
-    circuitID: props.circuit,
+export default async function Page(props: PageProps) {
+  const circuitID = props.params.circuitID;
+
+  const pastWinners = await getCircuitPastWinners({
+    circuitID,
     numPastWinners: NUM_PAST_WINNERS,
   });
 
   return (
     <div className={styles.wrapper}>
-      <CircuitProfileHeader circuitID={props.circuit} />
-
-      <CircuitProfileFacts circuitID={props.circuit} pastWinners={pastWinners} />
-
+      <CircuitProfileHeader circuitID={circuitID} />
+      <CircuitProfileFacts circuitID={circuitID} pastWinners={pastWinners} />
       <PreviousWinners previousRaces={pastWinners?.results} />
     </div>
   );
-};
-
-export default CircuitProfile;
+}

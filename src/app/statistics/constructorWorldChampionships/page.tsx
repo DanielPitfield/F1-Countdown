@@ -1,14 +1,9 @@
-import type { NextPage } from "next";
-import { trpc } from "../../utils/trpc";
-import { TeamSeasonResult } from "../../server/trpc/router/team";
 import TeamChampion from "../../../components/Statistics/TeamChampion";
+import { getTeamWorldChampionshipHistory } from "../../../utils/serverActions/statistics/getTeamWorldChampionshipHistory";
+import type { TeamSeasonResult } from "../../../utils/types/Team";
 
-const TeamWorldChampionship: NextPage = () => {
-  const { data: history } = trpc.statistics.getTeamWorldChampionshipHistory.useQuery();
-
-  if (!history) {
-    return null;
-  }
+export default async function Page() {
+  const history = await getTeamWorldChampionshipHistory();
 
   // The constructorId of every team that has won a world championship
   const teamChampionIDs: string[] = Array.from(
@@ -45,6 +40,4 @@ const TeamWorldChampionship: NextPage = () => {
       })}
     </div>
   );
-};
-
-export default TeamWorldChampionship;
+}
