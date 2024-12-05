@@ -1,3 +1,11 @@
+"use client";
+
+import styles from "../styles/Navbar.module.scss";
+
+import type { Circuit } from "../utils/types/Circuit";
+import type { Driver } from "../utils/types/Driver";
+import type { Team } from "../utils/types/Team";
+
 import React, { useState } from "react";
 import Link from "next/link";
 import SubNavDrivers from "./Navbar Submenus/SubNavDrivers";
@@ -6,31 +14,35 @@ import SubNavStandings from "./Navbar Submenus/SubNavStandings";
 import SubNavStatistics from "./Navbar Submenus/SubNavStatistics";
 import SubNavCircuits from "./Navbar Submenus/SubNavCircuits";
 
-import styles from "../styles/Navbar.module.scss";
-
 export type NavbarItem = {
   name: string;
   path: string;
   subItem?: React.ReactNode;
 };
 
-const items: NavbarItem[] = [
-  { name: "Schedule", path: "/Schedule" },
-  { name: "Standings", path: "/Standings", subItem: <SubNavStandings /> },
-  { name: "Drivers", path: "/Drivers", subItem: <SubNavDrivers /> },
-  { name: "Teams", path: "/Teams", subItem: <SubNavTeams /> },
-  { name: "Circuits", path: "/Circuits", subItem: <SubNavCircuits /> },
-  { name: "Seasons", path: "/Seasons" },
-  { name: "Grand Prixs", path: "/GrandPrixs" },
-  { name: "Statistics", path: "/Statistics", subItem: <SubNavStatistics /> },
-];
+interface NavbarProps {
+  currentDrivers: Driver[];
+  currentTeams: Team[];
+  currentCircuits: Circuit[];
+}
 
-const Navbar = () => {
+const Navbar = (props: NavbarProps) => {
   /* TODO: Navbar sub-navigation rendering
   Bad enough that navigation bar sub-content is fetching data...
   But will the SubNav components re-render (and therefore re-fetch)? 
   (each time their main item is hovered over?)
   */
+  const items: NavbarItem[] = [
+    { name: "Schedule", path: "/Schedule" },
+    { name: "Standings", path: "/Standings", subItem: <SubNavStandings /> },
+    { name: "Drivers", path: "/Drivers", subItem: <SubNavDrivers currentDrivers={props.currentDrivers} /> },
+    { name: "Teams", path: "/Teams", subItem: <SubNavTeams currentTeams={props.currentTeams} /> },
+    { name: "Circuits", path: "/Circuits", subItem: <SubNavCircuits currentCircuits={props.currentCircuits} /> },
+    { name: "Seasons", path: "/Seasons" },
+    { name: "Grand Prixs", path: "/GrandPrixs" },
+    { name: "Statistics", path: "/Statistics", subItem: <SubNavStatistics /> },
+  ];
+
   const [currentSubMenuName, setCurrentSubMenuName] = useState<string | null>(null);
 
   return (

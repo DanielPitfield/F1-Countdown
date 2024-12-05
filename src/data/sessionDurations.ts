@@ -1,4 +1,4 @@
-import { SessionName } from "../utils/getGrandPrixWeekendSessions";
+import { SessionName } from "../utils/types/GrandPrix";
 
 export const sessionDurations: { name: SessionName; minutes: number }[] = [
   { name: "Free Practice 1", minutes: 60 },

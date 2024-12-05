@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getFormattedTimeUntil } from "../utils/getFormattedTimeUntil";
-import { WeekendSession } from "../utils/getGrandPrixWeekendSessions";
+import { WeekendSession } from "../utils/types/GrandPrix";
 import { add, isWithinInterval, hoursToMilliseconds, minutesToMilliseconds } from "date-fns";
 import { sessionDurations } from "../data/sessionDurations";
 

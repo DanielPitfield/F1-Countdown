@@ -1,15 +1,13 @@
-import { trpc } from "../../../utils/trpc";
-
 import styles from "../../../styles/CircuitProfile.module.scss";
+
+import { getCircuitInfo } from "../../../utils/serverActions/circuit/getCircuitInfo";
 
 interface CircuitProfileHeaderProps {
   circuitID: string;
 }
 
-const CircuitProfileHeader = (props: CircuitProfileHeaderProps) => {
-  const { data: description } = trpc.circuit.getInfo.useQuery({
-    circuitID: props.circuitID,
-  });
+export default async function CircuitProfileHeader(props: CircuitProfileHeaderProps) {
+  const description = await getCircuitInfo({ circuitID: props.circuitID });
 
   return (
     <div className={styles.description}>
@@ -25,6 +23,4 @@ const CircuitProfileHeader = (props: CircuitProfileHeaderProps) => {
       </h3>
     </div>
   );
-};
-
-export default CircuitProfileHeader;
+}

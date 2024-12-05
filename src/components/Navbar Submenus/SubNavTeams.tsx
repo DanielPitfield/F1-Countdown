@@ -1,19 +1,16 @@
-import React from "react";
-import { trpc } from "../../utils/trpc";
-import TeamLink from "../Links/TeamLink";
-
 import styles from "../../styles/SubNav.module.scss";
 
-const SubNavTeams = () => {
-  const { data: currentTeams } = trpc.home.getCurrentTeams.useQuery();
+import TeamLink from "../Links/TeamLink";
+import type { Team } from "../../utils/types/Team";
 
-  if (!currentTeams) {
-    return null;
-  }
+interface SubNavTeamsProps {
+  currentTeams: Team[];
+}
 
+export default function SubNavTeams(props: SubNavTeamsProps) {
   return (
     <ul className={styles.menu}>
-      {currentTeams.map((team) => {
+      {props.currentTeams.map((team) => {
         return (
           <li key={team.constructorId} className={styles.item}>
             <TeamLink team={team} />
@@ -22,6 +19,4 @@ const SubNavTeams = () => {
       })}
     </ul>
   );
-};
-
-export default SubNavTeams;
+}

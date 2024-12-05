@@ -1,15 +1,13 @@
-import { trpc } from "../../../utils/trpc";
-
 import styles from "../../../styles/TeamProfile.module.scss";
+
+import { getTeamInfo } from "../../../utils/serverActions/team/getTeamInfo";
 
 interface TeamProfileHeaderProps {
   teamID: string;
 }
 
-const TeamProfileHeader = (props: TeamProfileHeaderProps) => {
-  const { data: description } = trpc.team.getInfo.useQuery({
-    teamID: props.teamID,
-  });
+export default async function TeamProfileHeader(props: TeamProfileHeaderProps) {
+  const description = await getTeamInfo({ teamID: props.teamID });
 
   return (
     <div className={styles.description}>
@@ -17,6 +15,4 @@ const TeamProfileHeader = (props: TeamProfileHeaderProps) => {
       <h3 className={styles.subtitle}>{description?.nationality}</h3>
     </div>
   );
-};
-
-export default TeamProfileHeader;
+}

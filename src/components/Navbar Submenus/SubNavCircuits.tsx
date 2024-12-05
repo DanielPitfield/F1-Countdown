@@ -1,19 +1,16 @@
-import React from "react";
-import { trpc } from "../../utils/trpc";
-import CircuitLink from "../Links/CircuitLink";
-
 import styles from "../../styles/SubNav.module.scss";
 
-const SubNavCircuits = () => {
-  const { data: currentCircuits } = trpc.home.getCurrentCircuits.useQuery();
+import CircuitLink from "../Links/CircuitLink";
+import type { Circuit } from "../../utils/types/Circuit";
 
-  if (!currentCircuits) {
-    return null;
-  }
+interface SubNavCircuitsProps {
+  currentCircuits: Circuit[];
+}
 
+export default function SubNavCircuits(props: SubNavCircuitsProps) {
   return (
     <ul className={styles.menu}>
-      {currentCircuits.map((circuit) => {
+      {props.currentCircuits.map((circuit) => {
         return (
           <li key={circuit.circuitId} className={styles.item}>
             <CircuitLink circuit={circuit} />
@@ -22,6 +19,4 @@ const SubNavCircuits = () => {
       })}
     </ul>
   );
-};
-
-export default SubNavCircuits;
+}

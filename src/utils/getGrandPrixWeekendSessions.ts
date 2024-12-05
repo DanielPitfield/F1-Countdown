@@ -1,16 +1,5 @@
 import { add, sub } from "date-fns";
-import { GrandPrixWeekend } from "../server/trpc/router/grandPrix";
-
-export type SessionName =
-  | "Free Practice 1"
-  | "Free Practice 2"
-  | "Free Practice 3"
-  | "Sprint Shootout"
-  | "Qualifying"
-  | "Sprint"
-  | "Race";
-
-export type WeekendSession = { name: SessionName; date: Date | null };
+import { GrandPrixWeekend, WeekendSession } from "./types/GrandPrix";
 
 // Get the date object of a session (using both date and time)
 function getFullSessionDate(session: { date: string; time: string } | undefined): Date | null {

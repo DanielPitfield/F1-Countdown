@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GrandPrixWeekend, Race } from "../../server/trpc/router/grandPrix";
+import type { GrandPrixWeekend, Race } from "../../utils/types/GrandPrix";
 
 interface GrandPrixLinkProps {
   grandPrix: GrandPrixWeekend | Race | undefined;
@@ -13,7 +13,7 @@ const GrandPrixLink = (props: GrandPrixLinkProps) => {
 
   const text = props.showRaceName ? `${props.grandPrix.season} ${props.grandPrix.raceName}` : props.grandPrix.season;
 
-  return <Link href={`/grandPrixProfiles/${props.grandPrix.season}/${props.grandPrix.round}`}>{text}</Link>;
+  return <Link href={`/grandPrixs/${props.grandPrix.season}/${props.grandPrix.round}`}>{text}</Link>;
 };
 
 export default GrandPrixLink;

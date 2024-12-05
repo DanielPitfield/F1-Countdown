@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Circuit } from "../../server/trpc/router/circuit";
+import type { Circuit } from "../../utils/types/Circuit";
 
 interface CircuitLinkProps {
   circuit: Circuit | undefined;
@@ -10,7 +10,7 @@ const CircuitLink = (props: CircuitLinkProps) => {
     return null;
   }
 
-  return <Link href={`/circuitProfiles/${props.circuit.circuitId}`}>{props.circuit.circuitName}</Link>;
+  return <Link href={`/circuits/${props.circuit.circuitId}`}>{props.circuit.circuitName}</Link>;
 };
 
 export default CircuitLink;

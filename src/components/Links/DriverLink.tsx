@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Driver } from "../../server/trpc/router/driver";
+import type { Driver } from "../../utils/types/Driver";
 import { getDriverName } from "../../utils/getDriverName";
 
 interface DriverLinkProps {
@@ -12,7 +12,7 @@ const DriverLink = (props: DriverLinkProps) => {
   }
 
   return (
-    <Link href={`/driverProfiles/${props.driver.driverId}`} data-is-driver={true}>
+    <Link href={`/drivers/${props.driver.driverId}`} data-is-driver={true}>
       {getDriverName(props.driver)}
     </Link>
   );

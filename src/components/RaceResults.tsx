@@ -1,8 +1,8 @@
-import { Race } from "../server/trpc/router/grandPrix";
+import styles from "../styles/Statistic.module.scss";
+
+import type { Race } from "../utils/types/GrandPrix";
 import DriverLink from "./Links/DriverLink";
 import TeamLink from "./Links/TeamLink";
-
-import styles from "../styles/Statistic.module.scss";
 
 interface RaceResultsProps {
   race: Race | undefined;

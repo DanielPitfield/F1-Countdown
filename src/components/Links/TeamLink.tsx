@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Team } from "../../server/trpc/router/team";
+import type { Team } from "../../utils/types/Team";
 
 interface TeamLinkProps {
   team: Team | undefined;
@@ -10,7 +10,7 @@ const TeamLink = (props: TeamLinkProps) => {
     return null;
   }
 
-  return <Link href={`/teamProfiles/${props.team.constructorId}`}>{props.team.name}</Link>;
+  return <Link href={`/teams/${props.team.constructorId}`}>{props.team.name}</Link>;
 };
 
 export default TeamLink;

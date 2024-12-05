@@ -1,19 +1,16 @@
-import React from "react";
-import { trpc } from "../../utils/trpc";
-import DriverLink from "../Links/DriverLink";
-
 import styles from "../../styles/SubNav.module.scss";
 
-const SubNavDrivers = () => {
-  const { data: currentDrivers } = trpc.home.getCurrentDrivers.useQuery();
+import DriverLink from "../Links/DriverLink";
+import type { Driver } from "../../utils/types/Driver";
 
-  if (!currentDrivers) {
-    return null;
-  }
+interface SubNavDriversProps {
+  currentDrivers: Driver[];
+}
 
+export default function SubNavDrivers(props: SubNavDriversProps) {
   return (
     <ul className={styles.menu}>
-      {currentDrivers.map((driver) => {
+      {props.currentDrivers.map((driver) => {
         return (
           <li key={driver.driverId} className={styles.item}>
             <DriverLink driver={driver} />
@@ -22,6 +19,4 @@ const SubNavDrivers = () => {
       })}
     </ul>
   );
-};
-
-export default SubNavDrivers;
+}
