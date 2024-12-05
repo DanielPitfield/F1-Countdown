@@ -12,7 +12,7 @@ const DriverLink = (props: DriverLinkProps) => {
   }
 
   return (
-    <Link href={`/driverProfiles/${props.driver.driverId}`} data-is-driver={true}>
+    <Link href={`/drivers/${props.driver.driverId}`} data-is-driver={true}>
       {getDriverName(props.driver)}
     </Link>
   );
