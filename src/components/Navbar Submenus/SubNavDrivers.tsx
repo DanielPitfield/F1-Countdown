@@ -1,14 +1,16 @@
 import styles from "../../styles/SubNav.module.scss";
 
 import DriverLink from "../Links/DriverLink";
-import { getCurrentDrivers } from "../../utils/serverActions/home/getCurrentDrivers";
+import type { Driver } from "../../utils/types/Driver";
 
-export default async function SubNavDrivers() {
-  const currentDrivers = await getCurrentDrivers();
+interface SubNavDriversProps {
+  currentDrivers: Driver[];
+}
 
+export default function SubNavDrivers(props: SubNavDriversProps) {
   return (
     <ul className={styles.menu}>
-      {currentDrivers.map((driver) => {
+      {props.currentDrivers.map((driver) => {
         return (
           <li key={driver.driverId} className={styles.item}>
             <DriverLink driver={driver} />

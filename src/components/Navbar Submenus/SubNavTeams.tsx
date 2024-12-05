@@ -1,14 +1,16 @@
 import styles from "../../styles/SubNav.module.scss";
 
 import TeamLink from "../Links/TeamLink";
-import { getCurrentTeams } from "../../utils/serverActions/home/getCurrentTeams";
+import type { Team } from "../../utils/types/Team";
 
-export default async function SubNavTeams() {
-  const currentTeams = await getCurrentTeams();
+interface SubNavTeamsProps {
+  currentTeams: Team[];
+}
 
+export default function SubNavTeams(props: SubNavTeamsProps) {
   return (
     <ul className={styles.menu}>
-      {currentTeams.map((team) => {
+      {props.currentTeams.map((team) => {
         return (
           <li key={team.constructorId} className={styles.item}>
             <TeamLink team={team} />

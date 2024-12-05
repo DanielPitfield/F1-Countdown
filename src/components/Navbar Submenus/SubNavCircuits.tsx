@@ -1,14 +1,16 @@
 import styles from "../../styles/SubNav.module.scss";
 
 import CircuitLink from "../Links/CircuitLink";
-import { getCurrentCircuits } from "../../utils/serverActions/home/getCurrentCircuits";
+import type { Circuit } from "../../utils/types/Circuit";
 
-export default async function SubNavCircuits() {
-  const currentCircuits = await getCurrentCircuits();
+interface SubNavCircuitsProps {
+  currentCircuits: Circuit[];
+}
 
+export default function SubNavCircuits(props: SubNavCircuitsProps) {
   return (
     <ul className={styles.menu}>
-      {currentCircuits.map((circuit) => {
+      {props.currentCircuits.map((circuit) => {
         return (
           <li key={circuit.circuitId} className={styles.item}>
             <CircuitLink circuit={circuit} />
