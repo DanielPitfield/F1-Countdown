@@ -10,8 +10,9 @@ interface DriverProfileHeaderProps {
 
 export default async function DriverProfileHeader(props: DriverProfileHeaderProps) {
   const description = await getDriverDescription({ driverID: props.driverID });
+  const dateOfBirth = description?.dateOfBirth ? new Date(description.dateOfBirth) : new Date();
 
-  const formattedDateOfBirth = new Date(description?.dateOfBirth).toLocaleDateString("en-GB", {
+  const formattedDateOfBirth = dateOfBirth.toLocaleDateString("en-GB", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -19,7 +20,7 @@ export default async function DriverProfileHeader(props: DriverProfileHeaderProp
 
   const age =
     intervalToDuration({
-      start: description?.dateOfBirth ? new Date(description?.dateOfBirth) : new Date(),
+      start: dateOfBirth,
       end: new Date(),
     }).years ?? 0;
 
