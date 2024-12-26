@@ -1,8 +1,10 @@
 import Link from "next/link";
 import type { Circuit } from "../../utils/types/Circuit";
+import { CSSProperties } from "react";
 
 interface CircuitLinkProps {
   circuit: Circuit | undefined;
+  style?: CSSProperties;
 }
 
 const CircuitLink = (props: CircuitLinkProps) => {
@@ -10,7 +12,11 @@ const CircuitLink = (props: CircuitLinkProps) => {
     return null;
   }
 
-  return <Link href={`/circuits/${props.circuit.circuitId}`}>{props.circuit.circuitName}</Link>;
+  return (
+    <Link style={props.style} href={`/circuits/${props.circuit.circuitId}`}>
+      {props.circuit.circuitName}
+    </Link>
+  );
 };
 
 export default CircuitLink;

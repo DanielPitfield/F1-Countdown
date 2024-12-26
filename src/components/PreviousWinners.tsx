@@ -12,17 +12,16 @@ const PreviousWinners = (props: PreviousWinnersProps) => {
   }
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", padding: "1em" }}>
       <strong>Previous Winners</strong>
 
       {props.previousRaces.map((race) => {
         const winningDriver = race.Results[0]?.Driver;
 
         return (
-          <div key={`${winningDriver?.driverId} - ${race.season}`}>
-            <GrandPrixLink grandPrix={race} showRaceName={false} />
+          <div key={`${winningDriver?.driverId} - ${race.season}`} style={{ display: "flex", padding: "0.25em 0" }}>
+            <GrandPrixLink style={{ marginRight: "0.5em" }} grandPrix={race} showRaceName={false} />
             <DriverLink driver={winningDriver} />
-            {`(${race.Results[0]?.Time?.time})`}
           </div>
         );
       })}
