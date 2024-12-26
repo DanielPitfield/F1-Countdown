@@ -19,7 +19,7 @@ export async function getDriverRaces(config: { driverID: string }): Promise<{
   const data = await response.json();
 
   // Every race the driver has participated in
-  const allRaces: Race[] = data.MRData.RaceTable.Races;
+  const allRaces: Race[] = data?.MRData?.RaceTable?.Races ?? [];
 
   const winningRaces: Race[] = allRaces.filter((race) => {
     // What position did the driver in question finish for the race?
@@ -30,7 +30,7 @@ export async function getDriverRaces(config: { driverID: string }): Promise<{
   });
 
   return {
-    numRacesEntered: parseInt(data.MRData.total),
+    numRacesEntered: parseInt(data?.MRData?.total ?? "0"),
     numPodiums: filterPodiums(allRaces).length,
     numWins: winningRaces.length,
     firstRace: allRaces[0],

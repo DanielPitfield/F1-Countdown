@@ -21,5 +21,5 @@ export async function getCurrentTeams(): Promise<Team[]> {
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.ConstructorTable.Constructors;
+  return data?.MRData?.ConstructorTable?.Constructors ?? [];
 }

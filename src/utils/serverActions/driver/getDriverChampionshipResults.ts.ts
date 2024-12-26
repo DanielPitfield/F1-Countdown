@@ -29,7 +29,7 @@ export async function getDriverChampionshipResults(config: { driverID: string })
   const data = await response.json();
 
   // The driver's position in the driver standings - for each year of their career
-  const allYears: DriverSeasonResult[] = data.MRData.StandingsTable.StandingsLists.map(
+  const allYears: DriverSeasonResult[] = (data?.MRData?.StandingsTable?.StandingsLists ?? []).map(
     (x: DriverSeasonResultResponse) => {
       return {
         season: x.season,
@@ -43,7 +43,7 @@ export async function getDriverChampionshipResults(config: { driverID: string })
 
   return {
     numChampionshipsWon: winningYears.length,
-    numChampionshipsEntered: parseInt(data.MRData.total),
+    numChampionshipsEntered: parseInt(data?.MRData?.total ?? "0"),
     numCareerPoints: getTotalNumChampionshipPoints(allYears),
     winningYears: winningYears,
     allYears: allYears,

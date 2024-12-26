@@ -27,7 +27,7 @@ export async function getTeamChampionshipResults(config: { teamID: string }): Pr
   const data = await response.json();
 
   // The team's position in the team standings - for each year of their career
-  const allYears: TeamSeasonResult[] = data.MRData.StandingsTable.StandingsLists.map((x: TeamSeasonResultResponse) => {
+  const allYears: TeamSeasonResult[] = (data?.MRData?.StandingsTable?.StandingsLists ?? []).map((x: TeamSeasonResultResponse) => {
     return {
       season: x.season,
       round: x.round,
@@ -39,7 +39,7 @@ export async function getTeamChampionshipResults(config: { teamID: string }): Pr
 
   return {
     numChampionshipsWon: winningYears.length,
-    numChampionshipsEntered: parseInt(data.MRData.total),
+    numChampionshipsEntered: parseInt(data?.MRData?.total ?? "0"),
     winningYears: winningYears,
     allYears: allYears,
   };
