@@ -19,7 +19,7 @@ const PreviousWinners = (props: PreviousWinnersProps) => {
         const winningDriver = race.Results[0]?.Driver;
 
         return (
-          <div key={winningDriver?.driverId}>
+          <div key={`${winningDriver?.driverId} - ${race.season}`}>
             <GrandPrixLink grandPrix={race} showRaceName={false} />
             <DriverLink driver={winningDriver} />
             {`(${race.Results[0]?.Time?.time})`}
