@@ -8,5 +8,5 @@ export async function getTeamNumFastestLaps(config: { teamID: string }): Promise
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return parseInt(data.MRData.total);
+  return parseInt(data?.MRData?.total ?? "0");
 }

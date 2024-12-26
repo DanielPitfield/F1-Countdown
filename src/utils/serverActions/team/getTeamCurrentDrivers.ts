@@ -9,5 +9,5 @@ export async function getTeamCurrentDrivers(config: { teamID: string }): Promise
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.DriverTable.Drivers;
+  return data?.MRData?.DriverTable?.Drivers ?? [];
 }

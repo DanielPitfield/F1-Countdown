@@ -13,9 +13,11 @@ export async function getDriverPolePositions(config: { driverID: string }): Prom
   const response = await fetch(API_URL);
   const data = await response.json();
 
+  const poles = data?.MRData?.RaceTable?.Races ?? [];
+
   return {
-    firstPole: data.MRData.RaceTable.Races[0],
-    lastPole: data.MRData.RaceTable.Races.at(-1),
-    totalNum: parseInt(data.MRData.total),
+    firstPole: poles?.[0],
+    lastPole: poles.at(-1),
+    totalNum: parseInt(data?.MRData?.total ?? "0"),
   };
 }

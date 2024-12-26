@@ -8,5 +8,5 @@ export async function getDriverNumFastestLaps(config: { driverID: string }): Pro
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return parseInt(data.MRData.total);
+  return parseInt(data?.MRData?.total ?? "0");
 }
