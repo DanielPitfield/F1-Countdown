@@ -12,5 +12,5 @@ export async function getDriverStandingsAfter(config: {
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+  return data?.MRData?.StandingsTable?.StandingsLists?.[0].DriverStandings ?? [];
 }

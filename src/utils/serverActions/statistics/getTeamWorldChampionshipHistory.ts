@@ -21,7 +21,7 @@ export async function getTeamWorldChampionshipHistory(): Promise<TeamSeasonResul
   const data = await response.json();
 
   // The driver's position in the driver standings - for each year they won the world championship
-  return data.MRData.StandingsTable.StandingsLists.map((x: TeamSeasonResultResponse) => {
+  return (data?.MRData?.StandingsTable?.StandingsLists ?? []).map((x: TeamSeasonResultResponse) => {
     return {
       season: x.season,
       round: x.round,

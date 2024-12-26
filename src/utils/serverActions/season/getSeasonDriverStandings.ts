@@ -9,5 +9,5 @@ export async function getSeasonDriverStandings(config: { seasonID: string }): Pr
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+  return data?.MRData?.StandingsTable?.StandingsLists?.[0].DriverStandings ?? [];
 }

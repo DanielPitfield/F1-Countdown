@@ -9,5 +9,5 @@ export async function getTeamStandingsAfter(config: { season: string; roundNumbe
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
+  return data?.MRData?.StandingsTable?.StandingsLists?.[0].ConstructorStandings ?? [];
 }
