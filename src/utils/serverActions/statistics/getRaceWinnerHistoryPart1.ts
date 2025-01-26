@@ -10,5 +10,5 @@ export async function getRaceWinnerHistoryPart1(): Promise<Race[]> {
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.RaceTable.Races;
+  return data?.MRData?.RaceTable?.Races ?? [];
 }

@@ -14,8 +14,8 @@ export async function getCircuitPastWinners(config: { circuitID: string; numPast
   const data = await response.json();
 
   return {
-    results: data.MRData.RaceTable.Races.slice(-config.numPastWinners),
-    firstYear: data.MRData.RaceTable.Races[0],
+    results: (data?.MRData?.RaceTable?.Races ?? []).slice(-config.numPastWinners),
+    firstYear: data?.MRData?.RaceTable?.Races?.[0],
     totalNum: parseInt(data?.MRData?.total ?? "0"),
   };
 }

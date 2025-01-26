@@ -9,5 +9,5 @@ export async function getGrandPrixRace(config: { season: string; roundNumber: st
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.RaceTable.Races[0];
+  return data?.MRData?.RaceTable?.Races?.[0];
 }

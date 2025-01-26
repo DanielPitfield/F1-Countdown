@@ -9,5 +9,5 @@ export async function getGrandPrixQualifying(config: { season: string; roundNumb
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.RaceTable.Races[0];
+  return data?.MRData?.RaceTable?.Races?.[0];
 }

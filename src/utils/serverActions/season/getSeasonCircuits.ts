@@ -9,5 +9,5 @@ export async function getSeasonCircuits(config: { seasonID: string }): Promise<C
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.CircuitTable.Circuits;
+  return data?.MRData?.CircuitTable?.Circuits ?? [];
 }

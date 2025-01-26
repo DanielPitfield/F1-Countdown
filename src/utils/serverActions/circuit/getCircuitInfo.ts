@@ -9,5 +9,5 @@ export async function getCircuitInfo(config: { circuitID: string }): Promise<Cir
   const response = await fetch(API_URL);
   const data = await response.json();
 
-  return data.MRData.CircuitTable.Circuits[0];
+  return data?.MRData?.CircuitTable?.Circuits?.[0];
 }
