@@ -1,5 +1,5 @@
 # F1 Dashboard
-Website for everything F1 including a countdown to the next Grand Prix weekend session!
+Real-time countdown showing how long left until the next Formula One session, never miss any racing again!
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
