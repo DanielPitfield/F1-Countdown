@@ -1,3 +1,6 @@
+// Fresh data on each request (on demand instead of being pre-rendered)
+export const dynamic = "force-dynamic";
+
 import styles from "../styles/index.module.scss";
 
 import Head from "next/head";
