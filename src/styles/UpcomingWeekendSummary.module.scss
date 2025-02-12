@@ -8,8 +8,8 @@
     .circuitDetails {
       display: flex;
       flex-direction: column;
-      //flex-grow: 1;
       align-items: flex-start;
+      margin-right: 0.5em;
 
       .raceName {
         margin: 0;

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,600;1,300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,200;1,300&display=swap");
 
 html,
 body,
@@ -7,42 +7,8 @@ main {
   flex-direction: column;
   flex-grow: 1;
   height: 100%;
-}
-
-html,
-body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-    Helvetica Neue, sans-serif;
-  background-color: #f3f3f3;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
   font-family: "Kanit", sans-serif;
-}
-
-h1 {
-  font-size: 2.6em;
-  line-height: 1.1em;
-}
-
-h3 {
-  font-size: 1.4em;
-}
-
-a {
-  color: #00a7cc;
-  &:hover {
-    color: lighten(#00a7cc, 10%);
-  }
-}
-
-* {
-  box-sizing: border-box;
+  background-color: #222;
 }

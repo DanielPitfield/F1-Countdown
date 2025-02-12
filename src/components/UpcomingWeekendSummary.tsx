@@ -61,7 +61,7 @@ const UpcomingWeekendSummary = (props: UpcomingWeekendSummaryProps) => {
     <div className={styles.wrapper}>
       <div className={styles.circuitWrapper}>
         <div className={styles.circuitDetails}>
-          <h3 className={styles.raceName}>{props.upcomingGrandPrixWeekend.raceName}</h3>
+          <h2 className={styles.raceName}>{props.upcomingGrandPrixWeekend.raceName}</h2>
           <div>{props.upcomingGrandPrixWeekend.Circuit.circuitName}</div>
           <div>{`Round ${props.upcomingGrandPrixWeekend.round}`}</div>
         </div>
