@@ -3,7 +3,6 @@ export const dynamic = "force-dynamic";
 
 import styles from "../styles/index.module.scss";
 
-import Head from "next/head";
 import Image from "next/image";
 import BannerImage from "../../public/Images/Banner.png";
 import UpcomingWeekendSummary from "../components/UpcomingWeekendSummary";
@@ -15,30 +14,22 @@ export default async function Page() {
   const upcomingGrandPrixWeekend = await getUpcomingGrandPrixWeekend();
 
   return (
-    <>
-      <Head>
-        <title>F1 Countdown</title>
-        <meta name="description" content="F1 Statistics, Schedule and Information" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <section className={styles.wrapper}>
+      <aside className={styles.navigation}>
+        <div className={styles.titleWrapper}>
+          <UpcomingWeekendSummary upcomingGrandPrixWeekend={upcomingGrandPrixWeekend} />
 
-      <section className={styles.wrapper}>
-        <aside className={styles.navigation}>
-          <div className={styles.titleWrapper}>
-            <UpcomingWeekendSummary upcomingGrandPrixWeekend={upcomingGrandPrixWeekend} />
-
-            <ul className={styles.list}>
-              {SocialMediaNames.map((name) => (
-                <SocialMediaButton key={name} name={name} />
-              ))}
-            </ul>
-          </div>
-        </aside>
-
-        <div className={styles.imageWrapper}>
-          <Image src={BannerImage} alt="Banner" priority fill />
+          <ul className={styles.list}>
+            {SocialMediaNames.map((name) => (
+              <SocialMediaButton key={name} name={name} />
+            ))}
+          </ul>
         </div>
-      </section>
-    </>
+      </aside>
+
+      <div className={styles.imageWrapper}>
+        <Image src={BannerImage} alt="Banner" priority fill />
+      </div>
+    </section>
   );
 }
