@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .wrapper {
   display: flex;
   flex-grow: 1;
@@ -39,8 +41,8 @@
             linear-gradient(0deg, rgba(0, 0, 0, 0.1), transparent 76%),
             linear-gradient(90deg, #002d86 0, #002d86 50%, #f50000 0, #f50000),
           ),
-          "F1 Quotes": lighten(black, 4%),
-          "Reddit": lighten(#fe4502, 4%),
+          "F1 Quotes": color.adjust(black, $lightness: 4%),
+          "Reddit": color.adjust(#fe4502, $lightness: 4%),
         );
 
         .item {
