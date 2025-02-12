@@ -17,7 +17,7 @@ export default async function Page() {
   return (
     <>
       <Head>
-        <title>F1 Dashboard</title>
+        <title>F1 Countdown</title>
         <meta name="description" content="F1 Statistics, Schedule and Information" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
