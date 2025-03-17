@@ -1,4 +1,3 @@
-import { add, sub } from "date-fns";
 import { GrandPrixWeekend, WeekendSession } from "./types/GrandPrix";
 
 // Get the date object of a session (using both date and time)
@@ -26,40 +25,23 @@ export function getGrandPrixWeekendSessions(weekend: GrandPrixWeekend | undefine
   }
 
   // Sprint weekend
-  if (weekend.Sprint) {
-    // The sprint shootout date is put under SecondPractice and is +30 minutes off
-    // http://ergast.com/mrd/bugs/comment-page-15/
-    const sprintShootoutDate = ((): Date => {
-      // Try to find the sprint shootout date/time under SecondPractice
-      const sessionDate = getFullSessionDate(weekend.SecondPractice);
-
-      // Account for being 30 minutes later than when the session actually starts
-      if (sessionDate) {
-        return sub(sessionDate, {
-          minutes: 30,
-        });
-      }
-
-      // Otherwise ~19 hours after qualifying (so around ~5 hours earlier on the next day)
-      return add(new Date(`${weekend.Qualifying.date} ${weekend.Qualifying.time}`), { hours: 19 });
-    })();
-
+  if (weekend.SprintQualifying || weekend.Sprint) {
     return [
       {
         name: "Free Practice 1",
         date: getFullSessionDate(weekend.FirstPractice),
       },
       {
-        name: "Qualifying",
-        date: getFullSessionDate(weekend.Qualifying),
-      },
-      {
-        name: "Sprint Shootout",
-        date: sprintShootoutDate,
+        name: "Sprint Qualifying",
+        date: getFullSessionDate(weekend.SprintQualifying),
       },
       {
         name: "Sprint",
         date: getFullSessionDate(weekend.Sprint),
+      },
+      {
+        name: "Qualifying",
+        date: getFullSessionDate(weekend.Qualifying),
       },
       {
         name: "Race",

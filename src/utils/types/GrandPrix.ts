@@ -7,23 +7,31 @@ export type GrandPrixWeekend = {
   url: string;
   raceName: string;
   Circuit: Circuit;
+
+  FirstPractice: { date: string; time: string };
+
+  // Sprint weekend (sprint qualifying and sprint race instead of two practice sessions)
+  SprintQualifying?: { date: string; time: string };
+  Sprint?: { date: string; time: string };
+
+  // Typical race weekend (with a further two practice sessions)
+  SecondPractice?: { date: string; time: string };
+  ThirdPractice?: { date: string; time: string };
+
+  Qualifying: { date: string; time: string };
+
+  // Race date and time are not nested
   date: string;
   time: string;
-  FirstPractice: { date: string; time: string };
-  SecondPractice: { date: string; time: string };
-  ThirdPractice?: { date: string; time: string };
-  Qualifying: { date: string; time: string };
-  // Some grand prix weekends will have a sprint race instead of a third practice session
-  Sprint?: { date: string; time: string };
 };
 
 export type SessionName =
   | "Free Practice 1"
   | "Free Practice 2"
   | "Free Practice 3"
-  | "Sprint Shootout"
-  | "Qualifying"
+  | "Sprint Qualifying"
   | "Sprint"
+  | "Qualifying"
   | "Race";
 
 export type WeekendSession = { name: SessionName; date: Date | null };
